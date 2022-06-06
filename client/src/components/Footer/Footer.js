@@ -12,6 +12,7 @@ import {
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { extendTheme } from '@chakra-ui/react';
 
+// styles
 const theme = extendTheme({
   colors: {
     transparent: 'transparent',
