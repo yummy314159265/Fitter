@@ -39,6 +39,9 @@ const NavLink = ({ children }) => (
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // replace with authentication
+  const loggedIn = false;
+
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -67,7 +70,7 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-
+              {loggedIn ?
               <Menu>
                 <MenuButton
                   as={Button}
@@ -99,7 +102,12 @@ export default function Navbar() {
                   <MenuItem>Account Settings</MenuItem>
                   <MenuItem>Logout</MenuItem>
                 </MenuList>
-              </Menu>
+              </Menu> :
+              <>
+                <Button>Log in</Button>
+                <Button colorScheme='blue'>Sign up</Button>
+              </>
+              }
             </Stack>
           </Flex>
         </Flex>

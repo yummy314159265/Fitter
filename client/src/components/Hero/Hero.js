@@ -82,7 +82,7 @@ export default function CallToActionWithAnnotation() {
               right={'-125px'}
               top={'-15px'}
               transform={'rotate(10deg)'}>
-              Starting at $15/mo
+              Get stronk today
             </Text>
           </Box>
         </Stack>
