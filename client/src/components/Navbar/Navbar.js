@@ -31,7 +31,8 @@ const NavLink = ({ children }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}>
+    href={'#'}
+  >
     {children}
   </Link>
 );
@@ -58,7 +59,8 @@ export default function Navbar() {
             <HStack
               as={'nav'}
               spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
+              display={{ base: 'none', md: 'flex' }}
+            >
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
@@ -77,7 +79,8 @@ export default function Navbar() {
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
+                  minW={0}
+                >
                   <Avatar
                     size={'sm'}
                     src={'https://avatars.dicebear.com/api/male/username.svg'}
@@ -104,6 +107,7 @@ export default function Navbar() {
                 </MenuList>
               </Menu> :
               <>
+                {/*Replace buttons*/}
                 <Button>Log in</Button>
                 <Button colorScheme='blue'>Sign up</Button>
               </>

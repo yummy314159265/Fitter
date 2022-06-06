@@ -50,7 +50,8 @@ const SocialButton = ({
       transition={'background 0.3s ease'}
       _hover={{
         bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
-      }}>
+      }}
+    >
       <VisuallyHidden>{label}</VisuallyHidden>
       {children}
     </chakra.button>
@@ -68,7 +69,8 @@ export default function SmallCentered() {
         py={4}
         spacing={4}
         justify={'center'}
-        align={'center'}>
+        align={'center'}
+      >
         <Logo />
         <Stack direction={'row'} spacing={6}>
           <Link href={'#'}>Home</Link>
@@ -89,7 +91,8 @@ export default function SmallCentered() {
           direction={{ base: 'column', md: 'row' }}
           spacing={4}
           justify={{ base: 'center', md: 'space-between' }}
-          align={{ base: 'center', md: 'center' }}>
+          align={{ base: 'center', md: 'center' }}
+        >
           <Text>© 2022 Chakra Templates. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
             <SocialButton label={'Twitter'} href={'#'}>

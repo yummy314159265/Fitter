@@ -10,8 +10,14 @@ import {
   useColorModeValue,
   createIcon,
 } from '@chakra-ui/react';
+import { useAnimate }  from 'react-simple-animate';
 
 export default function CallToActionWithAnnotation() {
+  const { play, style, isPlaying } = useAnimate({
+    start: { opacity: 1 },
+    end: { opacity: 0 }
+  })
+
   return (
     <Container maxW={'3xl'}>
       <Stack
@@ -22,13 +28,14 @@ export default function CallToActionWithAnnotation() {
         <Heading
           fontWeight={600}
           fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
+          lineHeight={'110%'}
+        >
           Fitter. Happier. <br />
           <Text as={'span'} color={'green.400'}>
             More Productive.
           </Text>
         </Heading>
-        <Text color={'gray.500'}>
+        <Text style={style} color={'gray.500'}>
           Comfortable
           Not drinking too much
           Regular exercise at the gym (3 days a week)
@@ -52,7 +59,8 @@ export default function CallToActionWithAnnotation() {
           spacing={3}
           align={'center'}
           alignSelf={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
           <Button
             colorScheme={'green'}
             bg={'green.400'}
@@ -60,7 +68,9 @@ export default function CallToActionWithAnnotation() {
             px={6}
             _hover={{
               bg: 'green.500',
-            }}>
+            }}
+            onClick={()=> play(!isPlaying)}
+          >
             Get Started
           </Button>
           <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
@@ -81,7 +91,8 @@ export default function CallToActionWithAnnotation() {
               position={'absolute'}
               right={'-125px'}
               top={'-15px'}
-              transform={'rotate(10deg)'}>
+              transform={'rotate(10deg)'}
+            >
               Get stronk today
             </Text>
           </Box>
