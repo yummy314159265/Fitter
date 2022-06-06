@@ -102,6 +102,10 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    posts: [Post]
+    meals: [Meal]
+    exercises: [Exercise]
+    goals: [Goal]
     me: User
   }
 `;
