@@ -10,20 +10,6 @@ import {
     VisuallyHidden,
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { extendTheme } from '@chakra-ui/react';
-
-const theme = extendTheme({
-  colors: {
-    transparent: 'transparent',
-    black: '#000',
-    white: '#fff',
-  },
-  fonts: {
-    body: "system-ui, sans-serif",
-    heading: "Georgia, serif",
-    mono: "Menlo, monospace",
-  }
-});
 
 const Logo = (props) => {
   return (
@@ -72,7 +58,7 @@ const SocialButton = ({
   );
 };
 
-export function SmallCentered() {
+export default function SmallCentered() {
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -124,5 +110,3 @@ export function SmallCentered() {
     </Box>
   );
 }
-
-export default theme;
