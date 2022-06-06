@@ -13,6 +13,7 @@ import {
 import { useAnimate }  from 'react-simple-animate';
 import { extendTheme } from '@chakra-ui/react';
 
+// styles
 const theme = extendTheme({
   colors: {
     transparent: 'transparent',

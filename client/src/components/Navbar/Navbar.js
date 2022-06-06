@@ -23,6 +23,7 @@ import { extendTheme } from '@chakra-ui/react';
 
 const Links = ['Stuff', 'Other stuff', 'More stuff']
 
+// styles
 const theme = extendTheme({
   colors: {
     transparent: 'transparent',
