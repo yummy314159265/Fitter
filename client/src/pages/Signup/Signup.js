@@ -89,7 +89,7 @@ export function SignupCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link as={Link} to='/Login' color={'blue.400'}>Login</Link>
+                Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
                 {/* link back to login if already a user */}
               </Text>
             </Stack>

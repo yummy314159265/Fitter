@@ -108,8 +108,12 @@ export default function Navbar() {
               </Menu> :
               <>
                 {/*Replace buttons*/}
-                <Button>Log in</Button>
-                <Button colorScheme='blue'>Sign up</Button>
+                <Link href='/login'>
+                  <Button>Log in</Button>
+                </Link>
+                <Link href='/signup'>
+                  <Button colorScheme='blue'>Sign up</Button>
+                </Link>
               </>
               }
             </Stack>
