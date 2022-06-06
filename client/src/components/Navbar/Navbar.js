@@ -31,7 +31,8 @@ const NavLink = ({ children }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}>
+    href={'#'}
+  >
     {children}
   </Link>
 );
@@ -39,6 +40,9 @@ const NavLink = ({ children }) => (
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // replace with authentication
+  const loggedIn = false;
+
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -55,7 +59,8 @@ export default function Navbar() {
             <HStack
               as={'nav'}
               spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
+              display={{ base: 'none', md: 'flex' }}
+            >
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
@@ -67,14 +72,15 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-
+              {loggedIn ?
               <Menu>
                 <MenuButton
                   as={Button}
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
+                  minW={0}
+                >
                   <Avatar
                     size={'sm'}
                     src={'https://avatars.dicebear.com/api/male/username.svg'}
@@ -82,6 +88,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList alignItems={'center'}>
                   <br />
+                  {/*This needs to show only when logged in, otherwise shows login button*/}
                   <Center>
                     <Avatar
                       size={'2xl'}
@@ -98,7 +105,13 @@ export default function Navbar() {
                   <MenuItem>Account Settings</MenuItem>
                   <MenuItem>Logout</MenuItem>
                 </MenuList>
-              </Menu>
+              </Menu> :
+              <>
+                {/*Replace buttons*/}
+                <Button>Log in</Button>
+                <Button colorScheme='blue'>Sign up</Button>
+              </>
+              }
             </Stack>
           </Flex>
         </Flex>
