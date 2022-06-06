@@ -1,6 +1,8 @@
 import React from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 // import { 
 //   ApolloClient, 
 //   ApolloProvider, 
@@ -13,14 +15,33 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Start from './pages/Start';
 import Footer from './components/Footer';
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Navbar />
-      <Start />
+    <Navbar />
+      <Router>
+
+      <Routes>
+      <Route 
+        path="/" 
+        element={<Start />} 
+      />
+           <Route 
+        path="/login" 
+        element={<Login />} 
+      />
+           <Route 
+        path="/signup" 
+        element={<Signup />} 
+      />
+      </Routes>
+      </Router>
       <Footer />
     </ChakraProvider>
+    
   );
 }
 
