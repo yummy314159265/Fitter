@@ -39,7 +39,7 @@ const typeDefs = gql`
    createdAt: String
    exercises: [Exercise]
    meals: [Meal]
-   tags: [Tag]
+   tags: [Tags]
    comments: [Comment]
    likes: Int
   }
@@ -98,11 +98,6 @@ const typeDefs = gql`
   type Tag {
    id: ID!      
    name: String   
-  }
-
-  type Query {
-    users: [User]
-    me: User
   }
 `;
 
