@@ -82,6 +82,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList alignItems={'center'}>
                   <br />
+                  {/*This needs to show only when logged in, otherwise shows login button*/}
                   <Center>
                     <Avatar
                       size={'2xl'}
