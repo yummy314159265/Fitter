@@ -19,22 +19,8 @@ import {
   IconButton
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { extendTheme } from '@chakra-ui/react';
 
 const Links = ['Stuff', 'Other stuff', 'More stuff']
-
-const theme = extendTheme({
-  colors: {
-    transparent: 'transparent',
-    black: '#000',
-    white: '#fff',
-  },
-  fonts: {
-    body: "system-ui, sans-serif",
-    heading: "Georgia, serif",
-    mono: "Menlo, monospace",
-  }
-});
 
 const NavLink = ({ children }) => (
   <Link
@@ -51,7 +37,7 @@ const NavLink = ({ children }) => (
   </Link>
 );
 
-export function Navbar() {
+export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   // replace with authentication
@@ -122,8 +108,12 @@ export function Navbar() {
               </Menu> :
               <>
                 {/*Replace buttons*/}
-                <Button>Log in</Button>
-                <Button colorScheme='blue'>Sign up</Button>
+                <Link href='/login'>
+                  <Button>Log in</Button>
+                </Link>
+                <Link href='/signup'>
+                  <Button colorScheme='blue'>Sign up</Button>
+                </Link>
               </>
               }
             </Stack>
@@ -133,5 +123,3 @@ export function Navbar() {
     </>
   );
 }
-
-export default theme;
