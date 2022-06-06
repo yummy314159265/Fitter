@@ -11,8 +11,22 @@ import {
   createIcon,
 } from '@chakra-ui/react';
 import { useAnimate }  from 'react-simple-animate';
+import { extendTheme } from '@chakra-ui/react';
 
-export default function CallToActionWithAnnotation() {
+const theme = extendTheme({
+  colors: {
+    transparent: 'transparent',
+    black: '#000',
+    white: '#fff',
+  },
+  fonts: {
+    body: "system-ui, sans-serif",
+    heading: "Georgia, serif",
+    mono: "Menlo, monospace",
+  }
+});
+
+export function CallToActionWithAnnotation() {
   const { play, style, isPlaying } = useAnimate({
     start: { opacity: 1 },
     end: { opacity: 0 }
@@ -114,3 +128,5 @@ const Arrow = createIcon({
     />
   ),
 });
+
+export default theme;
