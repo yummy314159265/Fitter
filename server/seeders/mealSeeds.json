@@ -1,0 +1,50 @@
+[
+  {
+    "name":"Chicken and rice",
+    "type":"Paleo",
+    "calories":100,
+    "proteins":20,
+    "carbs":50,
+    "fats":30
+  },
+  {
+    "name":"Hamburger",
+    "type":"Carnivore",
+    "calories":500,
+    "proteins":70,
+    "carbs":40,
+    "fats":100
+  },
+  {
+    "name":"Soup",
+    "type":"Vegan",
+    "calories":50,
+    "proteins":0,
+    "carbs":60,
+    "fats":10
+  },
+  {
+    "name":"Chicken nuggets",
+    "type":"Carnivore",
+    "calories":1000,
+    "proteins":80,
+    "carbs":60,
+    "fats":200
+  },
+  {
+    "name":"Sandwich",
+    "type":"Keto",
+    "calories":300,
+    "proteins":10,
+    "carbs":5,
+    "fats":99
+  },
+  {
+    "name":"Ice cream",
+    "type":"Cheat day",
+    "calories":1200,
+    "proteins":10,
+    "carbs":90,
+    "fats":100
+  }
+]
