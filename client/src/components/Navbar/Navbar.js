@@ -72,6 +72,9 @@ export default function Navbar() {
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
+              <Link as={RouterLink} to='/posts'>
+                  <Button>Posts</Button>
+                </Link>
             </HStack>
           </HStack>
 

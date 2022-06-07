@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { mealSchema } = require('./Meal');
-const { exerciseSchema } = require('./Exercise');
 const { commentSchema } = require('./Comment');
 const { tagSchema } = require('./Tag');
 
@@ -25,8 +23,18 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  exercises: [exerciseSchema],
-  meals: [mealSchema],
+  exercises: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Exercise',
+    },
+  ],
+  meals: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Meal',
+    },
+  ],
   tags: [tagSchema],
   comments: [commentSchema],
 });

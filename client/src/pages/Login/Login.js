@@ -52,7 +52,7 @@ export default function SimpleCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            {/*  */}
+            {/* Use this to make a form */}
             <form onSubmit={formik.handleSubmit}>
               <FormControl>
                 <FormLabel htmlFor='email'>Email address</FormLabel>
@@ -67,7 +67,7 @@ export default function SimpleCard() {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor='paassword'>Password</FormLabel>
+                <FormLabel htmlFor='password'>Password</FormLabel>
                 <Input 
                   id='password'
                   name='password'

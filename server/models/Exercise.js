@@ -28,4 +28,6 @@ const exerciseSchema = new Schema({
   },
 });
 
-module.exports = { exerciseSchema };
+const Exercise = model('Exercise', exerciseSchema);
+
+module.exports = Exercise;
