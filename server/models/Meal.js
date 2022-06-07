@@ -22,4 +22,6 @@ const mealSchema = new Schema({
   }
 });
 
-module.exports = { mealSchema };
+const Meal = model('Meal', mealSchema);
+
+module.exports = Meal;

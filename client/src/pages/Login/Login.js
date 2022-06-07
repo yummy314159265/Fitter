@@ -64,7 +64,7 @@ export default function SimpleCard() {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor='paassword'>Password</FormLabel>
+                <FormLabel htmlFor='password'>Password</FormLabel>
                 <Input 
                   id='password'
                   name='password'
