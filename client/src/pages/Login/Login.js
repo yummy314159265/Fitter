@@ -12,8 +12,11 @@ import {
     Heading,
     Text,
     useColorModeValue,
+    Center,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 // would need to add import for forgot password
 
 export default function SimpleCard() {
@@ -96,6 +99,21 @@ export default function SimpleCard() {
                   }}>
                   Sign in
                 </Button>
+                <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
+                  {/* Facebook */}
+                  <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
+                    <Center>
+                      <Text>Continue with Facebook</Text>
+                    </Center>
+                  </Button>
+
+                  {/* Google */}
+                  <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                    <Center>
+                      <Text>Sign in with Google</Text>
+                    </Center>
+                  </Button>
+                </Stack>
               </Stack>
             </form>
           </Stack>
