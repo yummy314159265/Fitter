@@ -1,0 +1,38 @@
+[
+  {
+    "postAuthor":"johnwick1",
+    "message": "first!",
+    "likes": 1,
+    "tags": {
+      "name": "#first"
+    },
+    "comments": [
+      {
+        "commentAuthor": "fitguy",
+        "message":"hi",
+        "likes":3,
+        "tags": {
+          "name":"#hi"
+        }
+      }
+    ]
+  },
+  {
+    "postAuthor":"fitguy",
+    "message": "second!",
+    "likes": 24,
+    "tags": {
+      "name": "#second"
+    },
+    "comments": [
+      {
+        "commentAuthor": "johnwick1",
+        "message":"hello",
+        "likes":3,
+        "tags": {
+          "name":"#hello"
+        }
+      }
+    ]
+  }
+]
