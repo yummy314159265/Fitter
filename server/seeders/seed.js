@@ -59,6 +59,15 @@ db.once('open', async () => {
             },
           }
         );
+
+        await Post.findOneAndUpdate(
+          {postAuthor: 'johnwick1'},
+          {
+            $addToSet: {
+              exercises: _id
+            }
+          }
+        )
       }
 
       if (i === 3) {
@@ -83,6 +92,15 @@ db.once('open', async () => {
             },
           }
         );
+
+        await Post.findOneAndUpdate(
+          {postAuthor: 'fitguy'},
+          {
+            $addToSet: {
+              exercises: _id
+            }
+          }
+        )
       }
 
       if (i === 4 || i == 5) {
@@ -111,6 +129,15 @@ db.once('open', async () => {
             },
           }
         );
+
+        await Post.findOneAndUpdate(
+          { postAuthor: 'johnwick1'},
+          {
+            $addToSet: {
+              meals: _id
+            }
+          }
+        );
       } else {
         await User.findOneAndUpdate(
           { username: 'fitguy'},
@@ -118,6 +145,15 @@ db.once('open', async () => {
             $addToSet: {
               mealPlan: _id
             },
+          }
+        );
+        
+        await Post.findOneAndUpdate(
+          { postAuthor: 'fitguy'},
+          {
+            $addToSet: {
+              meals: _id
+            }
           }
         );
       }
