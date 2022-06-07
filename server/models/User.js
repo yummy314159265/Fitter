@@ -1,6 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { mealSchema } = require('./Meal');
-const { exerciseSchema } = require('./Exercise');
 const { goalSchema } = require('./Goal');
 const bcrypt = require('bcrypt');
 
@@ -39,8 +37,18 @@ const userSchema = new Schema({
     required: true
   },
   goals: [goalSchema],
-  exercisePlan: [exerciseSchema],
-  mealPlan: [mealSchema],
+  exercisePlan: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Exercise',
+    },
+  ],
+  mealPlan: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Meal',
+    },
+  ],
   posts: [
     {
       type: Schema.Types.ObjectId,
