@@ -1,5 +1,8 @@
 import React from 'react';
+import '@fontsource/raleway/400.css';
+import '@fontsource/open-sans/700.css';
 import {
+    ChakraProvider,
     Flex,
     Box,
     FormControl,
@@ -17,7 +20,25 @@ import {
 import { useFormik } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { extendTheme } from '@chakra-ui/react';
+
+
 // would need to add import for forgot password
+
+const theme = extendTheme({
+  colors: {
+      green: "#9DE183",
+      lightblue: "#62929E",
+      darkblue: "#546A7B",
+      grey: "#393D3F",
+      black: "#000",
+      white: "#FFF"
+  },
+  fonts: {
+    heading: `'Open Sans', sans-serif`,
+    body: `'Raleway', sans-serif`,
+  },
+});
 
 export default function SimpleCard() {
   const formik = useFormik({
@@ -33,6 +54,7 @@ export default function SimpleCard() {
   })
 
   return (
+    <ChakraProvider theme={theme}>
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -48,7 +70,7 @@ export default function SimpleCard() {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={useColorModeValue('white', 'grey')}
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
@@ -96,8 +118,8 @@ export default function SimpleCard() {
                 <Button
                 // Need type='submit' here for formik
                   type='submit'
-                  bg={'blue.400'}
-                  color={'white'}
+                  bg={'green'}
+                  color={'black'}
                   _hover={{
                     bg: 'blue.500',
                   }}>
@@ -124,5 +146,6 @@ export default function SimpleCard() {
         </Box>
       </Stack>
     </Flex>
+    </ChakraProvider>
   );
 }
