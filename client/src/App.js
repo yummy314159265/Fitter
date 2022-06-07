@@ -21,25 +21,24 @@ import Signup from './pages/Signup'
 function App() {
   return (
     <ChakraProvider theme={theme}>
-    <Navbar />
       <Router>
-
-      <Routes>
-      <Route 
-        path="/" 
-        element={<Start />} 
-      />
-           <Route 
-        path="/login" 
-        element={<Login />} 
-      />
-           <Route 
-        path="/signup" 
-        element={<Signup />} 
-      />
-      </Routes>
+        <Navbar />
+        <Routes>
+          <Route 
+            path="/" 
+            element={<Start />} 
+          />
+          <Route 
+            path="/login" 
+            element={<Login />} 
+          />
+          <Route 
+            path="/signup" 
+            element={<Signup />} 
+          />
+        </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </ChakraProvider>
     
   );

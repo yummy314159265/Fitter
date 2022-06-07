@@ -24,7 +24,8 @@ const typeDefs = gql`
     "user can create post want to share with reference to exercise and meal plan"
     posts: [Post]
     friends: [User]
-   
+    exercisePlan: [Exercise]
+    mealPlan: [Meal]
   }
     """
     Post Schema will store post user want to share with reference to exercise and meal plan
@@ -107,6 +108,15 @@ const typeDefs = gql`
     exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
+  }
+  
+  type Mutations {
+    addUser
+    addPost
+    addExercisePlan
+    addMealPlan
+    addGoals
+    addComment
   }
 `;
 

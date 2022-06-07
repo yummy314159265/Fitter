@@ -6,7 +6,6 @@ import {
     FormLabel,
     Input,
     InputGroup,
-    HStack,
     InputRightElement,
     Stack,
     Button,
@@ -14,13 +13,30 @@ import {
     Text,
     useColorModeValue,
     Link,
+    Center,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useFormik } from 'formik';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 
-export function SignupCard() {
+export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
 //   need to add BMI/Fitness goal input options
+  
+  // create form variables
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    }
+  });
+
   return (
     <Flex
       minH={'100vh'}
@@ -42,49 +58,78 @@ export function SignupCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
-                </FormControl>
-              </Box>
-            </HStack>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }>
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                Sign up
+            <form onSubmit={formik.handleSubmit}>
+              <FormControl isRequired>
+                <FormLabel htmlFor='username'>Username</FormLabel>
+                <Input 
+                  id='username'
+                  name='username'
+                  type='text'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='email'>Email address</FormLabel>
+                <Input
+                  id='email' 
+                  name='email'
+                  type='email' 
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='password'>Password</FormLabel>
+                <InputGroup>
+                  <Input 
+                    id='password'
+                    name='password'
+                    type={showPassword ? 'text' : 'password'} 
+                    variant='filled'
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                  />
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  type='submit'
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}>
+                  Sign up
+                </Button>
+              </Stack>
+            </form>
+            <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
+                  {/* Facebook */}
+              <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
+                <Center>
+                  <Text>Continue with Facebook</Text>
+                </Center>
+              </Button>
+
+              {/* Google */}
+              <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                <Center>
+                  <Text>Sign in with Google</Text>
+                </Center>
               </Button>
             </Stack>
             <Stack pt={6}>
