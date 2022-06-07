@@ -27,6 +27,7 @@ export default function SimpleCard() {
       remember: false,
     },
     onSubmit: (values) => {
+      // funciton that happens on submit, will change to mutations when we have it set up
       alert(JSON.stringify(values, null, 2));
     }
   })
@@ -51,6 +52,7 @@ export default function SimpleCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
+            {/* Use this to make a form */}
             <form onSubmit={formik.handleSubmit}>
               <FormControl>
                 <FormLabel htmlFor='email'>Email address</FormLabel>
@@ -59,6 +61,7 @@ export default function SimpleCard() {
                   name='email'
                   type='email'
                   variant='filled'
+                  // use handlechange, variable name is same as variable above
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
@@ -91,6 +94,7 @@ export default function SimpleCard() {
                   {/* forgot password option - no link yet - send user and email with password? */}
                 </Stack>
                 <Button
+                // Need type='submit' here for formik
                   type='submit'
                   bg={'blue.400'}
                   color={'white'}

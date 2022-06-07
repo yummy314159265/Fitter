@@ -1,0 +1,11 @@
+pages
+components
+
+signup to add user
+add post
+add meal plan
+add exercise plan
+Goal model
+
+
+remove : { children: ReactNode } 
