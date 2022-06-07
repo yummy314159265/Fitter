@@ -17,10 +17,14 @@ import {
 import { useFormik } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { LOGIN_USER } from '../../utils/mutations';
+
 // would need to add import for forgot password
 
 export default function SimpleCard() {
-  const formik = useFormik({
+  const formik =  useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -28,7 +32,7 @@ export default function SimpleCard() {
     },
     onSubmit: (values) => {
       // funciton that happens on submit, will change to mutations when we have it set up
-      alert(JSON.stringify(values, null, 2));
+        alert(JSON.stringify(values, null, 2));    
     }
   })
 
