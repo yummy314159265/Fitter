@@ -67,7 +67,6 @@ export default function SignupCard() {
                   value={formik.values.username}
                 />
               </FormControl>
-
               <FormControl isRequired>
                 <FormLabel htmlFor='email'>Email address</FormLabel>
                 <Input

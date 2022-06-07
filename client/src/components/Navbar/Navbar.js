@@ -16,11 +16,12 @@ import {
   useColorMode,
   Center,
   HStack,
-  IconButton
+  IconButton,
+  Image
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import Logo from '../Logo';
-import cropped from '../../assets/images/logos/cropped.png';
+import logoImg from '../../assets/images/logos/green-logo-no-text.png';
+
 import { Link as RouterLink } from 'react-router-dom';
 
 const Links = ['Stuff', 'Other stuff', 'More stuff']
@@ -61,7 +62,7 @@ export default function Navbar() {
           <HStack spacing={8} alignItems={'center'}>
             <Box>
               <Link as={RouterLink} to='/'>
-                <Logo boxSize='64px' img={cropped} />
+                <Image boxSize='48px' objectFit='contain' src={logoImg} alt='Logo' />
               </Link>
             </Box>
             <HStack
