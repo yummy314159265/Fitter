@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Pullups",
+    "type": ["Strength", "Cardio"],
+    "calories": 200,
+    "reps": 5,
+    "sets": 2
+  },
+  {
+    "name": "Run",
+    "type": ["Cardio"],
+    "calories": 250,
+    "distance": 5,
+    "time": 10
+  },
+  {
+    "name": "Deadlift",
+    "type": ["Strength"],
+    "calories": 40,
+    "reps": 20,
+    "sets": 1,
+    "liftingWeight": 400
+  },
+  {
+    "name": "Pullups",
+    "type": ["Strength", "Cardio"],
+    "calories": 300,
+    "reps": 10,
+    "sets": 4
+  },
+  {
+    "name": "Run",
+    "type": ["Cardio"],
+    "calories": 400,
+    "distance": 10,
+    "time": 15
+  },
+  {
+    "name": "Deadlift",
+    "type": ["Strength"],
+    "calories": 100,
+    "reps": 50,
+    "sets": 1,
+    "liftingWeight": 500
+  }
+]
