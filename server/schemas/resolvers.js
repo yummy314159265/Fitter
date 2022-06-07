@@ -3,18 +3,37 @@
 // // // const { signToken } = require('../utils/auth');
 
  const resolvers = {
-     Query: {
-        users: async () => {
-          // Populate the meal and exercise subdocuments when querying for user
-          return await User.find({}).populate('goals').populate({
-            path: 'goals',
-            populate: 'meals'
-          }).populate({
-            path: 'goals',
-            populate: 'exercises'
-          });
-        },       
- }
+
+  Query: {
+    users: async () => {
+      // Populate the meal and exercise subdocuments when querying for user
+      return await User.find({})
+        .populate('goals')
+        .populate('exercisePlan')
+        .populate('mealPlan')
+        .populate('posts')
+        .populate('friends');
+    },
+    posts: async () => {
+      return await Post.find({});
+    },
+    meals: async () => {
+      return await User.find({})
+        .populate('mealPlan');
+    },
+    exercises: async () => {
+      return await User.find({})
+        .populate('exercisePlan');
+    },
+    goals: async () => {
+      return await User.find({})
+        .populate('goals');
+    },
+    me: async (id) => {
+      return await User.findOne({_id: id})
+    },
+  },
+
 }
 
  module.exports = resolvers;
