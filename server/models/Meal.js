@@ -22,4 +22,4 @@ const mealSchema = new Schema({
   }
 });
 
-module.exports = mealSchema;
+module.exports = { mealSchema };
