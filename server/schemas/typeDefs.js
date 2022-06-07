@@ -12,33 +12,34 @@ const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-    "user can have more than goals"
-    goals: [Goal!]
-    "user can create post want to share with reference to exercise and meal plan"
-    posts: [Post]
-    exercisePlan: [Exercise]
-    mealPlan: [Meal]
-    friends: [User]
-    "user who choose private true will not be shared for anything with other users"
+     "user who choose private true will not be shared for anything with other users"
     private: Boolean
     "Store weight in centimeters" 
     weight: Int
     height: Int
     age: Int
     gender: String
+    "user can have more than goals"
+    goals: [Goal!]    
+    "user can create post want to share with reference to exercise and meal plan"
+    posts: [Post]
+    friends: [User]
+    exercisePlan: [Exercise]
+    mealPlan: [Meal]
   }
     """
     Post Schema will store post user want to share with reference to exercise and meal plan
     """
   type Post {      
    id: ID!
-   user: User!      
+   postAuthor: String!
    message: String!
    image: String
+   createdAt: String
    exercises: [Exercise]
    meals: [Meal]
-   tags: String
-   comments: [Comments]
+   tags: [Tag]
+   comments: [Comment]
    likes: Int
   }
     """
@@ -61,9 +62,9 @@ const typeDefs = gql`
    id: ID!   
    name: String!
    type: String
-   caloriesBurned: Int
-   distanceTraveled: Float
-   stratDate: Date
+   calories: Int
+   distance: Float
+   time: String
    reps: Int
    sets: Int
    liftingWeight: Int
@@ -73,6 +74,8 @@ const typeDefs = gql`
   """
   type Goal {
    id: ID!   
+   currentWeight: Int
+   goalWeight: Int
    currentExercise: [Exercise]
    goalExercise: [Exercise]
    currentMeal: [Meal]
@@ -87,6 +90,31 @@ const typeDefs = gql`
    message: String!
    image: String
    likes: Int
+  }
+   """
+    Tag Schema will use for Post
+  """
+  type Tag {
+   id: ID!      
+   name: String   
+  }
+
+  type Query {
+    users: [User]
+    posts: [Post]
+    meals: [Meal]
+    exercises: [Exercise]
+    goals: [Goal]
+    me: User
+  }
+
+  type Mutations {
+    addUser
+    addPost
+    addExercisePlan
+    addMealPlan
+    addGoals
+    addComment
   }
 `;
 

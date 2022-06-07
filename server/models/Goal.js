@@ -9,10 +9,16 @@ const goalSchema = new Schema({
   goalWeight: {
     type: Number,
   },
-  currentExercise: [exerciseSchema],
+  currentExercise: {
+    type: Schema.Types.ObjectId,
+    ref: 'Exercise',
+  },
   goalExercise: [exerciseSchema],
-  currentMeal: [mealSchema],
+  currentMeal: {
+    type: Schema.Types.ObjectId,
+    ref: 'Meal',
+  },
   goalMeal: [mealSchema]
 });
 
-module.exports = goalSchema;
+module.exports = { goalSchema };
