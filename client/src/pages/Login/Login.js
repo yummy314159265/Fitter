@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 import React  from 'react';
-=======
-import React from 'react';
-import '@fontsource/raleway/400.css';
-import '@fontsource/open-sans/700.css';
->>>>>>> cf04c62a89a21617f22e19324efebfedaf986842
 import {
-    ChakraProvider,
     Flex,
     Box,
     FormControl,
@@ -24,32 +17,11 @@ import {
 import { useFormik } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-<<<<<<< HEAD
 
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { LOGIN_USER } from '../../utils/mutations';
-=======
-import { extendTheme } from '@chakra-ui/react';
-
-
->>>>>>> cf04c62a89a21617f22e19324efebfedaf986842
 // would need to add import for forgot password
-
-const theme = extendTheme({
-  colors: {
-      green: "#9DE183",
-      lightblue: "#62929E",
-      darkblue: "#546A7B",
-      grey: "#393D3F",
-      black: "#000",
-      white: "#FFF"
-  },
-  fonts: {
-    heading: `'Open Sans', sans-serif`,
-    body: `'Raleway', sans-serif`,
-  },
-});
 
 export default function SimpleCard() {
   const [login, { error }] = useMutation(LOGIN_USER);
@@ -75,7 +47,6 @@ export default function SimpleCard() {
   })
 
   return (
-    <ChakraProvider theme={theme}>
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -91,7 +62,7 @@ export default function SimpleCard() {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'grey')}
+          bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
@@ -139,8 +110,8 @@ export default function SimpleCard() {
                 <Button
                 // Need type='submit' here for formik
                   type='submit'
-                  bg={'green'}
-                  color={'black'}
+                  bg={'blue.400'}
+                  color={'white'}
                   _hover={{
                     bg: 'blue.500',
                   }}>
@@ -172,6 +143,5 @@ export default function SimpleCard() {
         </Box>
       </Stack>
     </Flex>
-    </ChakraProvider>
   );
 }
