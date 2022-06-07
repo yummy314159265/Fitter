@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
