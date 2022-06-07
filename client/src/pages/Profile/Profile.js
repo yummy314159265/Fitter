@@ -20,6 +20,7 @@ import { Button, ButtonProps} from '@chakra-ui/react';
 import { useState } from 'react';
 import { ReactElement } from 'react';
 
+import CreateExercisePlan from '../../components/CreateExercisePlan';
 
   const Feature = ({ text, icon, iconBg }) => {
     return (
@@ -95,7 +96,7 @@ import { ReactElement } from 'react';
               <Feature
                 iconBg={useColorModeValue('green.100', 'green.900')}
                 text={'Your current exercise plan : '}
-                // add goal
+                // add exercise plan
               />
               <Feature
                 iconBg={useColorModeValue('purple.100', 'purple.900')}
@@ -164,7 +165,9 @@ import { ReactElement } from 'react';
                     }}
                     onClick={console.log("poke")}>
                     Create Exercise Plan
+                    
                 </Button>
+                <CreateExercisePlan />
                 <Button
                     px={8}
                     bg={useColorModeValue('#151f21', 'gray.900')}

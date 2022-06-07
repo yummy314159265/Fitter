@@ -18,6 +18,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Posts from './pages/Timeline';
 import Profile from './pages/Profile';
+import CreateExercisePlan from './components/CreateExercisePlan';
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
           <Route
             path="/profile"
             element={<Profile />}
+          />
+          <Route
+            path="/createWorkout"
+            element={<CreateExercisePlan />}
           />
           <Route 
             path="/posts"
