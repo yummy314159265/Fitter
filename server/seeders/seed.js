@@ -147,7 +147,7 @@ db.once('open', async () => {
             },
           }
         );
-        
+
         await Post.findOneAndUpdate(
           { postAuthor: 'fitguy'},
           {
