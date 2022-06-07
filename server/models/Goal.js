@@ -15,4 +15,4 @@ const goalSchema = new Schema({
   goalMeal: [mealSchema]
 });
 
-module.exports = goalSchema;
+module.exports = { goalSchema };

@@ -7,4 +7,4 @@ const tagSchema = new Schema({
   }
 });
 
-module.exports = tagSchema;
+module.exports = { tagSchema };
