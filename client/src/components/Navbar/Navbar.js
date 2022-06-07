@@ -19,11 +19,15 @@ import {
   IconButton
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Logo from '../Logo';
+import cropped from '../../assets/images/logos/cropped.png';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Links = ['Stuff', 'Other stuff', 'More stuff']
 
 const NavLink = ({ children }) => (
   <Link
+    as={RouterLink}
     px={2}
     py={1}
     rounded={'md'}
@@ -31,7 +35,7 @@ const NavLink = ({ children }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}
+    to='#'
   >
     {children}
   </Link>
@@ -55,7 +59,11 @@ export default function Navbar() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Box>
+              <Link as={RouterLink} to='/'>
+                <Logo boxSize='64px' img={cropped} />
+              </Link>
+            </Box>
             <HStack
               as={'nav'}
               spacing={4}
@@ -108,10 +116,10 @@ export default function Navbar() {
               </Menu> :
               <>
                 {/*Replace buttons*/}
-                <Link href='/login'>
+                <Link as={RouterLink} to='/login'>
                   <Button>Log in</Button>
                 </Link>
-                <Link href='/signup'>
+                <Link as={RouterLink} to='/signup'>
                   <Button colorScheme='blue'>Sign up</Button>
                 </Link>
               </>
