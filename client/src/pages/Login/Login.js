@@ -1,8 +1,5 @@
-import React from 'react';
-import '@fontsource/raleway/400.css';
-import '@fontsource/open-sans/700.css';
+import React  from 'react';
 import {
-    ChakraProvider,
     Flex,
     Box,
     FormControl,
@@ -20,41 +17,36 @@ import {
 import { useFormik } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
-import { extendTheme } from '@chakra-ui/react';
 
-
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { LOGIN_USER } from '../../utils/mutations';
 // would need to add import for forgot password
 
-const theme = extendTheme({
-  colors: {
-      green: "#9DE183",
-      lightblue: "#62929E",
-      darkblue: "#546A7B",
-      grey: "#393D3F",
-      black: "#000",
-      white: "#FFF"
-  },
-  fonts: {
-    heading: `'Open Sans', sans-serif`,
-    body: `'Raleway', sans-serif`,
-  },
-});
-
 export default function SimpleCard() {
-  const formik = useFormik({
+  const [login, { error }] = useMutation(LOGIN_USER);
+
+  const formik =  useFormik({    
     initialValues: {
       email: '',
       password: '',
       remember: false,
     },
-    onSubmit: (values) => {
-      // funciton that happens on submit, will change to mutations when we have it set up
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      // funciton that happens on submit, will change to mutations when we have it set up  
+       // alert(JSON.stringify(values, null, 2));    
+        try {
+          const { data } = await login({
+            variables: { email: values.email, password: values.password },
+          });    
+          Auth.login(data.login.token);
+        } catch (e) {
+          console.error(e);
+        }
     }
   })
 
   return (
-    <ChakraProvider theme={theme}>
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -70,7 +62,7 @@ export default function SimpleCard() {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'grey')}
+          bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
@@ -118,8 +110,8 @@ export default function SimpleCard() {
                 <Button
                 // Need type='submit' here for formik
                   type='submit'
-                  bg={'green'}
-                  color={'black'}
+                  bg={'blue.400'}
+                  color={'white'}
                   _hover={{
                     bg: 'blue.500',
                   }}>
@@ -142,10 +134,14 @@ export default function SimpleCard() {
                 </Stack>
               </Stack>
             </form>
+            {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
+            )}
           </Stack>
         </Box>
       </Stack>
     </Flex>
-    </ChakraProvider>
   );
 }
