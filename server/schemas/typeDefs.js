@@ -100,6 +100,11 @@ const typeDefs = gql`
    name: String   
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type Query {
     users: [User]
     posts: [Post]
@@ -121,7 +126,8 @@ const typeDefs = gql`
       height: Int!,
       age: Int!,
       gender: String!
-      ): User
+      ): Auth
+    login(email: String!, password: String!): Auth   
     # addPost
     # addExercisePlan
     # addMealPlan
