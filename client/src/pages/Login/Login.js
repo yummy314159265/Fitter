@@ -12,64 +12,86 @@ import {
     Heading,
     Text,
     useColorModeValue,
+    Center,
 } from '@chakra-ui/react';
-import { extendTheme } from '@chakra-ui/react';
-import { Link } from "@reach/router";
+import { useFormik } from 'formik';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 // would need to add import for forgot password
 
-// styles
-const theme = extendTheme({
-    colors: {
-      transparent: 'transparent',
-      black: '#000',
-      white: '#fff',
+export default function SimpleCard() {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      remember: false,
     },
-    fonts: {
-      body: "system-ui, sans-serif",
-      heading: "Georgia, serif",
-      mono: "Menlo, monospace",
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
     }
-});
-  
-  export function SimpleCard() {
-    return (
-      <Flex
-        minH={'100vh'}
-        align={'center'}
-        justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
-              {/* add link to homepage where features of site are listed */}
-            </Text>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
-            <Stack spacing={4}>
-              <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+  })
+
+  return (
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}
+      bg={useColorModeValue('gray.50', 'gray.800')}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+            {/* add link to homepage where features of site are listed */}
+          </Text>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
+          <Stack spacing={4}>
+            <form onSubmit={formik.handleSubmit}>
+              <FormControl>
+                <FormLabel htmlFor='email'>Email address</FormLabel>
+                <Input
+                  id='email'
+                  name='email'
+                  type='email'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
               </FormControl>
-              <FormControl id="password">
-                <FormLabel>Password</FormLabel>
-                <Input type="password" />
+              <FormControl>
+                <FormLabel htmlFor='paassword'>Password</FormLabel>
+                <Input 
+                  id='password'
+                  name='password'
+                  type='password'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
                   justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox 
+                    id='remember'
+                    name='remember'
+                    onChange={formik.handleChange}
+                    isChecked={formik.values.remember}
+                  >
+                    Remember me
+                  </Checkbox>
                   <Link color={'blue.400'}>Forgot password?</Link>
                   {/* forgot password option - no link yet - send user and email with password? */}
                 </Stack>
                 <Button
+                  type='submit'
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
@@ -77,12 +99,26 @@ const theme = extendTheme({
                   }}>
                   Sign in
                 </Button>
-              </Stack>
-            </Stack>
-          </Box>
-        </Stack>
-      </Flex>
-    );
-  }
+                <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
+                  {/* Facebook */}
+                  <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
+                    <Center>
+                      <Text>Continue with Facebook</Text>
+                    </Center>
+                  </Button>
 
-  export default theme;
+                  {/* Google */}
+                  <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                    <Center>
+                      <Text>Sign in with Google</Text>
+                    </Center>
+                  </Button>
+                </Stack>
+              </Stack>
+            </form>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
+  );
+}

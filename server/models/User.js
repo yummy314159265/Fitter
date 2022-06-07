@@ -23,11 +23,11 @@ const userSchema = new Schema({
     default: false,
   },
   weight: {
-    type: Float,
+    type: Number,
     required: true,
   },
   height: {
-    type: Float,
+    type: Number,
     required: true,
   },
   age: {
