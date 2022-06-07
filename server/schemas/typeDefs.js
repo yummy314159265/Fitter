@@ -107,7 +107,7 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }
-
+  
   type Mutations {
     addUser
     addPost

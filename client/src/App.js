@@ -16,6 +16,7 @@ import Start from './pages/Start';
 import Footer from './components/Footer';
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Posts from './pages/Timeline'
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
             path="/signup" 
             element={<Signup />} 
           />
+          <Route 
+            path="/posts"
+            element={<Posts />}
+            />
         </Routes>
         <Footer />
       </Router>
