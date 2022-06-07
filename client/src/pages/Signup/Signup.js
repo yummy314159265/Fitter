@@ -13,10 +13,13 @@ import {
     Text,
     useColorModeValue,
     Link,
+    Center,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -114,6 +117,21 @@ export default function SignupCard() {
                 </Button>
               </Stack>
             </form>
+            <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
+                  {/* Facebook */}
+              <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
+                <Center>
+                  <Text>Continue with Facebook</Text>
+                </Center>
+              </Button>
+
+              {/* Google */}
+              <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                <Center>
+                  <Text>Sign in with Google</Text>
+                </Center>
+              </Button>
+            </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
                 Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
