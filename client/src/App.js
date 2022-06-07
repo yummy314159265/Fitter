@@ -9,6 +9,18 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+<<<<<<< HEAD
+=======
+
+// import { 
+//   ApolloClient, 
+//   ApolloProvider, 
+//   InMemoryCache, 
+//   createHttpLink, 
+// } from '@apollo/client';
+// import { setContext } from '@apollo/client/link/context';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+>>>>>>> cf04c62a89a21617f22e19324efebfedaf986842
 import Navbar from './components/Navbar';
 import Start from './pages/Start';
 import Footer from './components/Footer';
