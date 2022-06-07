@@ -102,7 +102,9 @@ const typeDefs = gql`
     users: [User]
     posts: [Post]
     meals: [Meal]
+    meal(calories: Int!): Meal
     exercises: [Exercise]
+    exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
   }

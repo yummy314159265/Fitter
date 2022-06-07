@@ -13,27 +13,18 @@
             path: 'goals',
             populate: 'exercises'
           });
-        },       
+        },     
+        // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
+        meal: async (parent, args) => {
+          return await User.find({
+            mealPlan: {calories: args.calories}
+          });            
+        },  
+        exercise: async (parent, args) => {
+          return await User.find({
+            exercisePlan: {calories: args.calories}
+          });            
+        },  
  }
 }
-
  module.exports = resolvers;
-
-
-   // cant work following as we dont have Meal model
-                // meals: async () => {            
-                //     return await Meal.find({});
-                // },
-
-         // cant work following as we dont have Exercise model
-        //    exercises: async () => {            
-        //         return await Exercise.find({});
-        //     },
-
-//         // cant work following as we dont have Goal model, also we've two refreence for meal and exercise in 
-//         // goal, how to query that?
-//         // goals: async () => {
-//         //     //  Populate the meal and exercise subdocuments when querying for goal
-//         //     return await Goal.find({}).populate('meals').populate('exercises');
-//         //   },
-//       }
