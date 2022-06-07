@@ -1,58 +1,37 @@
  const { User, Post } = require('../models');
-// // //const { AuthenticationError } = require('apollo-server-express');
-// // // const { signToken } = require('../utils/auth');
+ const { AuthenticationError } = require('apollo-server-express');
+ const { signToken } = require('../utils/auth'); 
 
  const resolvers = {
-
-  Query: {
-    users: async () => {
-      // Populate the meal and exercise subdocuments when querying for user
-      return await User.find({})
-        .populate('goals')
-        .populate('exercisePlan')
-        .populate('mealPlan')
-        .populate('posts')
-        .populate('friends');
+     Query: {
+        users: async () => {
+          // Populate the meal and exercise subdocuments when querying for user
+          return await User.find({}).populate('goals').populate({
+            path: 'goals',
+            populate: 'meals'
+          }).populate({
+            path: 'goals',
+            populate: 'exercises'
+          });
+        },     
+        // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
+        meal: async (parent, args) => {
+          return await User.find({
+            mealPlan: {calories: args.calories}
+          });            
+        },  
+        exercise: async (parent, args) => {
+          return await User.find({
+            exercisePlan: {calories: args.calories}
+          });            
+        },  
+  },   
+  Mutation: {   
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);  
+      return { token, user };
     },
-    posts: async () => {
-      return await Post.find({});
-    },
-    meals: async () => {
-      return await User.find({})
-        .populate('mealPlan');
-    },
-    exercises: async () => {
-      return await User.find({})
-        .populate('exercisePlan');
-    },
-    goals: async () => {
-      return await User.find({})
-        .populate('goals');
-    },
-    me: async (id) => {
-      return await User.findOne({_id: id})
-    },
-  },
-
+  }
 }
-
  module.exports = resolvers;
-
-
-   // cant work following as we dont have Meal model
-                // meals: async () => {            
-                //     return await Meal.find({});
-                // },
-
-         // cant work following as we dont have Exercise model
-        //    exercises: async () => {            
-        //         return await Exercise.find({});
-        //     },
-
-//         // cant work following as we dont have Goal model, also we've two refreence for meal and exercise in 
-//         // goal, how to query that?
-//         // goals: async () => {
-//         //     //  Populate the meal and exercise subdocuments when querying for goal
-//         //     return await Goal.find({}).populate('meals').populate('exercises');
-//         //   },
-//       }

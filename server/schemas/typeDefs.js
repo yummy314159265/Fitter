@@ -14,8 +14,9 @@ const typeDefs = gql`
     email: String!
      "user who choose private true will not be shared for anything with other users"
     private: Boolean
-    "Store weight in centimeters" 
+    "Store weight in lbs" 
     weight: Int
+    "Store height in inches" 
     height: Int
     age: Int
     gender: String
@@ -103,19 +104,29 @@ const typeDefs = gql`
     users: [User]
     posts: [Post]
     meals: [Meal]
+    meal(calories: Int!): Meal
     exercises: [Exercise]
+    exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
   }
   
-  type Mutations {
-    addUser
-    addPost
-    addExercisePlan
-    addMealPlan
-    addGoals
-    addComment
-  }
-`;
+  type Mutation {
+    addUser(
+      username: String!, 
+      password: String!, 
+      email: String!, 
+      private: Boolean!,
+      weight: Int!,
+      height: Int!,
+      age: Int!,
+      gender: String!
+      ): User
+    # addPost
+    # addExercisePlan
+    # addMealPlan
+    # addGoals
+    # addComment
+  }`;
 
 module.exports = typeDefs;
