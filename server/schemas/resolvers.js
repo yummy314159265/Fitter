@@ -3,6 +3,7 @@
 // // // const { signToken } = require('../utils/auth');
 
  const resolvers = {
+
   Query: {
     users: async () => {
       // Populate the meal and exercise subdocuments when querying for user
@@ -32,6 +33,7 @@
       return await User.findOne({_id: id})
     },
   },
+
 }
 
  module.exports = resolvers;
