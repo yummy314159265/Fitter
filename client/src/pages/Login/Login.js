@@ -35,14 +35,14 @@ export default function SimpleCard() {
     onSubmit: async (values) => {
       // funciton that happens on submit, will change to mutations when we have it set up  
        // alert(JSON.stringify(values, null, 2));    
-        try {
-          const { data } = await login({
-            variables: { email: values.email, password: values.password },
-          });    
-          Auth.login(data.login.token);
-        } catch (e) {
-          console.error(e);
-        }
+      try {
+        const { data } = await login({
+          variables: { email: values.email, password: values.password },
+        });    
+        Auth.login(data.login.token);
+      } catch (e) {
+        console.error(e);
+      }
     }
   })
 
@@ -54,9 +54,9 @@ export default function SimpleCard() {
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Heading fontSize={'4xl'}>Log in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+            to enjoy all of our cool features ✌️
             {/* add link to homepage where features of site are listed */}
           </Text>
         </Stack>
@@ -104,16 +104,16 @@ export default function SimpleCard() {
                   >
                     Remember me
                   </Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
+                  <Link color={'darkgreen'}>Forgot password?</Link>
                   {/* forgot password option - no link yet - send user and email with password? */}
                 </Stack>
                 <Button
                 // Need type='submit' here for formik
                   type='submit'
-                  bg={'blue.400'}
+                  bg={'green'}
                   color={'white'}
                   _hover={{
-                    bg: 'blue.500',
+                    bg: 'darkgreen',
                   }}>
                   Sign in
                 </Button>
@@ -128,7 +128,7 @@ export default function SimpleCard() {
                   {/* Google */}
                   <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
                     <Center>
-                      <Text>Sign in with Google</Text>
+                      <Text>Log in with Google</Text>
                     </Center>
                   </Button>
                 </Stack>

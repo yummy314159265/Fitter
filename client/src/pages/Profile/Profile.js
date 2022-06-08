@@ -6,20 +6,27 @@
 
 import {
     Container,
+    Box,
     SimpleGrid,
-    Image,
     Flex,
     Heading,
     Text,
+    Button,
+    ButtonGroup,
     Stack,
     StackDivider,
-    Icon,
+    Center,
     useColorModeValue,
+    Avatar,
+    ListItem,
+    UnorderedList,
   } from '@chakra-ui/react';
-import { Button, ButtonProps} from '@chakra-ui/react';
-import { useState } from 'react';
-import { ReactElement } from 'react';
 
+  import { 
+    BsFillPersonLinesFill,
+    BsTools,
+    BsFillPlusCircleFill,
+   } from "react-icons/bs";
 
   const Feature = ({ text, icon, iconBg }) => {
     return (
@@ -40,48 +47,40 @@ import { ReactElement } from 'react';
   
   export default function SplitWithImage() {
     return (
-      <Container maxW={'5xl'} py={12}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-          <Stack spacing={4}>
-            {/* <Text
-              textTransform={'uppercase'}
-              color={'blue.400'}
-              fontWeight={600}
-              fontSize={'sm'}
-              bg={useColorModeValue('blue.50', 'blue.900')}
-              p={2}
-              alignSelf={'flex-start'}
-              rounded={'md'}>
-              Welcome Back USERNAME HERE!
-            </Text> */}
-
-
-
+      <Box display="flex">
+      <Container maxW={'5xl'} py={12}>        
+        <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
+          <Stack spacing={4}  align="center">
+          <Center>
+            <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
+          </Center>
             <Heading>USERNAME'S Profile</Heading>
-            <Text color={'gray.500'} fontSize={'lg'}>
-              ALL USER DATA:
-              WEIGHT
-              HEIGHT
-              AGE
-              GENDER
-              GOALS
-              EXERCISE PLAN
-              MEAL PLAN
-            </Text>
-                <Button
-                    px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
-                    color={'white'}
-                    rounded={'md'}
-                    _hover={{
-                        transform: 'translateY(-2px)',
-                        boxShadow: 'lg',
-                    }}
-                    onClick={console.log("poke")}>
-                    Create Post
-                </Button>
+            <UnorderedList color={'gray.500'} fontSize={'lg'}>
+              <ListItem>WEIGHT</ListItem>
+              <ListItem>HEIGHT</ListItem>
+              <ListItem>AGE</ListItem>
+              <ListItem>GENDER</ListItem>         
+            </UnorderedList>
+            <Button
+                leftIcon={<BsFillPersonLinesFill />}
+                px={8}
+                bg={useColorModeValue('#151f21', 'gray.900')}
+                color={'white'}
+                rounded={'md'}
+                _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'lg',
+                }}
+                onClick={console.log("poke")}>
+                Edit Profile
+            </Button>
+            </Stack>
+            <Center>
             <Stack
               spacing={4}
+              align="center"
+              mt="5"
               divider={
                 <StackDivider
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
@@ -95,7 +94,7 @@ import { ReactElement } from 'react';
               <Feature
                 iconBg={useColorModeValue('green.100', 'green.900')}
                 text={'Your current exercise plan : '}
-                // add goal
+                // add exercise plan
               />
               <Feature
                 iconBg={useColorModeValue('purple.100', 'purple.900')}
@@ -107,77 +106,68 @@ import { ReactElement } from 'react';
                 text={'Your most recent post : '}
                 // add post
               />
+              <Button
+                  leftIcon={<BsFillPlusCircleFill />}              
+                  px={8}
+                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  color={'white'}
+                  rounded={'md'}
+                  _hover={{
+                      transform: 'translateY(-2px)',
+                      boxShadow: 'lg',
+                  }}
+                  onClick={console.log("poke")}>
+                  Create Post
+              </Button>
             </Stack>
-
-          </Stack>
-          <Flex>
-            <Image
-            // maybe some kind of chart? track weight over time or something? or maybe track cheat days/days you did the work?
-              rounded={'md'}
-              alt={'feature image'}
-              src={
-                'https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-              }
-              objectFit={'cover'}
-            />
-          </Flex>
+            </Center>
         </SimpleGrid>
-        <Stack
-              spacing={4}
-              divider={
-                <StackDivider
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
-                />
-              }>
-                <Button
-                    px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
-                    color={'white'}
-                    rounded={'md'}
-                    _hover={{
-                        transform: 'translateY(-2px)',
-                        boxShadow: 'lg',
-                    }}
-                    onClick={console.log("poke")}>
-                    Edit Profile
-                </Button>
-                <Button
-                    px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
-                    color={'white'}
-                    rounded={'md'}
-                    _hover={{
-                        transform: 'translateY(-2px)',
-                        boxShadow: 'lg',
-                    }}
-                    onClick={console.log("poke")}>
-                    Create Meal Plan
-                </Button>
-                <Button
-                    px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
-                    color={'white'}
-                    rounded={'md'}
-                    _hover={{
-                        transform: 'translateY(-2px)',
-                        boxShadow: 'lg',
-                    }}
-                    onClick={console.log("poke")}>
-                    Create Exercise Plan
-                </Button>
-                <Button
-                    px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
-                    color={'white'}
-                    rounded={'md'}
-                    _hover={{
-                        transform: 'translateY(-2px)',
-                        boxShadow: 'lg',
-                    }}
-                    onClick={console.log("poke")}>
-                    Edit Goal
-                </Button>
-            </Stack>
+        </Box>
+          <Box align="center">
+            <ButtonGroup variant='outline' spacing='6'>
+              <Button
+                  leftIcon={<BsFillPlusCircleFill />}
+                  px={5}
+                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  color={'white'}
+                  rounded={'md'}
+                  _hover={{
+                      transform: 'translateY(-2px)',
+                      boxShadow: 'lg',
+                  }}
+                  onClick={console.log("poke")}>
+                  Create Meal Plan
+              </Button>
+              <Button
+                  leftIcon={<BsFillPlusCircleFill />}
+                  px={8}
+                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  color={'white'}
+                  rounded={'md'}
+                  _hover={{
+                      transform: 'translateY(-2px)',
+                      boxShadow: 'lg',
+                  }}
+                  onClick={console.log("poke")}>
+                  Create Exercise Plan
+                  
+              </Button>
+              <Button
+                  leftIcon={<BsTools />}              
+                  px={8}
+                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  color={'white'}
+                  rounded={'md'}
+                  _hover={{
+                      transform: 'translateY(-2px)',
+                      boxShadow: 'lg',
+                  }}
+                  onClick={console.log("poke")}>
+                  Edit Goal
+              </Button>
+            </ButtonGroup>
+          </Box>       
       </Container>
+    </Box>
     );
   }

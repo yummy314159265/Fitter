@@ -164,11 +164,9 @@ const typeDefs = gql`
     addPost(
       postAuthor: String!
       message: String!
-      likes: Int
       exercises: [String]
       meals: [String]
       tags: [String]
-      comments: [String]
       createdAt: String   
       ): Post  
     # Allow user to add comment
