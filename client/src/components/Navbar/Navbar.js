@@ -22,6 +22,7 @@ import {
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import logoImg from '../../assets/images/logos/green-logo-no-text.png';
 import { Link as RouterLink } from 'react-router-dom';
+
 import Auth from '../../utils/auth';
 
 export default function Navbar() {
