@@ -24,7 +24,7 @@ import { LOGIN_USER } from '../../utils/mutations';
 // would need to add import for forgot password
 
 export default function SimpleCard() {
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [login, { error, data }] = useMutation(LOGIN_USER);
 
   const formik =  useFormik({    
     initialValues: {
@@ -39,7 +39,8 @@ export default function SimpleCard() {
         const { data } = await login({
           variables: { email: values.email, password: values.password },
         });    
-        Auth.login(data.login.token);
+
+        return data.login.token;
       } catch (e) {
         console.error(e);
       }
@@ -54,9 +55,9 @@ export default function SimpleCard() {
       bg={useColorModeValue('gray.50', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Heading fontSize={'4xl'}>Log in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+            to enjoy all of our cool features ✌️
             {/* add link to homepage where features of site are listed */}
           </Text>
         </Stack>
@@ -67,7 +68,11 @@ export default function SimpleCard() {
           p={8}>
           <Stack spacing={4}>
             {/* Use this to make a form */}
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={(e)=>{ 
+              e.preventDefault(); 
+              const token = formik.handleSubmit(e);
+              Auth.login(token);
+            }}>
               <FormControl>
                 <FormLabel htmlFor='email'>Email address</FormLabel>
                 <Input
@@ -104,16 +109,16 @@ export default function SimpleCard() {
                   >
                     Remember me
                   </Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
+                  <Link color={'darkgreen'}>Forgot password?</Link>
                   {/* forgot password option - no link yet - send user and email with password? */}
                 </Stack>
                 <Button
                 // Need type='submit' here for formik
                   type='submit'
-                  bg={'blue.400'}
+                  bg={'green'}
                   color={'white'}
                   _hover={{
-                    bg: 'blue.500',
+                    bg: 'darkgreen',
                   }}>
                   Sign in
                 </Button>
@@ -128,7 +133,7 @@ export default function SimpleCard() {
                   {/* Google */}
                   <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
                     <Center>
-                      <Text>Sign in with Google</Text>
+                      <Text>Log in with Google</Text>
                     </Center>
                   </Button>
                 </Stack>

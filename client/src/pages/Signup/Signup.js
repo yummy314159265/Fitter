@@ -43,7 +43,8 @@ export default function SignupCard() {
         const { data } = await addUser({
           variables: { username, email, password },
         });
-        Auth.login(data.login.token);
+
+        return data.login.token
       } catch (e) {
         console.error(e);
       }
@@ -71,7 +72,11 @@ export default function SignupCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={(e)=>{ 
+              e.preventDefault(); 
+              const token = formik.handleSubmit(e);
+              Auth.login(token);
+            }}>
               <FormControl isRequired>
                 <FormLabel htmlFor='username'>Username</FormLabel>
                 <Input 
@@ -121,10 +126,10 @@ export default function SignupCard() {
                   type='submit'
                   loadingText="Submitting"
                   size="lg"
-                  bg={'blue.400'}
+                  bg={'green'}
                   color={'white'}
                   _hover={{
-                    bg: 'blue.500',
+                    bg: 'darkgreen',
                   }}>
                   Sign up
                 </Button>
@@ -147,7 +152,7 @@ export default function SignupCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
+                Already a user? <Link to='/login' color={'darkgreen'}>Log in</Link>
                 {/* link back to login if already a user */}
               </Text>
             </Stack>

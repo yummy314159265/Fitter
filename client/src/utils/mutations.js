@@ -155,3 +155,19 @@ export const ADD_POST = gql`
         }
     }
 `;
+
+export const ADD_COMMENT = gql` 
+    mutation addComment(
+        $postId: ID!,
+        $input: commentInput
+    ) {
+        addComment(
+            postId: $postId,
+            input: $input
+        ) {
+            id
+            message
+            comments
+        }
+    }
+`;
