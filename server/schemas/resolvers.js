@@ -69,6 +69,29 @@ const resolvers = {
      );
      return updatedUser;
    },
+    // update Exercise plan
+    updateExercise: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to update Exercise plan!");
+      const updatedExercise = await Exercise.findByIdAndUpdate(
+        { _id: args.id },
+        { $set: args },
+        { runValidators: true, new: true }
+      );
+      return updatedExercise;
+      },
+      // remove Exercise plan
+      removeExercise: async (parent, { id }, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to update Exercise plan!");
+      const exercise = await Exercise.findOneAndDelete({
+        _id: id,      
+      });
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { exercisePlan: exercise._id } },
+        { new: true }
+      );
+      return updatedUser;
+     },
    // add meal plan
    addMeal: async (parent, args, context) => {
      if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");
@@ -81,6 +104,29 @@ const resolvers = {
      );
      return updatedUser;
    },
+    // update meal plan
+    updateMeal: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
+      const updatedMeal = await Meal.findByIdAndUpdate(
+        { _id: args.id },
+        { $set: args },
+        { runValidators: true, new: true }
+      );
+      return updatedMeal;
+    },
+      // remove meal plan
+      removeMeal: async (parent, { id }, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
+      const meal = await Meal.findOneAndDelete({
+        _id: id,      
+      });
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { mealPlan: meal._id } },
+        { new: true }
+      );
+      return updatedUser;
+    },
    // add goal plan
    addGoal: async (parent, { input }, context) => {
      if (!context.user) throw new AuthenticationError("You must be logged in to add Goal!");      
@@ -112,29 +158,6 @@ const resolvers = {
         { new: true }
       );
       return updatePost;
-    },
-     // update meal plan
-    updateMeal: async (parent, args, context) => {
-    if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
-    const updatedMeal = await Meal.findByIdAndUpdate(
-      { _id: args.id },
-      { $set: args },
-      { runValidators: true, new: true }
-    );
-    return updatedMeal;
-    },
-    // remove meal plan
-    removeMeal: async (parent, { id }, context) => {
-    if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
-    const meal = await Meal.findOneAndDelete({
-      _id: id,      
-    });
-    const updatedUser = await User.findByIdAndUpdate(
-      { _id: context.user._id },
-      { $pull: { mealPlan: meal._id } },
-      { new: true }
-    );
-    return updatedUser;
     },
  }
 }
