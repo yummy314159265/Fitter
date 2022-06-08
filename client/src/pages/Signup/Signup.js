@@ -108,10 +108,10 @@ export default function SignupCard() {
                   type='submit'
                   loadingText="Submitting"
                   size="lg"
-                  bg={'blue.400'}
+                  bg={'green'}
                   color={'white'}
                   _hover={{
-                    bg: 'blue.500',
+                    bg: 'darkgreen',
                   }}>
                   Sign up
                 </Button>
@@ -134,7 +134,7 @@ export default function SignupCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
+                Already a user? <Link to='/login' color={'darkgreen'}>Log in</Link>
                 {/* link back to login if already a user */}
               </Text>
             </Stack>

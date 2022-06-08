@@ -43,53 +43,56 @@ const SocialButton = ({
 
 export default function SmallCentered() {
   return (
-    <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
-      <Container
-        as={Stack}
-        maxW={'6xl'}
-        py={4}
-        spacing={4}
-        justify={'center'}
-        align={'center'}
-      >
-        <Image htmlWidth='137px' htmlHeight='32px' src={logoImg} />
-        <Stack direction={'row'} spacing={6}>
-          <Link href={'#'}>Home</Link>
-          <Link href={'#'}>About</Link>
-          <Link href={'#'}>Blog</Link>
-          <Link href={'#'}>Contact</Link>
-        </Stack>
-      </Container>
-
       <Box
-        borderTopWidth={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.700')}>
+        maxW={'100%'}
+        marginBottom={0}
+        paddingBottom={0}
+        bottom="0"
+        bg={useColorModeValue('gray.50', 'gray.900')}
+        color={useColorModeValue('gray.700', 'gray.200')}>
         <Container
           as={Stack}
           maxW={'6xl'}
           py={4}
-          direction={{ base: 'column', md: 'row' }}
           spacing={4}
-          justify={{ base: 'center', md: 'space-between' }}
-          align={{ base: 'center', md: 'center' }}
+          justify={'center'}
+          align={'center'}
         >
-          <Text>© 2022 Fitter Social. All rights reserved</Text>
+          <Image htmlWidth='137px' htmlHeight='32px' src={logoImg} />
           <Stack direction={'row'} spacing={6}>
-            <SocialButton label={'Twitter'} href={'#'}>
-              <FaTwitter />
-            </SocialButton>
-            <SocialButton label={'YouTube'} href={'#'}>
-              <FaYoutube />
-            </SocialButton>
-            <SocialButton label={'Instagram'} href={'#'}>
-              <FaInstagram />
-            </SocialButton>
+            <Link href={'#'}>Home</Link>
+            <Link href={'#'}>About</Link>
+            <Link href={'#'}>Contact</Link>
           </Stack>
         </Container>
+
+        <Box
+          borderTopWidth={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}>
+          <Container
+            as={Stack}
+            maxW={'6xl'}
+            py={4}
+            direction={{ base: 'column', md: 'row' }}
+            spacing={4}
+            justify={{ base: 'center', md: 'space-between' }}
+            align={{ base: 'center', md: 'center' }}
+          >
+            <Text>© 2022 Fitter Social. All rights reserved</Text>
+            <Stack direction={'row'} spacing={6}>
+              <SocialButton label={'Twitter'} href={'#'}>
+                <FaTwitter />
+              </SocialButton>
+              <SocialButton label={'YouTube'} href={'#'}>
+                <FaYoutube />
+              </SocialButton>
+              <SocialButton label={'Instagram'} href={'#'}>
+                <FaInstagram />
+              </SocialButton>
+            </Stack>
+          </Container>
+        </Box>
       </Box>
-    </Box>
   );
 }

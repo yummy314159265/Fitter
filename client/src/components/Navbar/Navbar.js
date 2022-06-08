@@ -23,8 +23,6 @@ import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import logoImg from '../../assets/images/logos/green-logo-no-text.png';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Links = ['Stuff', 'Other stuff', 'More stuff']
-
 const NavLink = ({ children }) => (
   <Link
     as={RouterLink}
@@ -69,9 +67,6 @@ export default function Navbar() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
               <Link as={RouterLink} to='/posts'>
                   <Button>Posts</Button>
               </Link>
@@ -123,10 +118,21 @@ export default function Navbar() {
               <>
                 {/*Replace buttons*/}
                 <Link as={RouterLink} to='/login'>
-                  <Button>Log in</Button>
+                  <Button
+                  color={'black'}
+                  _hover={{
+                    bg: 'lightgreen',
+                  }}
+                  >Log in</Button>
                 </Link>
                 <Link as={RouterLink} to='/signup'>
-                  <Button colorScheme='blue'>Sign up</Button>
+                  <Button 
+                  bg={'green'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'darkgreen',
+                  }}
+                  >Sign up</Button>
                 </Link>
               </>
               }
