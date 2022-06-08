@@ -109,17 +109,19 @@ const typeDefs = gql`
     exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
-  }
+  }  
   
-  input ExerciseInput {
-    bookId: String
-    authors: [String]
-    description: String
-    title: String
-    image: String
-    link: String
+  input goalInput {
+    goalWeight: Int
+    goalExercise: [String]    
   }
-
+  input commentInput {
+    commentAuthor: String
+    message: String
+    image: String
+    likes: Int
+    tags: [String]
+  }
   type Mutation {
     addUser(
       username: String!, 
@@ -152,12 +154,24 @@ const typeDefs = gql`
       proteins: Int
       carbs: Int
       fats: Int
-      ): Meal     
-    # addPost
-    # addExercisePlan
-    # addMealPlan
-    # addGoals
-    # addComment
+      ): Meal 
+    # Allow user to add goal plan
+    addGoal(
+      input: goalInput    
+      ): User   
+    # Allow user to add post
+    addPost(
+      postAuthor: String!
+      message: String!
+      likes: Int
+      exercises: [String]
+      meals: [String]
+      tags: [String]
+      comments: [String]
+      createdAt: String   
+      ): Post  
+    # Allow user to add comment
+    addComment(postId: ID!, input: commentInput): Post
   }`;
 
 module.exports = typeDefs;
