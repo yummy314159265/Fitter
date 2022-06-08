@@ -128,11 +128,29 @@ const resolvers = {
       return updatedUser;
     },
    // add goal plan
-   addGoal: async (parent, { input }, context) => {
+   addGoal: async (parent, args, context) => {
+    // To add new goal with array of exercise ids plus add each exercise record in exercise collection
+      // iterate over array of exercise and insert each to exercise collection
+        // store auto ids for each exercise in array goalExercise
+      // add subdocument goal with goalweight and goalExercise into user  
      if (!context.user) throw new AuthenticationError("You must be logged in to add Goal!");      
+     // create goalExercise array
+     let goalExercise = [];
+     // iterate over array of exercise and insert each to exercise collection
+     for (let i = 0; i < args.goalExercise.length; i++)
+     {
+        const exercise = await Exercise.create(args);        
+        goalExercise.push(exercise.id)
+     }
+     // generate subdocument
+     const goal = {
+       "goalWeight": args.goalWeight,
+       "goalExercise": goalExercise
+     }
+     // add to user
      const updatedUser = await User.findByIdAndUpdate(
        { _id: context.user._id },
-       { $addToSet: { goals: input } },
+       { $addToSet: { goals: goal} },
        { runValidators: true, new: true }
        );
      return updatedUser;

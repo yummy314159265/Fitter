@@ -40,6 +40,7 @@ export default function SimpleCard() {
           variables: { email: values.email, password: values.password },
         });    
         Auth.login(data.login.token);
+
       } catch (e) {
         console.error(e);
       }

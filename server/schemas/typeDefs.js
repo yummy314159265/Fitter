@@ -184,8 +184,9 @@ const typeDefs = gql`
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
     addGoal(
-      input: goalInput    
-      ): User   
+      goalWeight: Int
+      goalExercise: [String]    
+    ): User   
     # Allow user to add post
     addPost(
       postAuthor: String!
