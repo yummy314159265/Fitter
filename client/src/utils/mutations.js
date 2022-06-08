@@ -24,11 +24,11 @@ export const ADD_USER = gql`
         $username: String!, 
         $password: String!, 
         $email: String!, 
-        $private: Boolean!,
-        $weight: Int!,
-        $height: Int!,
-        $age: Int!,
-        $gender: String!
+        $private: Boolean,
+        $weight: Int,
+        $height: Int,
+        $age: Int,
+        $gender: String
         ) {
         addUser(
         username: $username,

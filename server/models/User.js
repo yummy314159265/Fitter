@@ -20,24 +20,19 @@ const userSchema = new Schema({
   },
   private: {
     type: Boolean,
-    required: true,
     default: false,
   },
   weight: {
     type: Number,
-    required: true,
   },
   height: {
     type: Number,
-    required: true,
   },
   age: {
     type: Number,
-    required: true,
   },
   gender: {
     type: String,
-    required: true
   },
   goals: [goalSchema],
   exercisePlan: [
