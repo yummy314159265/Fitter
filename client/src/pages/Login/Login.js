@@ -35,14 +35,14 @@ export default function SimpleCard() {
     onSubmit: async (values) => {
       // funciton that happens on submit, will change to mutations when we have it set up  
        // alert(JSON.stringify(values, null, 2));    
-        try {
-          const { data } = await login({
-            variables: { email: values.email, password: values.password },
-          });    
-          Auth.login(data.login.token);
-        } catch (e) {
-          console.error(e);
-        }
+      try {
+        const { data } = await login({
+          variables: { email: values.email, password: values.password },
+        });    
+        Auth.login(data.login.token);
+      } catch (e) {
+        console.error(e);
+      }
     }
   })
 
