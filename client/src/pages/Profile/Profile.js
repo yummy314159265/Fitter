@@ -89,7 +89,7 @@ import {
             <Center>
             <Stack
               spacing={4}
-              align="center"
+              align="left"
               mt="5"
               divider={
                 <StackDivider

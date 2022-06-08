@@ -68,11 +68,8 @@ export default function SimpleCard() {
           <Stack spacing={4}>
             {/* Use this to make a form */}
             <form onSubmit={(e)=>{ 
-              e.preventDefault();
-              console.log('made it here');
-              const token = formik.handleSubmit(e);
-
-              Auth.login(token);
+              e.preventDefault(); 
+              formik.handleSubmit(e);
             }}>
               <FormControl>
                 <FormLabel htmlFor='email'>Email address</FormLabel>

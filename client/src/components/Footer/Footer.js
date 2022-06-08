@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import logoImg from '../../assets/images/logos/side-by-side.png'
+import { Link as RouterLink } from 'react-router-dom';
   
 const SocialButton = ({
   children,
@@ -48,7 +49,7 @@ export default function SmallCentered() {
         marginBottom={0}
         paddingBottom={0}
         bottom="0"
-        bg={useColorModeValue('gray.50', 'gray.900')}
+        bg={useColorModeValue('lightgrey')}
         color={useColorModeValue('gray.700', 'gray.200')}>
         <Container
           as={Stack}
@@ -62,7 +63,7 @@ export default function SmallCentered() {
           <Stack direction={'row'} spacing={6}>
             <Link href={'#'}>Home</Link>
             <Link href={'#'}>About</Link>
-            <Link href={'#'}>Contact</Link>
+            <Link as={RouterLink} to='/contact'>Contact</Link>
           </Stack>
         </Container>
 
