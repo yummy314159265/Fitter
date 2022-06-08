@@ -22,11 +22,11 @@ const typeDefs = gql`
     gender: String
     "user can have more than goals"
     goals: [Goal!]    
-    "user can create post want to share with reference to exercise and meal plan"
-    posts: [Post]
-    friends: [User]
     exercisePlan: [Exercise]
     mealPlan: [Meal]
+    "user can create post want to share with reference to exercise and meal plan"
+    posts: [Post]
+    friends: [User]    
   }
     """
     Post Schema will store post user want to share with reference to exercise and meal plan
@@ -35,13 +35,12 @@ const typeDefs = gql`
    id: ID!
    postAuthor: String!
    message: String!
-   image: String
-   createdAt: String
+   likes: Int
    exercises: [Exercise]
    meals: [Meal]
    tags: [Tag]
    comments: [Comment]
-   likes: Int
+   createdAt: String   
   }
     """
     Meal Schema will store meal plan user created
@@ -49,7 +48,7 @@ const typeDefs = gql`
   type Meal {
    id: ID!   
    name: String
-   type: String
+   type: [String]
   "Following macronutrients are per complete meal and not per individual intake"
    calories: Int
    proteins: Int
@@ -62,7 +61,7 @@ const typeDefs = gql`
   type Exercise {
    id: ID!   
    name: String!
-   type: String
+   type: [String]
    calories: Int
    distance: Float
    time: String
@@ -74,23 +73,19 @@ const typeDefs = gql`
     Goal Schema will store goal user created
   """
   type Goal {
-   id: ID!   
-   currentWeight: Int
    goalWeight: Int
-   currentExercise: [Exercise]
    goalExercise: [Exercise]
-   currentMeal: [Meal]
-   goalMeal: [Meal]
   }
   """
     Comment Schema will use for Post
   """
   type Comment {
-   id: ID!   
-   user: User   
+   commentAuthor: User!   
    message: String!
    image: String
    likes: Int
+   tags: [Tag]
+   createdAt: String   
   }
    """
     Tag Schema will use for Post
@@ -116,6 +111,15 @@ const typeDefs = gql`
     me: User
   }
   
+  input ExerciseInput {
+    bookId: String
+    authors: [String]
+    description: String
+    title: String
+    image: String
+    link: String
+  }
+
   type Mutation {
     addUser(
       username: String!, 
@@ -127,7 +131,19 @@ const typeDefs = gql`
       age: Int!,
       gender: String!
       ): Auth
-    login(email: String!, password: String!): Auth   
+    # User authentication: Check for valid login using email and password
+    login(email: String!, password: String!): Auth 
+    # Allow user to add exercise plan
+    addExercise(
+      name: String!
+      type: [String]
+      calories: Int
+      distance: Float
+      time: String
+      reps: Int
+      sets: Int
+      liftingWeight: Int
+      ): Exercise   
     # addPost
     # addExercisePlan
     # addMealPlan

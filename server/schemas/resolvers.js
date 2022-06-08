@@ -1,4 +1,4 @@
- const { User, Post } = require('../models');
+ const { User, Exercise, Meal, Post } = require('../models');
  const { AuthenticationError } = require('apollo-server-express');
  const { signToken } = require('../utils/auth'); 
 
@@ -36,11 +36,13 @@
         },  
   },   
   Mutation: {   
+    // add new user
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);  
       return { token, user };
     },
+    // login 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -56,6 +58,18 @@
 
       const token = signToken(user);
       return { token, user };
+    },
+    // add exercise plan
+    addExercise: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to add Exercise plan!");
+      const exercise = await Exercise.create(args);
+      const exerciseId = exercise.id;
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { exercisePlan: exerciseId } },
+        { new: true }
+      );
+      return updatedUser;
     },
   }
 }
