@@ -3,7 +3,7 @@
 // Goals
 // Plans
 // Posts?
-
+import React  from 'react';
 import {
     Container,
     Box,
@@ -28,6 +28,10 @@ import {
     BsFillPlusCircleFill,
    } from "react-icons/bs";
 
+   import { useQuery } from '@apollo/client';
+   import Auth from '../../utils/auth';
+   import { QUERY_ME } from '../../utils/queries';
+
   const Feature = ({ text, icon, iconBg }) => {
     return (
       <Stack direction={'row'} align={'center'}>
@@ -45,7 +49,12 @@ import {
     );
   };
   
-  export default function SplitWithImage() {
+  export default function Profile() {
+    const username = Auth.getProfile().data.username;
+    // const {loading, error, data}= useQuery(QUERY_ME);
+    // const user = data?.me || {};
+    // console.log(user);
+
     return (
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>        
@@ -55,7 +64,7 @@ import {
           <Center>
             <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
           </Center>
-            <Heading>USERNAME'S Profile</Heading>
+            <Heading>{username}'s Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
               <ListItem>WEIGHT</ListItem>
               <ListItem>HEIGHT</ListItem>
@@ -72,7 +81,8 @@ import {
                     transform: 'translateY(-2px)',
                     boxShadow: 'lg',
                 }}
-                onClick={console.log("poke")}>
+                // onClick={console.log("poke")}
+                >
                 Edit Profile
             </Button>
             </Stack>
@@ -116,7 +126,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Post
               </Button>
             </Stack>
@@ -135,7 +146,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Meal Plan
               </Button>
               <Button
@@ -148,7 +160,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Exercise Plan
                   
               </Button>
@@ -162,7 +175,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Edit Goal
               </Button>
             </ButtonGroup>

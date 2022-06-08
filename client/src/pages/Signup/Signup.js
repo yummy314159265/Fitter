@@ -44,7 +44,7 @@ export default function SignupCard() {
           variables: { username, email, password },
         });
 
-        return data.login.token
+        return data.addUser.token
       } catch (e) {
         console.error(e);
       }
