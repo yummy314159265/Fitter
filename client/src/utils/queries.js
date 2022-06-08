@@ -10,7 +10,27 @@ export const QUERY_ME = gql`
       weight
       height
       age
-      gender
+      gender 
+      mealPlan {
+            id
+            name
+            type
+            calories
+            proteins
+            carbs
+            fats
+      }
+      exercisePlan {
+            id
+            name
+            type
+            calories
+            distance
+            time
+            reps
+            sets
+            liftingWeight
+      }
       goals {
         goalWeight
         goalExercise {
@@ -24,27 +44,7 @@ export const QUERY_ME = gql`
             sets
             liftingWeight
         }
-      }
-      exercisePlan {
-            id
-            name
-            type
-            calories
-            distance
-            time
-            reps
-            sets
-            liftingWeight
-      }
-      mealPlan {
-            id
-            name
-            type    
-            calories
-            proteins
-            carbs
-            fats
-      }
+      }             
       posts {
             id
             postAuthor
@@ -64,7 +64,7 @@ export const QUERY_ME = gql`
             meals {
                 id
                 name
-                type    
+                type
                 calories
                 proteins
                 carbs
@@ -82,7 +82,7 @@ export const QUERY_ME = gql`
                 tags {
                 id
                 name
-                }   
+                }
                 createdAt
             }
             createdAt
