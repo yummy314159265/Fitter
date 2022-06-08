@@ -62,10 +62,6 @@ function App() {
             path="/profile"
             element={<Profile />}
           />
-          <Route
-            path="/createWorkout"
-            element={<CreateExercisePlan />}
-          />
           <Route 
             path="/posts"
             element={<Posts />}
