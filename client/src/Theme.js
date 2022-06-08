@@ -9,13 +9,15 @@ const theme = extendTheme({
       lightblue: "#62929E",
       darkblue: "#546A7B",
       grey: "#393D3F",
-      lightgrey: "#899194",
+      lightgrey: "#f7fafc",
       black: "#000",
       white: "#FFF"
   },
   fonts: {
     heading: `'Open Sans', sans-serif`,
     body: `'Raleway', sans-serif`,
+    button: `'Raleway', sans-serif`,
+    text: `'Raleway', sans-serif`,
   },
 //   fontSizes: {
 //     xs: "0.75rem",

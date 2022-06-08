@@ -22,6 +22,7 @@ import {
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import logoImg from '../../assets/images/logos/green-logo-no-text.png';
 import { Link as RouterLink } from 'react-router-dom';
+
 import Auth from '../../utils/auth';
 
 export default function Navbar() {
@@ -31,7 +32,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={useColorModeValue('#f7fafc')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}

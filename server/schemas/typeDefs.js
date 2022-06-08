@@ -110,7 +110,7 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
-  
+  # will use to add new goal
   input goalInput {
     goalWeight: Int
     goalExercise: [String]    
@@ -120,7 +120,8 @@ const typeDefs = gql`
     message: String!
     image: String
     tags: [String]
-  }
+  }  
+  # Following defines mutation
   type Mutation {
     addUser(
       username: String!, 
@@ -145,6 +146,20 @@ const typeDefs = gql`
       sets: Int
       liftingWeight: Int
       ): Exercise  
+     # Update user Exercise plan information
+    updateExercise( 
+      id: ID!   
+      name: String!
+      type: [String]
+      calories: Int
+      distance: Float
+      time: String
+      reps: Int
+      sets: Int
+      liftingWeight: Int
+    ): Exercise
+    # Delete Exercise plan
+    removeExercise(id: ID!): Exercise 
     # Allow user to add meal plan
     addMeal(
       name: String!
@@ -154,6 +169,18 @@ const typeDefs = gql`
       carbs: Int
       fats: Int
       ): Meal 
+    # Update user Meal plan information
+    updateMeal( 
+      id: ID!   
+      name: String
+      type: [String]
+      calories: Int
+      proteins: Int
+      carbs: Int
+      fats: Int
+    ): Meal
+    # Delete Meal plan
+    removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
     addGoal(
       input: goalInput    
