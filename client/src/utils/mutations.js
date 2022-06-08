@@ -49,3 +49,125 @@ export const ADD_USER = gql`
         }
     }
 `;
+
+export const ADD_MEAL = gql`   
+    mutation addMeal(
+        $name: String!,
+        $type: [String],
+        $calories: Int,
+        $proteins: Int,
+        $carbs: Int,
+        $fats: Int
+    ) {
+        addMeal(
+            name: $name,
+            type: $type,
+            calories: $calories,
+            proteins: $proteins,
+            carbs: $carbs,
+            fats: $fats
+        ) {
+            id
+            name
+            type
+            calories
+            proteins
+            carbs
+            fats
+        }
+    }
+`;
+
+export const ADD_EXERCISE = gql` 
+    mutation addExercise(
+        $name: String!,
+        $type: [String],
+        $calories: Int,
+        $distance: Int,
+        $time: String,
+        $reps: Int,
+        $sets: Int,
+        $liftingWeight: Int
+    ) {
+        addMeal(
+            name: $name,
+            type: $type,
+            calories: $calories,
+            distance: $distance,
+            time: $time,
+            reps: $reps,
+            sets: $sets,
+            liftingWeight: $liftingWeight
+        ) {
+            id
+            name
+            type
+            calories
+            distance
+            time
+            reps
+            set
+            liftingWeight
+        }
+    }
+`;
+
+export const ADD_GOAL = gql` 
+    mutation addGoal(
+        $input: goalInput
+    ) {
+        addGoal(
+            input: $input
+        ) {
+           id
+           username
+           goals
+        }
+    }
+`;
+
+export const ADD_POST = gql` 
+    mutation addPOST(
+        $postAuthor: String!,
+        $message: String!,
+        $exercises: [String],
+        $meals: [String],
+        $tags: [String],
+        $createdAt: String
+    ) {
+        addPost(
+            postAuthor: $postAuthor,
+            message: $message,
+            exercises: $exercises,
+            meals: $meals,
+            tags: $tags,
+            createdAt: $createdAt
+        ) {
+           id
+           postAuthor
+           message
+           likes
+           exercises
+           meals
+           tags
+           comments
+           createdAt
+        }
+    }
+`;
+
+export const ADD_COMMENT = gql` 
+    mutation addComment(
+        $postId: ID!,
+        $input: commentInput
+    ) {
+        addComment(
+            postId: $postId,
+            input: $input
+        ) {
+            id
+            message
+            comments
+        }
+    }
+`;

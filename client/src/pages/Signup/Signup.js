@@ -21,8 +21,14 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { ADD_USER } from '../../utils/mutations'
+
+
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const [addUser, { error }] = useMutation(ADD_USER);
 //   need to add BMI/Fitness goal input options
   
   // create form variables
@@ -32,8 +38,16 @@ export default function SignupCard() {
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async ({ username, email, password}) => {
+      try {
+        const { data } = await addUser({
+          variables: { username, email, password },
+        });
+
+        return data.login.token
+      } catch (e) {
+        console.error(e);
+      }
     }
   });
 
@@ -58,7 +72,11 @@ export default function SignupCard() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={(e)=>{ 
+              e.preventDefault(); 
+              const token = formik.handleSubmit(e);
+              Auth.login(token);
+            }}>
               <FormControl isRequired>
                 <FormLabel htmlFor='username'>Username</FormLabel>
                 <Input 

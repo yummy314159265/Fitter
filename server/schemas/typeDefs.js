@@ -110,18 +110,18 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
-  
+  # will use to add new goal
   input goalInput {
     goalWeight: Int
     goalExercise: [String]    
   }
   input commentInput {
-    commentAuthor: String
-    message: String
+    commentAuthor: String!
+    message: String!
     image: String
-    likes: Int
     tags: [String]
-  }
+  }  
+  # Following defines mutation
   type Mutation {
     addUser(
       username: String!, 
@@ -146,6 +146,20 @@ const typeDefs = gql`
       sets: Int
       liftingWeight: Int
       ): Exercise  
+     # Update user Exercise plan information
+    updateExercise( 
+      id: ID!   
+      name: String!
+      type: [String]
+      calories: Int
+      distance: Float
+      time: String
+      reps: Int
+      sets: Int
+      liftingWeight: Int
+    ): Exercise
+    # Delete Exercise plan
+    removeExercise(id: ID!): Exercise 
     # Allow user to add meal plan
     addMeal(
       name: String!
@@ -155,6 +169,18 @@ const typeDefs = gql`
       carbs: Int
       fats: Int
       ): Meal 
+    # Update user Meal plan information
+    updateMeal( 
+      id: ID!   
+      name: String
+      type: [String]
+      calories: Int
+      proteins: Int
+      carbs: Int
+      fats: Int
+    ): Meal
+    # Delete Meal plan
+    removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
     addGoal(
       input: goalInput    
@@ -163,15 +189,13 @@ const typeDefs = gql`
     addPost(
       postAuthor: String!
       message: String!
-      likes: Int
       exercises: [String]
       meals: [String]
       tags: [String]
-      comments: [String]
       createdAt: String   
       ): Post  
     # Allow user to add comment
-    addComment(postId: ID!, input: commentInput): Post
+    addComment(postId: ID!, input: commentInput!): Post
   }`;
 
 module.exports = typeDefs;
