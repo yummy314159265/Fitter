@@ -16,10 +16,12 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Posts from './pages/Timeline';
 import Profile from './pages/Profile';
+import FoodSearch from './components/FoodSearch';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
+
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
@@ -63,7 +65,11 @@ function App() {
           <Route 
             path="/posts"
             element={<Posts />}
-            />
+          />
+          <Route 
+            path="/food-search"
+            element={<FoodSearch />}
+          />
         </Routes>
         <Footer />
       </Router>
