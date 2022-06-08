@@ -127,11 +127,11 @@ const typeDefs = gql`
       username: String!, 
       password: String!, 
       email: String!, 
-      private: Boolean!,
-      weight: Int!,
-      height: Int!,
-      age: Int!,
-      gender: String!
+      private: Boolean,
+      weight: Int,
+      height: Int,
+      age: Int,
+      gender: String
       ): Auth
     # User authentication: Check for valid login using email and password
     login(email: String!, password: String!): Auth 
