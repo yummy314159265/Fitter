@@ -21,7 +21,7 @@ const typeDefs = gql`
     age: Int
     gender: String
     "user can have more than goals"
-    goals: [Goal!]    
+    goals: [Goal]    
     exercisePlan: [Exercise]
     mealPlan: [Meal]
     "user can create post want to share with reference to exercise and meal plan"
