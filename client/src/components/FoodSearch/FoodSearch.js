@@ -30,11 +30,11 @@ export default function FoodSearch(){
       const data = await response.json();
 
       setResults(
-        <List spacing={3}>
+        <List textAlign={'left'} spacing={3}>
           {
-            data.foods.map(food =>{
+            data.foods.map((food, index) =>{
               return (
-                <ListItem>
+                <ListItem key={index}>
                   <IconButton
                     size='xs'
                     mr={2}
