@@ -7,21 +7,14 @@ const resolvers = {
        me: async (parent, args, context) => {
          if (context.user) {
            const userData = await User.findOne({ _id: context.user._id })
-           .select('-__v -password')
-       
-       return userData;
+           .select('-__v -password')       
+            return userData;
          }
          throw new AuthenticationError('You need to be logged in!');
        },   
        users: async () => {
          // Populate the meal and exercise subdocuments when querying for user
-         return await User.find({}).populate('goals').populate({
-           path: 'goals',
-           populate: 'meals'
-         }).populate({
-           path: 'goals',
-           populate: 'exercises'
-         });
+         return await User.find({}).populate('goals');
        },     
        // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
        meal: async (parent, args) => {
