@@ -13,9 +13,30 @@ import { useFormik } from 'formik';
 import { searchFood } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
 
+const SearchResult = ({ food, index }) => {
+  const [added, setAdded] = useState(false)
+
+  const addResult = (result) => {
+    console.log(result)
+    setAdded(prev => !prev)
+  }
+
+  return (
+    <ListItem key={index}>
+      <IconButton
+        size='xs'
+        mr={2}
+        icon={added ? <FaCheck /> : <FaPlus />}
+        colorScheme={added ? 'green' : 'gray'}
+        onClick={()=>addResult(food)}
+      />
+      {food.food_name}
+    </ListItem>
+  )
+}
+
 export default function FoodSearch(){
   const [results, setResults] = useState(null)
-  const [added, setAdded] = useState(false)
   const [data, setData] = useState(null)
 
   const formik = useFormik({
@@ -30,10 +51,7 @@ export default function FoodSearch(){
     })
   });
 
-  const addResult = (result) => {
-    console.log(result)
-    setAdded(prev => !prev)
-  }
+
 
   return (
     <>
@@ -62,22 +80,7 @@ export default function FoodSearch(){
             <CircularProgress isIndeterminate />
           ) : (results === 'done') ? (
             <List textAlign={'left'} spacing={3}>
-              {
-                data.foods.map((food, index) =>{
-                  return (
-                    <ListItem key={index}>
-                      <IconButton
-                        size='xs'
-                        mr={2}
-                        icon={added ? <FaCheck /> : <FaPlus />}
-                        colorScheme={added ? 'green' : 'gray'}
-                        onClick={()=>addResult(food)}
-                      />
-                      {food.food_name}
-                    </ListItem>
-                  )
-                })
-              }
+              {data.foods.map((food, index) => <SearchResult food={food} index={index} />)}
             </List> 
           ) : (
             null
