@@ -113,6 +113,29 @@ const resolvers = {
       );
       return updatePost;
     },
+     // update meal plan
+    updateMeal: async (parent, args, context) => {
+    if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
+    const updatedMeal = await Meal.findByIdAndUpdate(
+      { _id: args.id },
+      { $set: args },
+      { runValidators: true, new: true }
+    );
+    return updatedMeal;
+    },
+    // remove meal plan
+    removeMeal: async (parent, { id }, context) => {
+    if (!context.user) throw new AuthenticationError("You must be logged in to update Meal plan!");
+    const meal = await Meal.findOneAndDelete({
+      _id: id,      
+    });
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: context.user._id },
+      { $pull: { mealPlan: meal._id } },
+      { new: true }
+    );
+    return updatedUser;
+    },
  }
 }
 module.exports = resolvers;
