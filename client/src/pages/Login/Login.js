@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import {
     Flex,
     Box,
@@ -17,18 +17,32 @@ import {
 import { useFormik } from 'formik';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { LOGIN_USER } from '../../utils/mutations';
 // would need to add import for forgot password
 
 export default function SimpleCard() {
-  const formik = useFormik({
+  const [login, { error }] = useMutation(LOGIN_USER);
+
+  const formik =  useFormik({    
     initialValues: {
       email: '',
       password: '',
       remember: false,
     },
-    onSubmit: (values) => {
-      // funciton that happens on submit, will change to mutations when we have it set up
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      // funciton that happens on submit, will change to mutations when we have it set up  
+       // alert(JSON.stringify(values, null, 2));    
+        try {
+          const { data } = await login({
+            variables: { email: values.email, password: values.password },
+          });    
+          Auth.login(data.login.token);
+        } catch (e) {
+          console.error(e);
+        }
     }
   })
 
@@ -120,6 +134,11 @@ export default function SimpleCard() {
                 </Stack>
               </Stack>
             </form>
+            {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
+            )}
           </Stack>
         </Box>
       </Stack>
