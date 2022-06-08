@@ -116,10 +116,9 @@ const typeDefs = gql`
     goalExercise: [String]    
   }
   input commentInput {
-    commentAuthor: String
-    message: String
+    commentAuthor: String!
+    message: String!
     image: String
-    likes: Int
     tags: [String]
   }  
   # Following defines mutation
@@ -196,9 +195,7 @@ const typeDefs = gql`
       createdAt: String   
       ): Post  
     # Allow user to add comment
-    addComment(postId: ID!, input: commentInput): Post
-   
-     
+    addComment(postId: ID!, input: commentInput!): Post
   }`;
 
 module.exports = typeDefs;

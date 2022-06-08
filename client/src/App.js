@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, theme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { 
   ApolloClient, 
   ApolloProvider, 
@@ -17,6 +17,8 @@ import Signup from './pages/Signup';
 import Posts from './pages/Timeline';
 import Profile from './pages/Profile';
 import FoodSearch from './components/FoodSearch';
+
+import theme from './Theme';
 
 const httpLink = createHttpLink({
   uri: '/graphql',

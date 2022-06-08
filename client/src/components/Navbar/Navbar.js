@@ -23,27 +23,12 @@ import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import logoImg from '../../assets/images/logos/green-logo-no-text.png';
 import { Link as RouterLink } from 'react-router-dom';
 
-const NavLink = ({ children }) => (
-  <Link
-    as={RouterLink}
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    to='#'
-  >
-    {children}
-  </Link>
-);
+import Auth from '../../utils/auth';
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   // replace with authentication
-  const loggedIn = false;
 
   return (
     <>
@@ -81,7 +66,7 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-              {loggedIn ?
+              {Auth.loggedIn() ?
               <Menu>
                 <MenuButton
                   as={Button}
@@ -112,7 +97,7 @@ export default function Navbar() {
                   <MenuDivider />
                   <MenuItem>Your Servers</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={(e) =>{e.preventDefault(); Auth.logout()}}>Logout</MenuItem>
                 </MenuList>
               </Menu> :
               <>
