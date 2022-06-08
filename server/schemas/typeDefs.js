@@ -111,9 +111,19 @@ const typeDefs = gql`
     me: User
   }  
   # will use to add new goal
+  input ExerciseInput {    
+   name: String!
+   type: [String]
+   calories: Int
+   distance: Float
+   time: String
+   reps: Int
+   sets: Int
+   liftingWeight: Int
+  }
   input goalInput {
     goalWeight: Int
-    goalExercise: [String]    
+    goalExercise: [ExerciseInput]    
   }
   input commentInput {
     commentAuthor: String!
@@ -182,9 +192,7 @@ const typeDefs = gql`
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
-    addGoal(
-      input: goalInput    
-      ): User   
+    addGoal(input: goalInput): User   
     # Allow user to add post
     addPost(
       postAuthor: String!
