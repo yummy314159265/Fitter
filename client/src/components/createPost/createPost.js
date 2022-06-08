@@ -15,8 +15,6 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-
-
 export default function Component() {
     const [exercise, setExercise] = useState(false);
     const [cardio, setCardio] = useState(false);
