@@ -19,7 +19,7 @@ export default function CallToActionWithAnnotation() {
   })
 
   return (
-    <Container maxW={'3xl'}>
+    <Container>
       <Stack
         as={Box}
         textAlign={'center'}
@@ -31,28 +31,12 @@ export default function CallToActionWithAnnotation() {
           lineHeight={'110%'}
         >
           Fitter. Happier. <br />
-          <Text as={'span'} color={'green.400'}>
+          <Text as={'span'} color={'lightgreen'}>
             More Productive.
           </Text>
         </Heading>
         <Text style={style} color={'gray.500'}>
-          Comfortable
-          Not drinking too much
-          Regular exercise at the gym (3 days a week)
-          Getting on better with your associate employee contemporaries
-          At ease
-          Eating well (no more microwave dinners and saturated fats)
-          A patient, better driver
-          A safer car (baby smiling in back seat)
-          Sleeping well (no bad dreams)
-          No paranoia
-          Careful to all animals (never washing spiders down the plughole)
-          Keep in contact with old friends (enjoy a drink now and then)
-          Will frequently check credit at (moral) bank (hole in the wall)
-          Favours for favours
-          Fond but not in love
-          Charity standing orders
-          On Sundays ring road supermarket
+          A social media site for people looking to start their fitness journey and share their progress along the way. We wanted to create a welcoming space for all people, ranging from health experts to novices. 
         </Text>
         <Stack
           direction={'column'}
@@ -62,19 +46,16 @@ export default function CallToActionWithAnnotation() {
           position={'relative'}
         >
           <Button
-            colorScheme={'green'}
-            bg={'green.400'}
+            bg={'green'}
+            color={'white'}
             rounded={'full'}
             px={6}
             _hover={{
-              bg: 'green.500',
+              bg: 'darkgreen',
             }}
             onClick={()=> play(!isPlaying)}
           >
             Get Started
-          </Button>
-          <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-            Learn more
           </Button>
           <Box>
             <Icon
@@ -89,11 +70,11 @@ export default function CallToActionWithAnnotation() {
               fontSize={'lg'}
               fontFamily={'Caveat'}
               position={'absolute'}
-              right={'-125px'}
+              right={'-110px'}
               top={'-15px'}
-              transform={'rotate(10deg)'}
+              transform={'rotate(15deg)'}
             >
-              Get stronk today
+              Join today
             </Text>
           </Box>
         </Stack>
