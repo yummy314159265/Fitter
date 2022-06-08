@@ -143,7 +143,16 @@ const typeDefs = gql`
       reps: Int
       sets: Int
       liftingWeight: Int
-      ): Exercise   
+      ): Exercise  
+    # Allow user to add meal plan
+    addMeal(
+      name: String!
+      type: [String]
+      calories: Int
+      proteins: Int
+      carbs: Int
+      fats: Int
+      ): Meal     
     # addPost
     # addExercisePlan
     # addMealPlan

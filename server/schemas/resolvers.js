@@ -71,6 +71,18 @@
       );
       return updatedUser;
     },
+    // add meal plan
+    addMeal: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");
+      const meal = await Meal.create(args);
+      const mealId = meal.id;
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { mealPlan: mealId } },
+        { new: true }
+      );
+      return updatedUser;
+    },
   }
 }
  module.exports = resolvers;
