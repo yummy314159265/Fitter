@@ -110,7 +110,16 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
-  # will use to add new goal
+  # will use MealInout to add new post
+  input MealInput {    
+   name: String
+   type: [String]
+   calories: Int
+   proteins: Int
+   carbs: Int
+   fats: Int
+  }
+  # will use ExerciseInput to add new goal and post
   input ExerciseInput {    
    name: String!
    type: [String]
@@ -121,9 +130,18 @@ const typeDefs = gql`
    sets: Int
    liftingWeight: Int
   }
+  # goalInput to add new goal with ExerciseInput
   input goalInput {
     goalWeight: Int
     goalExercise: [ExerciseInput]    
+  }
+  # postInput to add new post with MealInout and ExerciseInput
+  input postInput {
+    postAuthor: String!
+    message: String!
+    exercises: [ExerciseInput]
+    meals: [MealInput]
+    tags: [String]
   }
   input commentInput {
     commentAuthor: String!
@@ -194,14 +212,7 @@ const typeDefs = gql`
     # Allow user to add goal plan
     addGoal(input: goalInput): User   
     # Allow user to add post
-    addPost(
-      postAuthor: String!
-      message: String!
-      exercises: [String]
-      meals: [String]
-      tags: [String]
-      createdAt: String   
-      ): Post  
+    addPost(input: postInput): Post  
     # Allow user to add comment
     addComment(postId: ID!, input: commentInput!): Post
   }`;
