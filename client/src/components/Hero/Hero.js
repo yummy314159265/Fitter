@@ -13,7 +13,7 @@ import {
 import { useAnimate }  from 'react-simple-animate';
 
 export default function CallToActionWithAnnotation() {
-  const { play, style, isPlaying } = useAnimate({
+  const { style, } = useAnimate({
     start: { opacity: 1 },
     end: { opacity: 0 }
   })
@@ -53,7 +53,10 @@ export default function CallToActionWithAnnotation() {
             _hover={{
               bg: 'darkgreen',
             }}
-            onClick={()=> play(!isPlaying)}
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href='/Login';
+              }}
           >
             Get Started
           </Button>
