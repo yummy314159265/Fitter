@@ -29,6 +29,8 @@ import {
    } from "react-icons/bs";
 
    import { useQuery } from '@apollo/client';
+
+   import theme from '../../Theme';
    import Auth from '../../utils/auth';
    import { QUERY_ME } from '../../utils/queries';
 
@@ -51,9 +53,9 @@ import {
   
   export default function Profile() {
     const username = Auth.getProfile().data.username;
-    // const {loading, error, data}= useQuery(QUERY_ME);
-    // const user = data?.me || {};
-    // console.log(user);
+    const {loading, error, data}= useQuery(QUERY_ME);
+    const user = data?.me || {};
+    console.log(user);
 
     return (
       <Box display="flex">
@@ -66,10 +68,10 @@ import {
           </Center>
             <Heading>{username}'s Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
-              <ListItem>WEIGHT</ListItem>
-              <ListItem>HEIGHT</ListItem>
-              <ListItem>AGE</ListItem>
-              <ListItem>GENDER</ListItem>         
+              <ListItem>{user.gender}</ListItem>  
+              <ListItem>{user.age} years old</ListItem>
+              <ListItem>{user.weight} pounds</ListItem>
+              <ListItem>{user.height} inches</ListItem>       
             </UnorderedList>
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
@@ -96,23 +98,25 @@ import {
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
                 />
               }>
+
               <Feature
-                iconBg={useColorModeValue('yellow.100', 'yellow.900')}
+                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
                 text={'Your current goal : '}
                 // add goal
+
               />
               <Feature
-                iconBg={useColorModeValue('green.100', 'green.900')}
+                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
                 text={'Your current exercise plan : '}
                 // add exercise plan
               />
               <Feature
-                iconBg={useColorModeValue('purple.100', 'purple.900')}
+                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
                 text={'Your current meal plan : '}
                 // add meal plan
               />
               <Feature
-                iconBg={useColorModeValue('red.100', 'red.900')}
+                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
                 text={'Your most recent post : '}
                 // add post
               />
