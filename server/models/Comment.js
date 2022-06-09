@@ -1,5 +1,4 @@
 const { Schema } = require('mongoose');
-const { tagSchema } = require('./Tag');
 
 const commentSchema = new Schema({
   commentAuthor: {
@@ -17,8 +16,9 @@ const commentSchema = new Schema({
   },
   likes: {
     type: Number,
+    default: 0
   },
-  tags: [tagSchema],
+  tags: [String],
   createdAt: {
     type: Date,
     default: Date.now

@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const { commentSchema } = require('./Comment');
-const { tagSchema } = require('./Tag');
 
 const postSchema = new Schema({
   postAuthor: {
@@ -18,6 +17,7 @@ const postSchema = new Schema({
   },  
   likes: {
     type: Number,
+    default: 0
   },
   createdAt: {
     type: Date,
@@ -35,7 +35,7 @@ const postSchema = new Schema({
       ref: 'Meal',
     },
   ],
-  tags: [tagSchema],
+  tags: [String],
   comments: [commentSchema],
 });
 
