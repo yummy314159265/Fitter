@@ -17,6 +17,7 @@ const commentSchema = new Schema({
   },
   likes: {
     type: Number,
+    default: 0
   },
   tags: [tagSchema],
   createdAt: {

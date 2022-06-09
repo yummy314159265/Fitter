@@ -143,11 +143,16 @@ const typeDefs = gql`
     meals: [MealInput]
     tags: [String]
   }
-  input commentInput {
+  # commentDetails input will be use in commentInput
+  input commentDetails {
     commentAuthor: String!
     message: String!
-    image: String
     tags: [String]
+  }
+  # commentInput will be use to add new comment to post
+  input commentInput {
+    postId: ID!   
+    commentDetails: [commentDetails] 
   }  
   # Following defines mutation
   type Mutation {
@@ -214,7 +219,7 @@ const typeDefs = gql`
     # Allow user to add post
     addPost(input: postInput): Post  
     # Allow user to add comment
-    addComment(postId: ID!, input: commentInput!): Post
+    addComment(input: commentInput!): Post
   }`;
 
 module.exports = typeDefs;

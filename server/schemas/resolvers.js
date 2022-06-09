@@ -195,11 +195,12 @@ const resolvers = {
     return updatedUser;
   },
     // add comment to post
-    addComment: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");      
+    addComment: async (parent, commentInput, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to add comment!");      
+      const postId = commentInput.input.postId;
       const updatePost = await Post.findByIdAndUpdate(
-        { _id: args.postId },
-        { $addToSet: { comments: args.input } },
+        { _id: postId },
+        { $addToSet: { comments: commentInput.input.commentDetails } },
         { new: true }
       );
       return updatePost;
