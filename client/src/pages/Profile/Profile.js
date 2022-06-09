@@ -20,6 +20,7 @@ import {
     Avatar,
     ListItem,
     UnorderedList,
+    List,
   } from '@chakra-ui/react';
 
   import { 
@@ -54,8 +55,17 @@ import {
   export default function Profile() {
     const username = Auth.getProfile().data.username;
     const {loading, error, data}= useQuery(QUERY_ME);
+    // if (loading) {
+    //   return <div>Loading...</div>;
+    // }
     const user = data?.me || {};
     console.log(user);
+    // const reversedKeys = Object.keys(user.mealPlan).reverse();
+    // reversedKeys.forEach(key => {
+    //   console.log(key, user.mealPlan[key]);
+    // });
+    // const targetWeight = user.goals[0].goalWeight;
+    // console.log(targetWeight);
 
     return (
       <Box display="flex">
@@ -101,25 +111,41 @@ import {
 
               <Feature
                 iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
-                text={'Your current goal : '}
+                text={'Your current goals : '}
                 // add goal
-
               />
+              <UnorderedList>
+                
+                {/* <ListItem>Target weight : {targetWeight}</ListItem> */}
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
                 text={'Your current exercise plan : '}
                 // add exercise plan
               />
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
                 text={'Your current meal plan : '}
                 // add meal plan
               />
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
                 text={'Your most recent post : '}
                 // add post
               />
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Button
                   leftIcon={<BsFillPlusCircleFill />}              
                   px={8}
