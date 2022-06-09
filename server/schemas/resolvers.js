@@ -155,10 +155,38 @@ const resolvers = {
         return updatedUser;   
    },
    // add post
-   addPost: async (parent, args, context) => {
+   addPost: async (parent, postInput, context) => {
     if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");
-    const post = await Post.create(args);
-    const postId = post.id;
+    let postExerciseList = [];
+    // iterate over array of exercise and insert each to exercise collection
+    for (let i = 0; i < postInput.input.exercises.length; i++)
+    {
+       const exercise = await Exercise.create(postInput.input.exercises[i]);
+       postExerciseList.push(exercise.id)
+    }
+    let postMealList = [];
+    // iterate over array of meals and insert each to meals collection
+    for (let i = 0; i < postInput.input.meals.length; i++)
+    {
+       const meal = await Meal.create(postInput.input.meals[i]);
+       postMealList.push(meal.id)
+    }
+    // generate post document
+    const post = {
+      "postAuthor": postInput.input.postAuthor,
+      "message": postInput.input.message,
+      "exercises": postExerciseList,
+      "meals": postMealList,
+    }    
+    const postinsert = await Post.create(post);
+    const postId = postinsert.id;
+    // append tags to post just inserted    
+    const updatepost = await Post.findByIdAndUpdate(
+      { _id: postId },
+      { $addToSet: { tags: postInput.input.tags} },
+      { runValidators: true, new: true }
+      );
+     // finally update user to add post 
     const updatedUser = await User.findByIdAndUpdate(
       { _id: context.user._id },
       { $addToSet: { posts: postId } },
@@ -167,11 +195,12 @@ const resolvers = {
     return updatedUser;
   },
     // add comment to post
-    addComment: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");      
+    addComment: async (parent, commentInput, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to add comment!");      
+      const postId = commentInput.input.postId;
       const updatePost = await Post.findByIdAndUpdate(
-        { _id: args.postId },
-        { $addToSet: { comments: args.input } },
+        { _id: postId },
+        { $addToSet: { comments: commentInput.input.commentDetails } },
         { new: true }
       );
       return updatePost;

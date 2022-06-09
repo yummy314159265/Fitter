@@ -38,7 +38,7 @@ const typeDefs = gql`
    likes: Int
    exercises: [Exercise]
    meals: [Meal]
-   tags: [Tag]
+   tags: [String]
    comments: [Comment]
    createdAt: String   
   }
@@ -84,15 +84,8 @@ const typeDefs = gql`
    message: String!
    image: String
    likes: Int
-   tags: [Tag]
+   tags: [String]
    createdAt: String   
-  }
-   """
-    Tag Schema will use for Post
-  """
-  type Tag {
-   id: ID!      
-   name: String   
   }
 
   type Auth {
@@ -110,7 +103,16 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
-  # will use to add new goal
+  # will use MealInout to add new post
+  input MealInput {    
+   name: String
+   type: [String]
+   calories: Int
+   proteins: Int
+   carbs: Int
+   fats: Int
+  }
+  # will use ExerciseInput to add new goal and post
   input ExerciseInput {    
    name: String!
    type: [String]
@@ -121,14 +123,29 @@ const typeDefs = gql`
    sets: Int
    liftingWeight: Int
   }
+  # goalInput to add new goal with ExerciseInput
   input goalInput {
     goalWeight: Int
     goalExercise: [ExerciseInput]    
   }
-  input commentInput {
+  # postInput to add new post with MealInout and ExerciseInput
+  input postInput {
+    postAuthor: String!
+    message: String!
+    exercises: [ExerciseInput]
+    meals: [MealInput]
+    tags: [String]
+  }
+  # commentDetails input will be use in commentInput
+  input commentDetails {
     commentAuthor: String!
     message: String!
-    image: String
+    tags: [String]
+  }
+  # commentInput will be use to add new comment to post
+  input commentInput {
+    postId: ID!   
+    commentDetails: [commentDetails] 
     tags: [String]
   }  
   # Following defines mutation
@@ -194,16 +211,9 @@ const typeDefs = gql`
     # Allow user to add goal plan
     addGoal(input: goalInput): User   
     # Allow user to add post
-    addPost(
-      postAuthor: String!
-      message: String!
-      exercises: [String]
-      meals: [String]
-      tags: [String]
-      createdAt: String   
-      ): Post  
+    addPost(input: postInput): Post  
     # Allow user to add comment
-    addComment(postId: ID!, input: commentInput!): Post
+    addComment(input: commentInput!): Post
   }`;
 
 module.exports = typeDefs;
