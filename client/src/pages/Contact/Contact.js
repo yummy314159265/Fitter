@@ -20,8 +20,20 @@ import {
     MdLocationOn,
     MdFace,
   } from 'react-icons/md';
-  
+import emailjs from 'emailjs-com';
+
   export default function contact() {
+    function sendEmail(e) {
+      e.preventDefault();
+
+    emailjs.sendForm('service_11i1bdt', 'template_3nn73r6', e.target, 'TQyGtTwOG5qoi8XRR')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset()
+    }
     return (
       <Container bg="lightgrey" maxW="full" mt={0} centerContent overflow="hidden">
         <Flex>
@@ -71,8 +83,8 @@ import {
                   <Box bg="white" borderRadius="lg">
                     <Box m={8} color="#0B0E3F">
                       <VStack spacing={5}>
-                        <FormControl id="name">
-                          <FormLabel>Your Name</FormLabel>
+                        <FormControl id="form" onSubmit={sendEmail}>
+                          <FormLabel name="name">Your Name</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
@@ -81,9 +93,9 @@ import {
                             />
                             <Input type="text" size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Email</FormLabel>
+                        
+                        
+                          <FormLabel name="email">Email</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
@@ -92,9 +104,9 @@ import {
                             />
                             <Input type="text" size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Message</FormLabel>
+                        
+                        
+                          <FormLabel name="message">Message</FormLabel>
                           <Textarea
                             borderColor="gray.300"
                             _hover={{
@@ -106,6 +118,7 @@ import {
 {/* need to add onsubmit for send message btn */}
                         <FormControl id="name" float="right">
                           <Button
+                            type="submit"
                             variant="solid"
                             bg="darkgreen"
                             color="white"
