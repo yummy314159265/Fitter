@@ -18,6 +18,7 @@ const theme = extendTheme({
     body: `'Raleway', sans-serif`,
     button: `'Raleway', sans-serif`,
     text: `'Raleway', sans-serif`,
+    listitem: `'Raleway', sans-serif`,
   },
   fontSizes: {
     xs: "0.75rem",

@@ -40,7 +40,8 @@ export default function SimpleCard() {
           variables: { email: values.email, password: values.password },
         });    
 
-        return data.login.token;
+        Auth.login(data.login.token);
+
       } catch (e) {
         console.error(e);
       }
@@ -70,8 +71,7 @@ export default function SimpleCard() {
             {/* Use this to make a form */}
             <form onSubmit={(e)=>{ 
               e.preventDefault(); 
-              const token = formik.handleSubmit(e);
-              Auth.login(token);
+              formik.handleSubmit(e);
             }}>
               <FormControl>
                 <FormLabel htmlFor='email'>Email address</FormLabel>

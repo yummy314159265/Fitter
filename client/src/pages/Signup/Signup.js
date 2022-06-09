@@ -44,7 +44,7 @@ export default function SignupCard() {
           variables: { username, email, password },
         });
 
-        return data.login.token
+        Auth.login(data.addUser.token);
       } catch (e) {
         console.error(e);
       }
@@ -74,8 +74,7 @@ export default function SignupCard() {
           <Stack spacing={4}>
             <form onSubmit={(e)=>{ 
               e.preventDefault(); 
-              const token = formik.handleSubmit(e);
-              Auth.login(token);
+              formik.handleSubmit(e);
             }}>
               <FormControl isRequired>
                 <FormLabel htmlFor='username'>Username</FormLabel>

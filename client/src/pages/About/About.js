@@ -41,7 +41,7 @@ export default function SplitWithImage() {
           <Stack spacing={4}>
             <Heading>About</Heading>
             <Text color={'black'} fontSize={'lg'}>
-              Meet the Team
+              Meet the Team!
             </Text>
 {/* Need to add personal statements */}
             <UnorderedList spacing={4} padding={6}>
@@ -56,7 +56,7 @@ export default function SplitWithImage() {
             <Image
               rounded={'md'}
               alt={'feature image'}
-              src={'.../working.jpg'}
+              src={'/working.jpg'}
               objectFit={'cover'}
             />
           </Flex>
