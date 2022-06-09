@@ -38,7 +38,7 @@ const typeDefs = gql`
    likes: Int
    exercises: [Exercise]
    meals: [Meal]
-   tags: [Tag]
+   tags: [String]
    comments: [Comment]
    createdAt: String   
   }
@@ -84,15 +84,8 @@ const typeDefs = gql`
    message: String!
    image: String
    likes: Int
-   tags: [Tag]
+   tags: [String]
    createdAt: String   
-  }
-   """
-    Tag Schema will use for Post
-  """
-  type Tag {
-   id: ID!      
-   name: String   
   }
 
   type Auth {
@@ -153,6 +146,7 @@ const typeDefs = gql`
   input commentInput {
     postId: ID!   
     commentDetails: [commentDetails] 
+    tags: [String]
   }  
   # Following defines mutation
   type Mutation {

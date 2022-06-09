@@ -180,7 +180,7 @@ const resolvers = {
     }    
     const postinsert = await Post.create(post);
     const postId = postinsert.id;
-    // append tags to post just inserted
+    // append tags to post just inserted    
     const updatepost = await Post.findByIdAndUpdate(
       { _id: postId },
       { $addToSet: { tags: postInput.input.tags} },
