@@ -13,7 +13,7 @@ import {
     FiUser,
     FiSettings
 } from 'react-icons/fi'
-import NavItem from '../components/NavItem'
+import NavItem from './NavItem'
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large")
