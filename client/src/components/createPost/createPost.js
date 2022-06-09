@@ -13,11 +13,29 @@ import {
   Button,
   Center,
   Input,
+  ListItem,
+  IconButton,
+  CircularProgress,
+  List,
+  UnorderedList,
+  Text,
+  Divider,
+
 } from "@chakra-ui/react";
+// import { Formik, useFormik } from 'formik';
+import { searchFood } from '../../utils/API';
+import { FaPlus, FaCheck } from 'react-icons/fa';
+
+
 
 export default function Component() {
+
+
+    //Rendered States
     const [exercise, setExercise] = useState(false);
     const [cardio, setCardio] = useState(false);
+    const [meal, setMeal] = useState(false);
+
 
 const renderExercise = () => {
   if (exercise) {
@@ -144,6 +162,109 @@ const handleCardio = () => {
         renderCardio()
     }
 }
+const [results, setResults] = useState(null)
+const [data, setData] = useState(null)
+const [search, setSearch] = useState('');
+const handleChange = (event) => {
+  const { name, value } = event.target;
+
+  if (name === 'query' ) {
+    setSearch(value);
+  }
+};
+
+
+  const searchNutrition =(async (values) => {
+    // event.preventDefault();
+    // if(values==null)
+    // {
+    //   return;
+    // }
+    setResults('loading');
+    const response = await searchFood(values);
+    setData(await response.json())
+    setResults('done');
+  })
+
+  //Formik Nutritioniix functions
+  const SearchResult = ({ food, index }) => {
+    const [added, setAdded] = useState(false) 
+  const addResult = (result) => {
+      console.log(result)
+      setAdded(prev => !prev)
+    }
+    return (
+   
+      <Box>
+    
+
+      <ListItem key={index}
+      >
+        <IconButton
+          size='xs'
+          mr={2}
+          icon={added ? <FaCheck /> : <FaPlus />}
+          color={added ? 'darkgreen' : 'gray'}
+          bg={added ? 'green' : 'white'}
+          onClick={()=>addResult(food)}
+        />
+        {food.food_name}
+
+      </ListItem>
+
+      </Box>
+    )
+  }
+const renderMeal = () => {
+  if (meal) {
+   return (
+        <>
+          <Center py={6}>
+          <Stack spacing={4}>
+            <Box>
+                <Input 
+                  id='query'
+                  name='query'
+                  type='query'
+                  value= {search}
+                  onChange={handleChange}
+                />
+                <Button my={6} onClick = {() =>searchNutrition(search) && console.log(search)}>
+                  Search Food
+                </Button>
+                </Box>         
+
+              {(results === 'loading') ? (
+                <CircularProgress isIndeterminate />
+              ) : (results === 'done') ? (
+                <List textAlign={'left'} spacing={3}>
+                  {data.foods.map((food, index) => <SearchResult food={food} index={index} />)}
+                </List> 
+              ) : (
+                null
+              )}
+           </Stack>
+          </Center>     
+        </>
+      )  
+    
+  }
+  else{
+     console.log('Search Food')
+  }
+}
+const handleMeal = () => {
+    if(meal===false){
+        setMeal(true);
+        renderMeal()
+    }
+    else{
+        setMeal(false)
+        renderMeal()
+    }
+}
+
+//Rendered onto timeline page
   return (
     <Box bg={useColorModeValue("gray.50", "inherit")} p={10} alignItems="center">
       <Box  alignItems="center">
@@ -229,10 +350,23 @@ const handleCardio = () => {
                     >
                     Add Cardio
                     </Button>
+                    <Button
+                      type="button"
+                      ml={5}
+                      variant="outline"
+                      size="sm"
+                      fontWeight="medium"
+                      _focus={{ shadow: "none" }}
+                      colorScheme = "blue"
+                      onClick = { () => handleMeal() }
+                    >
+                    Add Meal
+                    </Button>
                   </Flex>
                 </FormControl>
                 {renderExercise()}
                 {renderCardio()}
+                {renderMeal()}
               </Stack>
               <FormControl>
                   <Center>
