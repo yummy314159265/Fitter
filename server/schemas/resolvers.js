@@ -6,7 +6,8 @@ const resolvers = {
     Query: {
        me: async (parent, args, context) => {
          if (context.user) {
-           const userData = await User.findOne({ _id: context.user._id })
+           console.log(context.user)
+          //  const userData = await User.findOne({ _id: context.user._id })
            .populate('mealPlan')
            .populate('exercisePlan')
            .populate('goals')
@@ -56,19 +57,19 @@ const resolvers = {
    login: async (parent, { email, password }) => {
      const user = await User.findOne({ email });
 
-     if (!user) {
-       throw new AuthenticationError('No user with this email found!');
-     }
+    if (!user) {
+      throw new AuthenticationError('No user with this email found!');
+    }
 
-     const correctPw = await user.isCorrectPassword(password);
+    const correctPw = await user.isCorrectPassword(password);
 
-     if (!correctPw) {
-       throw new AuthenticationError('Incorrect password!');
-     }
+    if (!correctPw) {
+      throw new AuthenticationError('Incorrect password!');
+    }
 
-     const token = signToken(user);
-     return { token, user };
-   },
+    const token = signToken(user);
+    return { token, user };
+  },
    // add exercise plan
    addExercise: async (parent, args, context) => {
      if (!context.user) throw new AuthenticationError("You must be logged in to add Exercise plan!");
