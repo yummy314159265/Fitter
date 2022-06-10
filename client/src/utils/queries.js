@@ -45,6 +45,7 @@ export const QUERY_ME = gql`
             liftingWeight
         }
       }
+
       posts {
             id
             postAuthor
@@ -53,6 +54,46 @@ export const QUERY_ME = gql`
             likes
             tags                                
       } 
+
     }
   }
 `;
+
+export const GET_POSTS = gql`
+  query posts {
+    posts {
+      postAuthor
+      message
+      likes
+      exercises {
+        name
+        type
+        calories
+        distance
+        time
+        reps
+        sets
+        liftingWeight
+      }
+      meals {
+        name
+        type
+        calories
+        proteins
+        carbs
+        fats
+      }
+      tags
+      comments {
+        commentAuthor
+        message
+        image
+        likes
+        tags
+        createdAt
+      }
+      createdAt
+      image
+    }
+  }
+`

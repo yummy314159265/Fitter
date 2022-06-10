@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from '../../components/Post';
+import PostList from '../../components/PostList';
 import CreatePost from '../../components/createPost';
 import Sidebar from '../../components/Sidebar';
 
@@ -29,5 +29,4 @@ export default function postsPages() {
         </GridItem>
     </Grid>
  </>
-
 )}

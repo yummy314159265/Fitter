@@ -31,7 +31,9 @@ import {
 // import { Formik, useFormik } from 'formik';
 import { searchFood } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
+
 import { searchExercise } from "../../utils/API";
+
 
 
 
@@ -42,6 +44,7 @@ export default function Component() {
     const [exercise, setExercise] = useState(false);
     const [cardio, setCardio] = useState(false);
     const [meal, setMeal] = useState(false);
+
    
    //states for exercise query
     const [lift, setLift] = useState('');
@@ -49,6 +52,7 @@ export default function Component() {
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
     
+
 
 const renderExercise = () => {
   if (exercise) {
@@ -274,10 +278,12 @@ const handleChange = (event) => {
 
   const searchNutrition =(async (values) => {
     // event.preventDefault();
+
     if(values==null)
     {
       return;
     }
+
     setResults('loading');
     const response = await searchFood(values);
     setData(await response.json())
@@ -356,6 +362,7 @@ const renderMeal = () => {
     
   }
   else{
+
   }
 }
 const handleMeal = () => {
@@ -368,6 +375,7 @@ const handleMeal = () => {
         renderMeal()
     }
 }
+
 //POST the POST
 const [postdata, setPostdata]=useState('')
 const textChange=(event)=>{
@@ -380,6 +388,7 @@ const addPost=(text)=>{
 
   console.log(text);
 }
+
 
 //Rendered onto timeline page
   return (
