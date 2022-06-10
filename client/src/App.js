@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Posts from './pages/Timeline';
 import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import FoodSearch from './components/FoodSearch';
@@ -61,6 +62,10 @@ function App() {
           <Route 
             path="/signup" 
             element={<Signup />} 
+          />
+           <Route
+            path="/profile/edit"
+            element={<EditProfile />}
           />
           <Route
             path="/profile"

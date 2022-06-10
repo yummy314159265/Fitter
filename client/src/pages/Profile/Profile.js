@@ -64,7 +64,7 @@ import {
 
     // const user = GetData();
     const username = Auth.getProfile().data.username;
-    const {loading, error, data}= useQuery(QUERY_ME);
+    const {loading, data}= useQuery(QUERY_ME);
     // if (loading) {
     //   console.log("loading");
     // }
@@ -81,7 +81,7 @@ import {
 
     return (
       <Box display="flex">
-      <Container maxW={'5xl'} py={12}>        
+      <Container maxW={'5xl'} py={12}>
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
           <Stack spacing={4}  align="center">
@@ -107,7 +107,7 @@ import {
                 }}
                 // onClick={console.log("poke")}
                 >
-                Edit Profile
+                <a href="profile/edit">Edit Profile</a>
             </Button>
             </Stack>
             <Center>
@@ -123,7 +123,7 @@ import {
 
               <Feature
                 iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
-                text={'Your current goals : '}
+                text={`Your current goal`}
                 // add goal
               />
               <UnorderedList>
@@ -133,7 +133,7 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
-                text={'Your current exercise plan : '}
+                text={`Your current exercise plan`}
                 // add exercise plan
               />
               <UnorderedList>
@@ -142,7 +142,7 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
-                text={'Your current meal plan : '}
+                text={`Your current meal plan`}
                 // add meal plan
               />
               <UnorderedList>
@@ -151,7 +151,7 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
-                text={'Your most recent post : '}
+                text={`Your most recent post`}
                 // add post
               />
               <UnorderedList>

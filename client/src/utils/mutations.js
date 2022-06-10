@@ -50,6 +50,38 @@ export const ADD_USER = gql`
     }
 `;
 
+// mutation to update user
+export const UPDATE_USER = gql`
+    mutation updateUser(
+        $username: String!, 
+        $email: String!, 
+        $private: Boolean, 
+        $weight: Int,
+        $height: Int, 
+        $age: Int, 
+        $gender: String
+        ) {
+        updateUser(        
+            username: $username, 
+            email: $email, 
+            private: $private, 
+            weight: $weight, 
+            height: $height, 
+            age: $age, 
+            gender: $gender
+        )
+        {
+            username,
+            email,
+            private,
+            weight,
+            height,
+            age,
+            gender
+        }
+    }
+`;
+
 export const ADD_MEAL = gql`   
     mutation addMeal(
         $name: String!,
