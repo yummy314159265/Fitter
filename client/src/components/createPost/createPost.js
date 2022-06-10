@@ -20,6 +20,11 @@ import {
   UnorderedList,
   Text,
   Divider,
+  Accordion,
+  AccordionPanel,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
 
 } from "@chakra-ui/react";
 // import { Formik, useFormik } from 'formik';
@@ -40,7 +45,7 @@ export default function Component() {
 const renderExercise = () => {
   if (exercise) {
     return(
-        <Box as={'form'} mt={10}>
+        <Box as={'form'} mt={0}>
             <Stack spacing={4}>
               <Input
                 placeholder="Lift(Bench,Pullups,etc.)"
@@ -74,15 +79,15 @@ const renderExercise = () => {
               fontFamily={'heading'}
               mt={8}
               w={'full'}
-              bgGradient="linear(to-r, red.400,pink.400)"
+              bg="darkgreen"
               color={'white'}
               _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
+                bg: 'lightgreen',
                 boxShadow: 'xl',
               }}>
               Add Another Lift
             </Button>
-          </Box>
+        </Box>
     )
   }
   else{
@@ -137,10 +142,10 @@ const renderCardio = () => {
               fontFamily={'heading'}
               mt={8}
               w={'full'}
-              bgGradient="linear(to-r, red.400,pink.400)"
+              bg="darkgreen"
               color={'white'}
               _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
+                bg: 'lightgreen',
                 boxShadow: 'xl',
               }}>
               Add Another Cardio
@@ -229,7 +234,15 @@ const renderMeal = () => {
                   value= {search}
                   onChange={handleChange}
                 />
-                <Button my={6} onClick = {() =>searchNutrition(search) && console.log(search)}>
+                <Button 
+                  bg={'darkgreen'} 
+                  color={'white'} 
+                  my={6} 
+                  onClick = {() =>searchNutrition(search) && console.log(search)}
+                  _hover={{
+                    bg: 'lightgreen',
+                    boxShadow: 'xl'
+                  }}>
                   Search Food
                 </Button>
                 </Box>         
@@ -271,13 +284,14 @@ const handleMeal = () => {
         <SimpleGrid
           display={{ base: "initial", md: "grid" }}
           columns={{ md: 4 }}
-          spacing={{ md: 6 }}
+          spacing={{ md: 4 }}
+          mt={0}
           align="center"
         >
             <Center>
             </Center>
 
-          <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
+          <GridItem mt={[0, null, 0]} colSpan={4}>
             <chakra.form
               method="POST"
               shadow="base"
@@ -289,81 +303,92 @@ const handleMeal = () => {
                 px={4}
                 py={5}
                 bg={useColorModeValue("white", "gray.700")}
-                spacing={6}
-                p={{ sm: 6 }}
+                spacing={4}
+                p={2}
+                align='stretch'
               >
+                <Accordion allowMultiple allowToggle>
+                  <AccordionItem>
+             
+                      <h2>
+                        <AccordionButton>
+                          <FormControl id="createpost" mt={1}>
+                            <FormLabel
+                              fontSize="sm"
+                              fontWeight="md"
+                              color={useColorModeValue("gray.700", "gray.50")}
+                            >
+                              Write a Post!
+                            </FormLabel>
+                            <Textarea
+                              placeholder="Big Lift Today! New PR 225 Bench "
+                              mt={1}
+                              rows={3}
+                              shadow="sm"
+                              focusBorderColor="brand.400"
+                              fontSize={{ sm: "sm" }}
+                            />
+                          </FormControl>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel>
+                  
 
-                <div>
-                  <FormControl id="email" mt={1}>
-                    <FormLabel
-                      fontSize="sm"
-                      fontWeight="md"
-                      color={useColorModeValue("gray.700", "gray.50")}
-                    >
-                      Write a Post!
-                    </FormLabel>
-                    <Textarea
-                      placeholder="Big Lift Today! New PR 225 Bench "
-                      mt={1}
-                      rows={3}
-                      shadow="sm"
-                      focusBorderColor="brand.400"
-                      fontSize={{ sm: "sm" }}
-                    />
-                  </FormControl>
-                </div>
-
-                <FormControl>
-                  <Flex alignItems="center" mt={1}>
-         
-                    <Button
-                      type="button"
-                      ml={5}
-                      variant="outline"
-                      size="sm"
-                      fontWeight="medium"
-                      _focus={{ shadow: "none" }}
-                    >
-                    Add Image
-                    </Button>
-                    <Button
-                      type="button"
-                      ml={5}
-                      variant="outline"
-                      size="sm"
-                      fontWeight="medium"
-                      _focus={{ shadow: "none" }}
-                      colorScheme = "blue"
-                      onClick={  () => handleExercise() } 
-                    >
-                    Add Exercise
-                    </Button>
-                    <Button
-                      type="button"
-                      ml={5}
-                      variant="outline"
-                      size="sm"
-                      fontWeight="medium"
-                      _focus={{ shadow: "none" }}
-                      colorScheme = "blue"
-                      onClick = { () => handleCardio() }
-                    >
-                    Add Cardio
-                    </Button>
-                    <Button
-                      type="button"
-                      ml={5}
-                      variant="outline"
-                      size="sm"
-                      fontWeight="medium"
-                      _focus={{ shadow: "none" }}
-                      colorScheme = "blue"
-                      onClick = { () => handleMeal() }
-                    >
-                    Add Meal
-                    </Button>
-                  </Flex>
-                </FormControl>
+                        <FormControl>
+                          <Flex alignItems="center" mt={1}>
+                
+                            <Button
+                              type="button"
+                              ml={5}
+                              variant="outline"
+                              size="sm"
+                              fontWeight="medium"
+                              _focus={{ shadow: "none" }}
+                            >
+                            Add Image
+                            </Button>
+                            <Button
+                              type="button"
+                              ml={5}
+                              variant="outline"
+                              size="sm"
+                              fontWeight="medium"
+                              _focus={{ shadow: "none" }}
+                              colorScheme = "blue"
+                              onClick={  () => handleExercise() } 
+                            >
+                            Add Exercise
+                            </Button>
+                            <Button
+                              type="button"
+                              ml={5}
+                              variant="outline"
+                              size="sm"
+                              fontWeight="medium"
+                              _focus={{ shadow: "none" }}
+                              colorScheme = "blue"
+                              onClick = { () => handleCardio() }
+                            >
+                            Add Cardio
+                            </Button>
+                            <Button
+                              type="button"
+                              ml={5}
+                              variant="outline"
+                              size="sm"
+                              fontWeight="medium"
+                              _focus={{ shadow: "none" }}
+                              colorScheme = "blue"
+                              onClick = { () => handleMeal() }
+                            >
+                            Add Meal
+                            </Button>
+                          </Flex>
+                        </FormControl>
+                      </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>  
                 {renderExercise()}
                 {renderCardio()}
                 {renderMeal()}
