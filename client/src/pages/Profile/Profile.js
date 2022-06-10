@@ -55,14 +55,18 @@ import {
   };
 
   const GetData = async () => {
-    const response = await useQuery(QUERY_ME)
+    const response = await useQuery(QUERY_ME);
+    // console.log(response.data.me);
     localStorage.setItem('user_info', JSON.stringify(response.data.me));
-      
-    };
-    // console.log(response.data.me);    
-  
+  };
   
   export default function Profile() {
+
+    // ISSUES
+    // stores data in localstorage but only after loading the page
+    // On page load, no data is there to use
+    // This throws an error if I uncomment line 135 and try running it
+
     const testing = GetData();
     // const username = Auth.getProfile().data.username;
     // const {loading, data}= useQuery(QUERY_ME);
