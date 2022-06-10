@@ -7,10 +7,16 @@ import {
   Button,
   Stack,
   Icon,
+  Link,
   useColorModeValue,
   createIcon,
 } from '@chakra-ui/react';
+
+import { useAnimate }  from 'react-simple-animate';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { useNavigate } from "react-router-dom";
+
 
 export default function CallToActionWithAnnotation() {
   const navigate = useNavigate();
@@ -47,6 +53,7 @@ export default function CallToActionWithAnnotation() {
           alignSelf={'center'}
           position={'relative'}
         >
+          <Link as={RouterLink} to='/signup'>
           <Button
             bg={'green'}
             color={'white'}
@@ -59,6 +66,10 @@ export default function CallToActionWithAnnotation() {
           >
             Get Started
           </Button>
+          </Link>
+          
+
+            
           <Box>
             <Icon
               as={Arrow}
