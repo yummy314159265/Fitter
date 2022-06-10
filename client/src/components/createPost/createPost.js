@@ -323,10 +323,6 @@ const handleMeal = () => {
                             /> */}
                           </FormControl>
                 <Accordion allowMultiple allowToggle>
-                  <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <AccordionPanel>
 {/* write post */}
                           <FormControl id="createpost" mt={1}>
                             {/* <FormLabel
@@ -345,12 +341,7 @@ const handleMeal = () => {
                               fontSize={{ sm: "sm" }}
                             />
                           </FormControl>
-                          <AccordionIcon />
-                          </AccordionPanel>
-                        </AccordionButton>
-                      </h2>
-                      
-                  </AccordionItem>
+
                   <AccordionItem> 
                     <h2>
                       <AccordionButton>
@@ -431,6 +422,7 @@ const handleMeal = () => {
                           </Flex>
                         </FormControl>
                         </AccordionPanel>
+                        <AccordionIcon />
                       </AccordionButton>
                       </h2>
                   </AccordionItem>
