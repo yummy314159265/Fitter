@@ -3,7 +3,7 @@
 // Goals
 // Plans
 // Posts?
-
+import React  from 'react';
 import {
     Container,
     Box,
@@ -28,6 +28,12 @@ import {
     BsFillPlusCircleFill,
    } from "react-icons/bs";
 
+   import { useQuery } from '@apollo/client';
+
+   import theme from '../../Theme';
+   import Auth from '../../utils/auth';
+   import { QUERY_ME } from '../../utils/queries';
+
   const Feature = ({ text, icon, iconBg }) => {
     return (
       <Stack direction={'row'} align={'center'}>
@@ -45,7 +51,12 @@ import {
     );
   };
   
-  export default function SplitWithImage() {
+  export default function Profile() {
+    const username = Auth.getProfile().data.username;
+    const {loading, data}= useQuery(QUERY_ME);
+    const user = data?.me || {};
+     console.log(user);
+    
     return (
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>        
@@ -55,12 +66,12 @@ import {
           <Center>
             <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
           </Center>
-            <Heading>USERNAME'S Profile</Heading>
+            <Heading>{username}'s Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
-              <ListItem>WEIGHT</ListItem>
-              <ListItem>HEIGHT</ListItem>
-              <ListItem>AGE</ListItem>
-              <ListItem>GENDER</ListItem>         
+              <ListItem>{user.gender}</ListItem>  
+              <ListItem>{user.age} years old</ListItem>
+              <ListItem>{user.weight} pounds</ListItem>
+              <ListItem>{user.height} inches</ListItem>       
             </UnorderedList>
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
@@ -72,8 +83,9 @@ import {
                     transform: 'translateY(-2px)',
                     boxShadow: 'lg',
                 }}
-                onClick={console.log("poke")}>
-                Edit Profile
+                // onClick={console.log("poke")}
+                >
+                <a href="profile/edit">Edit Profile</a>
             </Button>
             </Stack>
             <Center>
@@ -86,24 +98,26 @@ import {
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
                 />
               }>
+
               <Feature
-                iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-                text={'Your current goal : '}
+                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
+                text={`Your current goal`}
                 // add goal
+
               />
               <Feature
-                iconBg={useColorModeValue('green.100', 'green.900')}
-                text={'Your current exercise plan : '}
+                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+                text={`Your current exercise plan`}
                 // add exercise plan
               />
               <Feature
-                iconBg={useColorModeValue('purple.100', 'purple.900')}
-                text={'Your current meal plan : '}
+                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+                text={`Your current meal plan`}
                 // add meal plan
               />
               <Feature
-                iconBg={useColorModeValue('red.100', 'red.900')}
-                text={'Your most recent post : '}
+                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+                text={`Your most recent post `}
                 // add post
               />
               <Button
@@ -116,7 +130,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Post
               </Button>
             </Stack>
@@ -135,7 +150,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Meal Plan
               </Button>
               <Button
@@ -148,7 +164,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Exercise Plan
                   
               </Button>
@@ -162,7 +179,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Edit Goal
               </Button>
             </ButtonGroup>

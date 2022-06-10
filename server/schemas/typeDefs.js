@@ -206,6 +206,16 @@ const typeDefs = gql`
       carbs: Int
       fats: Int
     ): Meal
+    # Update user information
+    updateUser(       
+      username: String!
+      email: String!
+      private: Boolean    
+      weight: Int    
+      height: Int
+      age: Int
+      gender: String
+    ): User
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
