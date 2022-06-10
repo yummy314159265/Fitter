@@ -15,9 +15,16 @@ import {
     FiSettings
 } from 'react-icons/fi'
 import NavItem from './NavItem'
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large")
+    const navigate = useNavigate();
+
+    const handleClick = (event) => {
+        event.preventDefault();
+        navigate('/profile', { replace: true})
+  }
     return (
             <Flex
                 pos="sticky"
@@ -56,28 +63,19 @@ export default function Sidebar() {
                         color="black"
                         title="Timeline" 
                         active
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Timeline';
-                            }} />
+                         />
                     <NavItem 
                         navSize={navSize} 
                         icon={FiUser} 
                         color="black"
                         title="Profile"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Profile';
-                            }} />
+                        onClick={handleClick} />
                     <NavItem 
                         navSize={navSize} 
                         icon={FiSettings} 
                         color="black"
                         title="Settings"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Settings';
-                            }} />
+                         />
                 </Flex>
 
                 <Flex

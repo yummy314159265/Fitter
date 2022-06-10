@@ -25,7 +25,7 @@ export default function postsPages() {
         </GridItem>
 
         <GridItem colSpan={4}>
-            <Post />
+            <PostList />
         </GridItem>
     </Grid>
  </>
