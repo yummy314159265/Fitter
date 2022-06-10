@@ -6,7 +6,7 @@ export const QUERY_ME = gql`
       id
       username
       email
-      private
+      isPrivate
       weight
       height
       age
