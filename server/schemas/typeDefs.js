@@ -12,8 +12,8 @@ const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-     "user who choose private true will not be shared for anything with other users"
-    private: Boolean
+     "user who choose isPrivate true will not be shared for anything with other users"
+    isPrivate: Boolean
     "Store weight in lbs" 
     weight: Int
     "Store height in inches" 
@@ -154,7 +154,7 @@ const typeDefs = gql`
       username: String!, 
       password: String!, 
       email: String!, 
-      private: Boolean,
+      isPrivate: Boolean,
       weight: Int,
       height: Int,
       age: Int,
@@ -210,7 +210,7 @@ const typeDefs = gql`
     updateUser(       
       username: String!
       email: String!
-      private: Boolean    
+      isPrivate: Boolean    
       weight: Int    
       height: Int
       age: Int

@@ -40,10 +40,11 @@ export default function SignupCard() {
     },
     onSubmit: async ({ username, email, password}) => {
       try {
+        console.log('before addUser')
         const { data } = await addUser({
           variables: { username, email, password },
         });
-
+        console.log('after addUser')
         Auth.login(data.addUser.token);
       } catch (e) {
         console.error(e);
