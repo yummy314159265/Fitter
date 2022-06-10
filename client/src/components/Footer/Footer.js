@@ -61,8 +61,8 @@ export default function SmallCentered() {
         >
           <Image htmlWidth='137px' htmlHeight='32px' src={logoImg} />
           <Stack direction={'row'} spacing={6}>
-            <Link href={'#'}>Home</Link>
-            <Link href={'#'}>About</Link>
+            <Link as={RouterLink} to='/'>Home</Link>
+            <Link as={RouterLink} to='/about'>About</Link>
             <Link as={RouterLink} to='/contact'>Contact</Link>
           </Stack>
         </Container>
