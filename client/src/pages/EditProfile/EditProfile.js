@@ -3,7 +3,8 @@
 // Goals
 // Plans
 // Posts?
-import React  from 'react';
+import React, { useState }  from 'react';
+import { useNavigate  } from 'react-router-dom';
 import {
     Container,
     Box,
@@ -15,9 +16,9 @@ import {
     RadioGroup,
     NumberInput,
     NumberInputField,
-    NumberIncrementStepper,
     NumberInputStepper,
-    NumberDecrementStepper,    
+    NumberIncrementStepper,
+    NumberDecrementStepper,  
     Radio,
     HStack,
     InputGroup,
@@ -33,8 +34,11 @@ import {
     Avatar,
     ListItem,
     UnorderedList,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
   } from '@chakra-ui/react';
-  import { useState } from 'react';
   import { useFormik, Field } from 'formik';
   import { 
     BsFillPersonLinesFill,
@@ -45,7 +49,9 @@ import {
    import { useQuery } from '@apollo/client';
 
    import theme from '../../Theme';
+   import { useMutation } from '@apollo/client';
    import Auth from '../../utils/auth';
+   import { UPDATE_USER } from '../../utils/mutations'
    import { QUERY_ME } from '../../utils/queries';
 
   const Feature = ({ text, icon, iconBg }) => {
@@ -66,6 +72,11 @@ import {
   };
   
   export default function EditProfile() {
+    // success to show message profile updated successfully.
+    const [successmsg, setSuccessMsg] = useState('');
+    let navigate = useNavigate();
+
+    const [updateUser, { error }] = useMutation(UPDATE_USER);
     const {data}= useQuery(QUERY_ME);
     const user = data?.me || {};     
     console.log(user)
@@ -74,16 +85,34 @@ import {
     initialValues: {
       username: user.username ? user.username: "",
       email: user.email ? user.email: "",
-      privateProfile: user.private? user.private: "",
+      privateProfile: user.private? "1": "0",
       weight: user.weight? user.weight: "",
       height: user.height? user.height: "",
       age: user.age? user.age: "",
-      gender: user.gender? user.gender: ""
+      gender: user.gender? user.gender: "",
     }, 
     enableReinitialize: true,  
-    onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
-      } 
+    onSubmit: async ({ username, email, privateProfile, weight, height, age, gender }) => {      
+      try {
+        // private        
+        const { data } = await updateUser({          
+          variables: { username, email, privateProfile, weight, height, age, gender },
+        });     
+        if (error) {
+          throw new Error('something went wrong!');
+        }
+        else {
+          //setSuccessMsg("Your profile has been updated successfully.");  
+          navigate("../profile", { replace: true });
+        }
+        
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    // onSubmit: (values) => {
+    //     alert(JSON.stringify(values, null, 2));
+    //   } 
   });
     
     return (
@@ -117,51 +146,42 @@ import {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor='weight'>Weight</FormLabel>
-                <NumberInput id='weight' name='weight' 
-                value={formik.values.weight}
-                onChange={formik.handleChange} max={500} min={30}>
-                <NumberInputField/>
-                <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-                </NumberInputStepper>
-                </NumberInput> 
+              <FormLabel htmlFor='weight'>Weight</FormLabel>
+                <Input 
+                  id='weight'
+                  name='weight'
+                  type='number'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.weight}
+                />
               </FormControl>  
               <FormControl>
                 <FormLabel htmlFor='height'>Height</FormLabel>
-                <NumberInput id='height' name='height' 
-                value={formik.values.height}
-                onChange={formik.handleChange} max={100} min={30}>
-                <NumberInputField/>
-                <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-                </NumberInputStepper>
-                </NumberInput> 
+                <Input 
+                  id='height'
+                  name='height'
+                  type='number'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.height}
+                />
               </FormControl>  
               <FormControl>
                 <FormLabel htmlFor='age'>Age</FormLabel>
-                <NumberInput id='age' name='age' 
-                value={formik.values.age}
-                onChange={formik.handleChange} max={100} min={10}>
-                <NumberInputField/>
-                <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-                </NumberInputStepper>
-                </NumberInput>                
+                <Input 
+                  id='age'
+                  name='age'
+                  type='number'
+                  variant='filled'
+                  onChange={formik.handleChange}
+                  value={formik.values.age}
+                />               
               </FormControl> 
               <FormControl as='fieldset'>
-                <div id="gender-radio-group">Gender</div>
-                <div role="group" aria-labelledby='gender-radio-group'>
-                  <label>
-                    <Field type="radio" name="gender" value="Male">Male</Field>
-
-                  </label>
-                </div>
+                
                 <FormLabel as='legend'>Gender</FormLabel>
-                <RadioGroup defaultValue={formik.values.gender}>
+                <RadioGroup value={formik.values.gender}>
                     <HStack spacing='24px'>
                     <Radio name ='gender' onChange={formik.handleChange} value='Male'>Male</Radio>
                     <Radio name ='gender' onChange={formik.handleChange} value='Female'>Female</Radio>                    
@@ -170,10 +190,10 @@ import {
                 </FormControl> 
                 <FormControl as='fieldset'>
                 <FormLabel as='legend'>Private Profile?</FormLabel>
-                <RadioGroup defaultValue={formik.values.privateProfile}>
+                <RadioGroup value={formik.values.privateProfile}>
                     <HStack spacing='24px'>
-                    <Radio value='true'>Yes</Radio>
-                    <Radio value='false'>No</Radio>                    
+                    <Radio name ='privateProfile' value="1" onChange={formik.handleChange}>Yes</Radio>
+                    <Radio name ='privateProfile' value="0" onChange={formik.handleChange}>No</Radio>                    
                     </HStack>
                 </RadioGroup>                
                 </FormControl>  
@@ -190,7 +210,15 @@ import {
                   Submit
                 </Button>
                 </Stack>
-        </form> </Box>
+        </form>
+        {successmsg && (
+          <Stack spacing={3}>
+              <Alert status='success'>
+              <AlertIcon />
+              {successmsg}
+            </Alert>
+            </Stack>  
+            )} </Box>
     </Flex>
     );
   }
