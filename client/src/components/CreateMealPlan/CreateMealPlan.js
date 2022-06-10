@@ -14,6 +14,8 @@ import {
   FormLabel,
   Textarea,
   Button,
+  ButtonGroup,
+  Link,
   Center,
   Input,
   ListItem,
@@ -23,13 +25,49 @@ import {
   UnorderedList,
   Text,
   Divider,
-
 } from "@chakra-ui/react";
+
+import { 
+    BsFillPersonLinesFill,
+    BsTools,
+    BsFillPlusCircleFill,
+   } from "react-icons/bs";
+
+import { Link as RouterLink } from 'react-router-dom';
+
 // import { Formik, useFormik } from 'formik';
 import { searchFood } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
 
 export default function Component() {
+
+
+//     const [cart, setCart] = useState([]);
+
+//     function addItemToCart(e) {
+//       const item = e.target.value;
+//       console.log(item);
+//       setCart([...cart, item]);
+//     }
+  
+//     return (
+//       <div className="app">
+//         <div className="items">
+//           <button value="MacBook Pro" onClick={addItemToCart}> MacBook Pro</button>
+//           <button value="iPhone XS" onClick={addItemToCart}>iPhone XS</button>
+//           <button value="Gem" onClick={addItemToCart}> Gem</button>
+//           <button value="Teddy Bear" onClick={addItemToCart}> Teddy Bear</button>
+//         </div>
+//         <div className="cart">
+//           Cart
+//           <ul>
+//             {cart.map(item => <li key={item}>{item}</li>)}
+//           </ul>
+//         </div>
+//       </div>
+//     );
+//   }
+
 
 const [meal, setMeal] = useState(false);
 
@@ -160,9 +198,6 @@ return (
             </Button> */}
         {renderMeal()}
     </Stack>
-          <Center>
-            <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
-          </Center>
             <Heading>text's Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
               <ListItem>text</ListItem>  

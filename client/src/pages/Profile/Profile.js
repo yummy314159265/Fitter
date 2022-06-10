@@ -3,7 +3,7 @@
 // Goals
 // Plans
 // Posts?
-import React  from 'react';
+import React from 'react';
 import {
     Container,
     Box,
@@ -53,23 +53,24 @@ import {
       </Stack>
     );
   };
+
+  const GetData = async () => {
+    const response = await useQuery(QUERY_ME)
+    localStorage.setItem('user_info', JSON.stringify(response.data.me));
+      
+    };
+    // console.log(response.data.me);    
+  
   
   export default function Profile() {
-
-    // const GetData = async () => {
-    //   const response = await useQuery(QUERY_ME);
-    //   console.log(response.data.me);
-    //   return (response.data.me)
-    // }
-
-    // const user = GetData();
-    const username = Auth.getProfile().data.username;
-    const {loading, data}= useQuery(QUERY_ME);
+    const testing = GetData();
+    // const username = Auth.getProfile().data.username;
+    // const {loading, data}= useQuery(QUERY_ME);
     // if (loading) {
     //   console.log("loading");
     // }
     // console.log(data);
-    const user = data?.me || {};
+    const user = JSON.parse(localStorage.getItem('user_info')) || {};
     console.log(user);
     console.log(user.age)
     // const reversedKeys = Object.keys(user.mealPlan).reverse();
@@ -88,7 +89,7 @@ import {
           <Center>
             <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
           </Center>
-            <Heading>{username}'s Profile</Heading>
+            <Heading>{user.username}'s Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
               <ListItem>{user.gender}</ListItem>  
               <ListItem>{user.age} years old</ListItem>
@@ -105,7 +106,6 @@ import {
                     transform: 'translateY(-2px)',
                     boxShadow: 'lg',
                 }}
-                // onClick={console.log("poke")}
                 >
                 <a href="profile/edit">Edit Profile</a>
             </Button>
@@ -128,7 +128,7 @@ import {
               />
               <UnorderedList>
                 
-                {/* <ListItem>Target weight : {targetWeight}</ListItem> */}
+                {/* <ListItem>Target weight : {user.goals[0].goalWeight}</ListItem> */}
                 <ListItem>goal 2</ListItem>
               </UnorderedList>
               <Feature
@@ -169,7 +169,6 @@ import {
                         transform: 'translateY(-2px)',
                         boxShadow: 'lg',
                     }}
-                    // onClick={console.log("poke")}
                     >
                     Create Post
                 </Button>
@@ -180,6 +179,7 @@ import {
         </Box>
           <Box align="center">
             <ButtonGroup variant='outline' spacing='6'>
+            <Link as={RouterLink} to='/meal-plan'>
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={5}
@@ -194,6 +194,7 @@ import {
                   >
                   Create Meal Plan
               </Button>
+            </Link>
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={8}
