@@ -50,6 +50,22 @@ export const ADD_USER = gql`
     }
 `;
 
+// mutation to update user
+export const updateUser = gql`
+    mutation updateUser() {
+        updateUser() {
+            id
+            username        
+            email
+            private
+            weight
+            height
+            age
+            gender
+        }
+    }
+`;
+
 export const ADD_MEAL = gql`   
     mutation addMeal(
         $name: String!,
