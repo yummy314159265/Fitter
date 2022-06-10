@@ -11,7 +11,9 @@ const resolvers = {
            .populate('mealPlan')
            .populate('exercisePlan')
            .populate('goals')
-           .populate('posts')
+           .populate({
+             path: 'posts', 
+             option: { 'createdAt': -1 } })
            .populate('friends')
            .select('-__v -password')              
             return userData;
@@ -41,13 +43,23 @@ const resolvers = {
  Mutation: {   
    // add new user
    addUser: async (parent, args) => {
-    const user = await User.create(args);
-    const token = signToken(user);  
-    return { token, user };
+     const user = await User.create(args);
+     const token = signToken(user);  
+     return { token, user };
+   },
+   // update user information
+   updateUser: async (parent, args, context) => {
+    if (!context.user) throw new AuthenticationError("You must be logged in to update user!");
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: context.user._id },
+      { $set: args },
+      { runValidators: true, new: true }
+    );
+    return updatedUser;
   },
-  // login 
-  login: async (parent, { email, password }) => {
-    const user = await User.findOne({ email });
+   // login 
+   login: async (parent, { email, password }) => {
+     const user = await User.findOne({ email });
 
     if (!user) {
       throw new AuthenticationError('No user with this email found!');
