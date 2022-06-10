@@ -1,4 +1,6 @@
 const express = require('express');
+
+// for refactor with passport
 // const session = require('express-session');
 // const passport = require('passport');
 // const { buildContext } = require('graphql-passport');
@@ -15,6 +17,7 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// for refactor with passport
 // var store = new MongoDBStore({
 //   uri: 'mongodb://127.0.0.1:27017/fitnessDB',
 //   collection: 'mySessions'
@@ -28,6 +31,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// for refactor with passport
 // app.use(session({
 //   secret: 'This is a secret',
 //   cookie: {

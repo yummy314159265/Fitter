@@ -32,7 +32,11 @@ const resolvers = {
          return await User.find({
            exercisePlan: {calories: args.calories}
          });            
-       },  
+       },
+       posts: async (parent, args, context) => {
+        // create algorithm to show users desired posts if user is logged in
+        return await Post.find({}).populate('exercises').populate('meals');
+       }
  },   
  Mutation: {   
    // add new user
