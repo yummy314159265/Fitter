@@ -85,18 +85,18 @@ import {
     initialValues: {
       username: user.username ? user.username: "",
       email: user.email ? user.email: "",
-      privateProfile: user.private? "1": "0",
+      isPrivate: user.isPrivate? "1": "0",
       weight: user.weight? user.weight: "",
       height: user.height? user.height: "",
       age: user.age? user.age: "",
       gender: user.gender? user.gender: "",
     }, 
     enableReinitialize: true,  
-    onSubmit: async ({ username, email, privateProfile, weight, height, age, gender }) => {      
+    onSubmit: async ({ username, email, isPrivate, weight, height, age, gender }) => {      
       try {
-        // private        
+        isPrivate = isPrivate === "1" ? true: false;
         const { data } = await updateUser({          
-          variables: { username, email, privateProfile, weight, height, age, gender },
+          variables: { username, email, isPrivate, weight, height, age, gender },
         });     
         if (error) {
           throw new Error('something went wrong!');
@@ -190,10 +190,10 @@ import {
                 </FormControl> 
                 <FormControl as='fieldset'>
                 <FormLabel as='legend'>Private Profile?</FormLabel>
-                <RadioGroup value={formik.values.privateProfile}>
+                <RadioGroup value={formik.values.isPrivate}>
                     <HStack spacing='24px'>
-                    <Radio name ='privateProfile' value="1" onChange={formik.handleChange}>Yes</Radio>
-                    <Radio name ='privateProfile' value="0" onChange={formik.handleChange}>No</Radio>                    
+                    <Radio name ='isPrivate' value="1" onChange={formik.handleChange}>Yes</Radio>
+                    <Radio name ='isPrivate' value="0" onChange={formik.handleChange}>No</Radio>                    
                     </HStack>
                 </RadioGroup>                
                 </FormControl>  

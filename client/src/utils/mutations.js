@@ -8,7 +8,7 @@ export const LOGIN_USER = gql`
                 id
                 username
                 email
-                private
+                isPrivate
                 weight
                 height
                 age
@@ -24,7 +24,7 @@ export const ADD_USER = gql`
         $username: String!, 
         $password: String!, 
         $email: String!, 
-        $private: Boolean,
+        $isPrivate: Boolean,
         $weight: Int,
         $height: Int,
         $age: Int,
@@ -34,7 +34,7 @@ export const ADD_USER = gql`
         username: $username,
         password: $password,
         email: $email, 
-        private: $private,
+        isPrivate: $isPrivate,
         weight: $weight,
         height: $height,
         age: $age,
@@ -55,7 +55,7 @@ export const UPDATE_USER = gql`
     mutation updateUser(
         $username: String!, 
         $email: String!, 
-        $private: Boolean, 
+        $isPrivate: Boolean, 
         $weight: Int,
         $height: Int, 
         $age: Int, 
@@ -64,7 +64,7 @@ export const UPDATE_USER = gql`
         updateUser(        
             username: $username, 
             email: $email, 
-            private: $private, 
+            isPrivate: $isPrivate, 
             weight: $weight, 
             height: $height, 
             age: $age, 
@@ -73,7 +73,7 @@ export const UPDATE_USER = gql`
         {
             username,
             email,
-            private,
+            isPrivate,
             weight,
             height,
             age,
