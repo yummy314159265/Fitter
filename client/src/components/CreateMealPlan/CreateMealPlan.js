@@ -1,99 +1,174 @@
-// profile page shows ...
-// Name
-// Goals
-// Plans
-// Posts?
-import React  from 'react';
+import React, {useState} from "react";
 import {
-    Container,
-    Box,
-    SimpleGrid,
-    Flex,
-    Heading,
-    Text,
-    Button,
-    ButtonGroup,
-    Stack,
-    StackDivider,
-    Center,
-    useColorModeValue,
-    Avatar,
-    ListItem,
-    UnorderedList,
-    List,
-    Link,
-  } from '@chakra-ui/react';
+  chakra,
+  Box,
+  Container,
+  Heading,
+  StackDivider,
+  Flex,
+  useColorModeValue,
+  SimpleGrid,
+  GridItem,
+  Stack,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Button,
+  Center,
+  Input,
+  ListItem,
+  IconButton,
+  CircularProgress,
+  List,
+  UnorderedList,
+  Text,
+  Divider,
 
-  import { 
-    BsFillPersonLinesFill,
-    BsTools,
-    BsFillPlusCircleFill,
-   } from "react-icons/bs";
+} from "@chakra-ui/react";
+// import { Formik, useFormik } from 'formik';
+import { searchFood } from '../../utils/API';
+import { FaPlus, FaCheck } from 'react-icons/fa';
 
-   import { useQuery } from '@apollo/client';
-   import { Link as RouterLink } from 'react-router-dom';
+export default function Component() {
 
-   import theme from '../../Theme';
-   import Auth from '../../utils/auth';
-   import { QUERY_ME } from '../../utils/queries';
+const [meal, setMeal] = useState(false);
 
-  const Feature = ({ text, icon, iconBg }) => {
-    return (
-      <Stack direction={'row'} align={'center'}>
-        <Flex
-          w={8}
-          h={8}
-          align={'center'}
-          justify={'center'}
-          rounded={'full'}
-          bg={iconBg}>
-          {icon}
-        </Flex>
-        <Text fontWeight={600}>{text}</Text>
-      </Stack>
-    );
-  };
-  
-  export default function Profile() {
+const [results, setResults] = useState(null)
+const [data, setData] = useState(null)
+const [search, setSearch] = useState('');
+const handleChange = (event) => {
+  const { name, value } = event.target;
 
-    // const GetData = async () => {
-    //   const response = await useQuery(QUERY_ME);
-    //   console.log(response.data.me);
-    //   return (response.data.me)
+  if (name === 'query' ) {
+    setSearch(value);
+  }
+};
+
+
+  const searchNutrition =(async (values) => {
+    // event.preventDefault();
+    // if(values==null)
+    // {
+    //   return;
     // }
+    setResults('loading');
+    const response = await searchFood(values);
+    setData(await response.json())
+    setResults('done');
+  })
 
-    // const user = GetData();
-    const username = Auth.getProfile().data.username;
-    const {loading, error, data}= useQuery(QUERY_ME);
-    // if (loading) {
-    //   console.log("loading");
-    // }
-    // console.log(data);
-    const user = data?.me || {};
-    console.log(user);
-    console.log(user.age)
-    // const reversedKeys = Object.keys(user.mealPlan).reverse();
-    // reversedKeys.forEach(key => {
-    //   console.log(key, user.mealPlan[key]);
-    // });
-    // const targetWeight = user.goals[0].goalWeight;
-    // console.log(targetWeight);
-
+  //Formik Nutritioniix functions
+  const SearchResult = ({ food, index }) => {
+    const [added, setAdded] = useState(false) 
+  const addResult = (result) => {
+      console.log(result)
+      setAdded(prev => !prev)
+    }
     return (
-      <Box display="flex">
+   
+      <Box>
+    
+
+      <ListItem key={index}
+      >
+        <IconButton
+          size='xs'
+          mr={2}
+          icon={added ? <FaCheck /> : <FaPlus />}
+          color={added ? 'darkgreen' : 'gray'}
+          bg={added ? 'green' : 'white'}
+          onClick={()=>addResult(food)}
+        />
+        {food.food_name}
+
+      </ListItem>
+
+      </Box>
+    )
+  }
+const renderMeal = () => {
+//   if (meal) {
+   return (
+        <>
+          <Center py={6}>
+          <Stack spacing={4}>
+            <Box>
+                <Input 
+                  id='query'
+                  name='query'
+                  type='query'
+                  value= {search}
+                  onChange={handleChange}
+                />
+                <Button my={6} onClick = {() =>searchNutrition(search) && console.log(search)}>
+                  Search Food
+                </Button>
+                </Box>         
+
+              {(results === 'loading') ? (
+                <CircularProgress isIndeterminate />
+              ) : (results === 'done') ? (
+                <List textAlign={'left'} spacing={3}>
+                  {data.foods.map((food, index) => <SearchResult food={food} index={index} />)}
+                </List> 
+              ) : (
+                null
+              )}
+           </Stack>
+          </Center>     
+        </>
+      )  
+    
+//   }
+
+//   else{
+//      console.log('Search Food')
+//   }
+}
+const handleMeal = () => {
+    if(meal===false){
+        setMeal(true);
+        renderMeal()
+    }
+    else{
+        setMeal(false)
+        renderMeal()
+    }
+}
+return (
+    <Box display="flex">
       <Container maxW={'5xl'} py={12}>        
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
           <Stack spacing={4}  align="center">
+          <Stack>
+        <Center>
+            <Text>Search for food to add to your meal plan!</Text>
+        </Center>
+
+        {/* <Button
+            type="button"
+            ml={5}
+            variant="outline"
+            size="sm"
+            fontWeight="medium"
+            _focus={{ shadow: "none" }}
+            colorScheme = "blue"
+            onClick = { () => handleMeal() }
+            >
+            Add Meal
+            </Button> */}
+        {renderMeal()}
+    </Stack>
           <Center>
             <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
           </Center>
-            <Heading>{username}'s Profile</Heading>
+            <Heading>text's Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
-              <ListItem>{user.gender}</ListItem>  
-              <ListItem>{user.age} years old</ListItem>
-              <ListItem>{user.weight} pounds</ListItem>
-              <ListItem>{user.height} inches</ListItem>       
+              <ListItem>text</ListItem>  
+              <ListItem>text years old</ListItem>
+              <ListItem>text pounds</ListItem>
+              <ListItem>text inches</ListItem>       
             </UnorderedList>
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
@@ -120,44 +195,6 @@ import {
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
                 />
               }>
-
-              <Feature
-                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
-                text={'Your current goals : '}
-                // add goal
-              />
-              <UnorderedList>
-                
-                {/* <ListItem>Target weight : {targetWeight}</ListItem> */}
-                <ListItem>goal 2</ListItem>
-              </UnorderedList>
-              <Feature
-                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
-                text={'Your current exercise plan : '}
-                // add exercise plan
-              />
-              <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
-              </UnorderedList>
-              <Feature
-                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
-                text={'Your current meal plan : '}
-                // add meal plan
-              />
-              <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
-              </UnorderedList>
-              <Feature
-                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
-                text={'Your most recent post : '}
-                // add post
-              />
-              <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
-              </UnorderedList>
               <Link as={RouterLink} to='/posts'>
                 <Button
                     leftIcon={<BsFillPlusCircleFill />}              
@@ -227,5 +264,6 @@ import {
           </Box>       
       </Container>
     </Box>
+
     );
-  }
+}

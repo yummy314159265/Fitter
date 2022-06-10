@@ -20,6 +20,7 @@ import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import FoodSearch from './components/FoodSearch';
+import Meals from './pages/MealPlan';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -80,6 +81,10 @@ function App() {
           <Route 
             path="/food-search"
             element={<FoodSearch />}
+          />
+          <Route
+            path="/meal-plan"
+            element={<Meals />}
           />
         </Routes>
         <Footer />
