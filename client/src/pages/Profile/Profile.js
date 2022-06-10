@@ -53,10 +53,17 @@ import {
   
   export default function Profile() {
     const username = Auth.getProfile().data.username;
+<<<<<<< HEAD
     const {loading, data}= useQuery(QUERY_ME);
     const user = data?.me || {};
      console.log(user);
     
+=======
+    const {loading, error, data}= useQuery(QUERY_ME);
+    const user = data?.me || {};
+    console.log(user);
+
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
     return (
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>        
@@ -85,7 +92,11 @@ import {
                 }}
                 // onClick={console.log("poke")}
                 >
+<<<<<<< HEAD
                 <a href="profile/edit">Edit Profile</a>
+=======
+                Edit Profile
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
             </Button>
             </Stack>
             <Center>
@@ -101,23 +112,39 @@ import {
 
               <Feature
                 iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
+<<<<<<< HEAD
                 text={`Your current goal`}
+=======
+                text={'Your current goal : '}
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
                 // add goal
 
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+<<<<<<< HEAD
                 text={`Your current exercise plan`}
+=======
+                text={'Your current exercise plan : '}
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
                 // add exercise plan
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+<<<<<<< HEAD
                 text={`Your current meal plan`}
+=======
+                text={'Your current meal plan : '}
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
                 // add meal plan
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+<<<<<<< HEAD
                 text={`Your most recent post `}
+=======
+                text={'Your most recent post : '}
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
                 // add post
               />
               <Button

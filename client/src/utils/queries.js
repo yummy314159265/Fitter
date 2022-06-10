@@ -45,6 +45,7 @@ export const QUERY_ME = gql`
             liftingWeight
         }
       }
+<<<<<<< HEAD
       posts {
             id
             postAuthor
@@ -53,6 +54,8 @@ export const QUERY_ME = gql`
             likes
             tags                                
       } 
+=======
+>>>>>>> 641324223ed91640c1a4330505414bf72a76c499
     }
   }
 `;

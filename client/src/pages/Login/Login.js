@@ -24,9 +24,9 @@ import { LOGIN_USER } from '../../utils/mutations';
 // would need to add import for forgot password
 
 export default function SimpleCard() {
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error}] = useMutation(LOGIN_USER);
 
-  const formik =  useFormik({    
+  const formik =  useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -39,7 +39,6 @@ export default function SimpleCard() {
         const { data } = await login({
           variables: { email: values.email, password: values.password },
         });    
-
         Auth.login(data.login.token);
 
       } catch (e) {
