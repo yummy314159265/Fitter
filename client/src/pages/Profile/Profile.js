@@ -53,10 +53,12 @@ import {
   
   export default function Profile() {
     const username = Auth.getProfile().data.username;
+
     const {loading, data}= useQuery(QUERY_ME);
     const user = data?.me || {};
      console.log(user);
     
+
     return (
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>        
@@ -85,7 +87,9 @@ import {
                 }}
                 // onClick={console.log("poke")}
                 >
+
                 <a href="profile/edit">Edit Profile</a>
+
             </Button>
             </Stack>
             <Center>
@@ -102,22 +106,29 @@ import {
               <Feature
                 iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
                 text={`Your current goal`}
+
                 // add goal
 
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+
                 text={`Your current exercise plan`}
+
                 // add exercise plan
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+
                 text={`Your current meal plan`}
+
                 // add meal plan
               />
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+
                 text={`Your most recent post `}
+
                 // add post
               />
               <Button

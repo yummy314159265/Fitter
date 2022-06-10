@@ -1,11 +1,11 @@
 import React from 'react';
-import Post from '../../components/Post';
+import PostList from '../../components/PostList';
 import CreatePost from '../../components/createPost';
 
 export default function postsPages() {
- return(<>
- <CreatePost />
- < Post />
+ return(
+ <>
+  <CreatePost />
+  <PostList />
  </>
-
 )}
