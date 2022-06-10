@@ -1,6 +1,5 @@
 import {
   Box,
-  Center,
   Heading,
   Text,
   Stack,
@@ -8,14 +7,10 @@ import {
   useColorModeValue,
   Image
 } from '@chakra-ui/react';
-import Sidebar from '../Sidebar/Sidebar';
 
 export default function Post() {
   return (
-    <>
-      <Sidebar />
-    
-      {/* <Center py={6}> */}
+    <> 
         <Box
           maxW={'445px'}
           w={'full'}
@@ -71,7 +66,6 @@ export default function Post() {
             </Stack>
           </Stack>
         </Box>
-      {/* </Center> */}
     </>
   );
 }
