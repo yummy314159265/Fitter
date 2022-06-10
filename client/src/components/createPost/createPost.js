@@ -26,10 +26,12 @@ import {
   AccordionButton,
   AccordionIcon,
 
+
 } from "@chakra-ui/react";
 // import { Formik, useFormik } from 'formik';
 import { searchFood } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
+import { searchExercise } from "../../utils/API";
 
 
 
@@ -40,7 +42,13 @@ export default function Component() {
     const [exercise, setExercise] = useState(false);
     const [cardio, setCardio] = useState(false);
     const [meal, setMeal] = useState(false);
-
+   
+   //states for exercise query
+    const [lift, setLift] = useState('');
+    const [weight, setWeight] = useState('');
+    const [sets, setSets] = useState('');
+    const [reps, setReps] = useState('');
+    
 
 const renderExercise = () => {
   if (exercise) {
@@ -55,6 +63,8 @@ const renderExercise = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                value = {lift}
+                onChange={handleLiftchange}
               />
               <Input
                 placeholder="Weight"
@@ -64,6 +74,19 @@ const renderExercise = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                value = {weight}
+                onChange={handleWeightchange}
+              />
+                 <Input
+                placeholder="Sets"
+                bg={'gray.100'}
+                border={0}
+                color={'gray.500'}
+                _placeholder={{
+                  color: 'gray.500',
+                }}
+                value = {sets}
+                onChange={handleSetchange}
               />
               <Input
                 placeholder="Reps"
@@ -73,6 +96,8 @@ const renderExercise = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                value={reps}
+                onChange={handleRepchange}
               />
             </Stack>
             <Button
@@ -84,16 +109,45 @@ const renderExercise = () => {
               _hover={{
                 bg: 'lightgreen',
                 boxShadow: 'xl',
-              }}>
-              Add Another Lift
+              }}
+              onClick = {() => queryExercise()}>
+              Add Lift
             </Button>
-        </Box>
+            {(liftResults === 'loading') ? (
+                <CircularProgress isIndeterminate />
+              ) : (liftResults === 'done') ? (
+                <List textAlign={'left'} spacing={3}>
+                  {liftData.lifts.map((lift, index) => <ExerciseResult lift={lift} index={index} />)}
+                </List> 
+              ) : (
+                null
+              )}
+          </Box>
     )
   }
   else{
      
   }
 }
+const handleLiftchange = (event) => {
+  const { value } = event.target;
+    setLift(value);  
+};
+
+const handleWeightchange = (event) => {
+  const { value } = event.target;
+    setWeight(value);  
+};
+
+const handleSetchange = (event) => {
+  const { value } = event.target;
+    setSets(value);  
+};
+
+const handleRepchange = (event) => {
+  const { value } = event.target;
+    setReps(value);  
+};
 const handleExercise = () => {
     if(exercise===false){
         setExercise(true);
@@ -156,6 +210,47 @@ const renderCardio = () => {
      
   }
 }
+
+const [liftResults, setLiftresults] = useState(null)
+const [liftData, setLiftdata] = useState(null)
+const [liftSearch, setLiftsearch] = useState('');
+
+const queryExercise = (async () => {
+setLiftsearch(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
+// console.log(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
+const response = await searchExercise(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps');
+setLiftdata(await response.json())
+console.log(response.json)
+})
+
+const ExerciseResult =  ( {lifts, index } ) => {
+  const [liftadded, setLiftadded] = useState(false); 
+  const addLiftresult = (result) => {
+      console.log(result)
+      setLiftadded(prev => !prev)
+    }
+    return (
+   
+      <Box>
+    
+
+      <ListItem key={index}
+      >
+        <IconButton
+          size='xs'
+          mr={2}
+          icon={liftadded ? <FaCheck /> : <FaPlus />}
+          color={liftadded ? 'darkgreen' : 'gray'}
+          bg={liftadded ? 'green' : 'white'}
+          onClick={()=>addLiftresult(lifts)}
+        />
+        {lifts.lift_name}
+
+      </ListItem>
+
+      </Box>
+    )
+}
 const handleCardio = () => {
     if(cardio===false){
         setCardio(true);
@@ -179,10 +274,10 @@ const handleChange = (event) => {
 
   const searchNutrition =(async (values) => {
     // event.preventDefault();
-    // if(values==null)
-    // {
-    //   return;
-    // }
+    if(values==null)
+    {
+      return;
+    }
     setResults('loading');
     const response = await searchFood(values);
     setData(await response.json())
@@ -261,7 +356,6 @@ const renderMeal = () => {
     
   }
   else{
-     console.log('Search Food')
   }
 }
 const handleMeal = () => {
@@ -273,6 +367,18 @@ const handleMeal = () => {
         setMeal(false)
         renderMeal()
     }
+}
+//POST the POST
+const [postdata, setPostdata]=useState('')
+const textChange=(event)=>{
+  const { value } = event.target;
+    setPostdata(value);
+  
+}
+const addPost=(text)=>{
+  //ADD TO DB
+
+  console.log(text);
 }
 
 //Rendered onto timeline page
@@ -437,7 +543,7 @@ const handleMeal = () => {
   {/* post button needs functionality */}
   {/* post btn */}
               <Button
-                      type="button"
+                      
                       ml={5}
                       variant="outline"
                       size="md"
@@ -451,6 +557,7 @@ const handleMeal = () => {
                         bg: 'darkgreen',
                         boxShadow: 'xl',
                       }}
+                      onClick={()=> addPost(postdata)}
                     >
                     Post
                     </Button>
@@ -463,7 +570,7 @@ const handleMeal = () => {
                 textAlign="right"
               >
                 <Button
-                  type="submit"
+                  type="button"
                   colorScheme="brand"
                   _focus={{ shadow: "" }}
                   fontWeight="md"

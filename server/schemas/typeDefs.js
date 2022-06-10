@@ -12,8 +12,8 @@ const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-     "user who choose private true will not be shared for anything with other users"
-    private: Boolean
+     "user who choose isPrivate true will not be shared for anything with other users"
+    isPrivate: Boolean
     "Store weight in lbs" 
     weight: Int
     "Store height in inches" 
@@ -154,7 +154,7 @@ const typeDefs = gql`
       username: String!, 
       password: String!, 
       email: String!, 
-      private: Boolean,
+      isPrivate: Boolean,
       weight: Int,
       height: Int,
       age: Int,
@@ -206,6 +206,16 @@ const typeDefs = gql`
       carbs: Int
       fats: Int
     ): Meal
+    # Update user information
+    updateUser(       
+      username: String!
+      email: String!
+      isPrivate: Boolean    
+      weight: Int    
+      height: Int
+      age: Int
+      gender: String
+    ): User
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan

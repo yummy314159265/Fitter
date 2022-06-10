@@ -6,11 +6,11 @@ export const QUERY_ME = gql`
       id
       username
       email
-      private
+      isPrivate
       weight
       height
       age
-      gender 
+      gender   
       mealPlan {
             id
             name
@@ -19,7 +19,7 @@ export const QUERY_ME = gql`
             proteins
             carbs
             fats
-      }
+      }   
       exercisePlan {
             id
             name
@@ -45,6 +45,14 @@ export const QUERY_ME = gql`
             liftingWeight
         }
       }
+      posts {
+            id
+            postAuthor
+            message
+            createdAt
+            likes
+            tags                                
+      } 
     }
   }
 `;
