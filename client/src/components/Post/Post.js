@@ -7,7 +7,7 @@ import {
   Avatar,
   useColorModeValue,
   Image,
-  Center
+  Center,
   Button
 } from '@chakra-ui/react';
 
