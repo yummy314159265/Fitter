@@ -49,7 +49,7 @@ export default function SplitWithImage() {
                 <ListItem>Rodin Grajo: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Koki Hara: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Melissa Hookey: super fun and interesting sentence goes here</ListItem>
-                <ListItem>Mayur Patel: super fun and interesting sentence goes here</ListItem>
+                <ListItem>Mayur Patel: Believe in `Passion creates motivation, which leads to innovation`</ListItem>
             </UnorderedList>
           </Stack>
           <Flex>
