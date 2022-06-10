@@ -463,7 +463,7 @@ const addPost=(text)=>{
                         <AccordionPanel>
                   
                         <FormControl alignItems="center" mt={1}>
-                          <Flex>
+                          <Flex wrap="wrap">
 {/* add image btn */}    
                             <Button
                               type="button"
