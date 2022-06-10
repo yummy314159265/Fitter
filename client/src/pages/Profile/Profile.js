@@ -62,6 +62,7 @@ import {
   
   export default function Profile() {
 
+
     // ISSUES
     // stores data in localstorage but only after loading the page
     // On page load, no data is there to use
@@ -111,7 +112,9 @@ import {
                     boxShadow: 'lg',
                 }}
                 >
+
                 <a href="profile/edit">Edit Profile</a>
+
             </Button>
             </Stack>
             <Center>
@@ -128,6 +131,7 @@ import {
               <Feature
                 iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
                 text={`Your current goal`}
+
                 // add goal
               />
               <UnorderedList>
@@ -137,7 +141,9 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+
                 text={`Your current exercise plan`}
+
                 // add exercise plan
               />
               <UnorderedList>
@@ -146,7 +152,9 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+
                 text={`Your current meal plan`}
+
                 // add meal plan
               />
               <UnorderedList>
@@ -155,7 +163,9 @@ import {
               </UnorderedList>
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+
                 text={`Your most recent post`}
+
                 // add post
               />
               <UnorderedList>
