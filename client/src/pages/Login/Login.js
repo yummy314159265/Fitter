@@ -41,6 +41,7 @@ export default function SimpleCard() {
         });    
 
         Auth.login(data.login.token);
+
       } catch (e) {
         console.error(e);
       }

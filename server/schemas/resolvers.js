@@ -6,7 +6,8 @@ const resolvers = {
     Query: {
        me: async (parent, args, context) => {
          if (context.user) {
-           const userData = await User.findOne({ _id: context.user._id })
+           console.log(context.user)
+          //  const userData = await User.findOne({ _id: context.user._id })
            .populate('mealPlan')
            .populate('exercisePlan')
            .populate('goals')
@@ -36,27 +37,27 @@ const resolvers = {
  Mutation: {   
    // add new user
    addUser: async (parent, args) => {
-     const user = await User.create(args);
-     const token = signToken(user);  
-     return { token, user };
-   },
-   // login 
-   login: async (parent, { email, password }) => {
-     const user = await User.findOne({ email });
+    const user = await User.create(args);
+    const token = signToken(user);  
+    return { token, user };
+  },
+  // login 
+  login: async (parent, { email, password }) => {
+    const user = await User.findOne({ email });
 
-     if (!user) {
-       throw new AuthenticationError('No user with this email found!');
-     }
+    if (!user) {
+      throw new AuthenticationError('No user with this email found!');
+    }
 
-     const correctPw = await user.isCorrectPassword(password);
+    const correctPw = await user.isCorrectPassword(password);
 
-     if (!correctPw) {
-       throw new AuthenticationError('Incorrect password!');
-     }
+    if (!correctPw) {
+      throw new AuthenticationError('Incorrect password!');
+    }
 
-     const token = signToken(user);
-     return { token, user };
-   },
+    const token = signToken(user);
+    return { token, user };
+  },
    // add exercise plan
    addExercise: async (parent, args, context) => {
      if (!context.user) throw new AuthenticationError("You must be logged in to add Exercise plan!");
@@ -128,20 +129,65 @@ const resolvers = {
       return updatedUser;
     },
    // add goal plan
-   addGoal: async (parent, { input }, context) => {
-     if (!context.user) throw new AuthenticationError("You must be logged in to add Goal!");      
-     const updatedUser = await User.findByIdAndUpdate(
-       { _id: context.user._id },
-       { $addToSet: { goals: input } },
-       { runValidators: true, new: true }
-       );
-     return updatedUser;
+   addGoal: async (parent, goalInput, context) => {
+    // To add new goal with array of exercise ids plus add each exercise record in exercise collection
+      // iterate over array of exercise and insert each to exercise collection
+        // store auto ids for each exercise in array goalExercise        
+        if (!context.user) throw new AuthenticationError("You must be logged in to add Goal!");
+        // create goalExercise array
+        let goalExerciseList = [];
+        // iterate over array of exercise and insert each to exercise collection
+        for (let i = 0; i < goalInput.input.goalExercise.length; i++)
+        {
+           const exercise = await Exercise.create(goalInput.input.goalExercise[i]);
+           goalExerciseList.push(exercise.id)
+        }
+        // generate subdocument
+        const goal = {
+          "goalWeight": goalInput.input.goalWeight,
+          "goalExercise": goalExerciseList
+        }
+        // add to user
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { goals: goal} },
+          { runValidators: true, new: true }
+          );
+        return updatedUser;   
    },
    // add post
-   addPost: async (parent, args, context) => {
+   addPost: async (parent, postInput, context) => {
     if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");
-    const post = await Post.create(args);
-    const postId = post.id;
+    let postExerciseList = [];
+    // iterate over array of exercise and insert each to exercise collection
+    for (let i = 0; i < postInput.input.exercises.length; i++)
+    {
+       const exercise = await Exercise.create(postInput.input.exercises[i]);
+       postExerciseList.push(exercise.id)
+    }
+    let postMealList = [];
+    // iterate over array of meals and insert each to meals collection
+    for (let i = 0; i < postInput.input.meals.length; i++)
+    {
+       const meal = await Meal.create(postInput.input.meals[i]);
+       postMealList.push(meal.id)
+    }
+    // generate post document
+    const post = {
+      "postAuthor": postInput.input.postAuthor,
+      "message": postInput.input.message,
+      "exercises": postExerciseList,
+      "meals": postMealList,
+    }    
+    const postinsert = await Post.create(post);
+    const postId = postinsert.id;
+    // append tags to post just inserted    
+    const updatepost = await Post.findByIdAndUpdate(
+      { _id: postId },
+      { $addToSet: { tags: postInput.input.tags} },
+      { runValidators: true, new: true }
+      );
+     // finally update user to add post 
     const updatedUser = await User.findByIdAndUpdate(
       { _id: context.user._id },
       { $addToSet: { posts: postId } },
@@ -150,11 +196,12 @@ const resolvers = {
     return updatedUser;
   },
     // add comment to post
-    addComment: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");      
+    addComment: async (parent, commentInput, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to add comment!");      
+      const postId = commentInput.input.postId;
       const updatePost = await Post.findByIdAndUpdate(
-        { _id: args.postId },
-        { $addToSet: { comments: args.input } },
+        { _id: postId },
+        { $addToSet: { comments: commentInput.input.commentDetails } },
         { new: true }
       );
       return updatePost;
