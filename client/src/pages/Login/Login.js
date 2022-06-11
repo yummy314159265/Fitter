@@ -38,7 +38,7 @@ export default function SimpleCard() {
       try {
         const { data } = await login({
           variables: { email: values.email, password: values.password },
-        });
+        });    
         Auth.login(data.login.token);
 
       } catch (e) {

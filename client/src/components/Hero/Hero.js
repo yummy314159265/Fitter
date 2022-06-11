@@ -7,24 +7,16 @@ import {
   Button,
   Stack,
   Icon,
-  Link,
   useColorModeValue,
   createIcon,
 } from '@chakra-ui/react';
-
 import { useAnimate }  from 'react-simple-animate';
-import { Link as RouterLink } from 'react-router-dom';
-
-import { useNavigate } from "react-router-dom";
-
 
 export default function CallToActionWithAnnotation() {
-  const navigate = useNavigate();
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    navigate('/posts', { replace: true})
-  }
+  const { play, style, isPlaying } = useAnimate({
+    start: { opacity: 1 },
+    end: { opacity: 0 }
+  })
 
   return (
     <Container>
@@ -43,7 +35,7 @@ export default function CallToActionWithAnnotation() {
             More Productive.
           </Text>
         </Heading>
-        <Text color={'gray.500'}>
+        <Text style={style} color={'gray.500'}>
           A social media site for people looking to start their fitness journey and share their progress along the way. We wanted to create a welcoming space for all people, ranging from health experts to novices. 
         </Text>
         <Stack
@@ -53,7 +45,6 @@ export default function CallToActionWithAnnotation() {
           alignSelf={'center'}
           position={'relative'}
         >
-          <Link as={RouterLink} to='/signup'>
           <Button
             bg={'green'}
             color={'white'}
@@ -62,14 +53,10 @@ export default function CallToActionWithAnnotation() {
             _hover={{
               bg: 'darkgreen',
             }}
-            onClick={handleClick}
+            onClick={()=> play(!isPlaying)}
           >
             Get Started
           </Button>
-          </Link>
-          
-
-            
           <Box>
             <Icon
               as={Arrow}

@@ -13,9 +13,9 @@ export const LOGIN_USER = gql`
                 height
                 age
                 gender
-            }
-        }
-    }
+             }
+     }
+   }
 `;
 
 // add new user
