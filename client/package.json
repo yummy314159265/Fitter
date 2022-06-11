@@ -24,7 +24,8 @@
     "react-scripts": "5.0.1",
     "react-simple-animate": "^3.4.0",
     "react-transition-group": "^4.4.2",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -5,6 +5,8 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Alert,
+    AlertIcon,
     InputGroup,
     InputRightElement,
     Stack,
@@ -24,13 +26,15 @@ import { FaFacebook } from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { ADD_USER } from '../../utils/mutations'
+import { validatePassword } from '../../utils/helpers'
 
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [addUser, { error }] = useMutation(ADD_USER);
 //   need to add BMI/Fitness goal input options
-  
+  const [errorMessage, setErrorMessage] = useState('');
+
   // create form variables
   const formik = useFormik({
     initialValues: {
@@ -38,8 +42,14 @@ export default function SignupCard() {
       email: '',
       password: '',
     },
-    onSubmit: async ({ username, email, password}) => {
-      try {
+    onSubmit: async ({ username, email, password}) => {     
+       // if (!validatePassword(password)) {
+        //   setErrorMessage(`Password must be at least 8 characters long and contain one uppercase, 
+        //   one lowercase, one number and one special case character!`);
+        //   return;
+        // }
+      try {       
+        // setErrorMessage('');
         console.log('before addUser')
         const { data } = await addUser({
           variables: { username, email, password },
@@ -48,7 +58,7 @@ export default function SignupCard() {
         Auth.login(data.addUser.token);
       } catch (e) {
         console.error(e);
-      }
+      }   
     }
   });
 
@@ -135,6 +145,14 @@ export default function SignupCard() {
                 </Button>
               </Stack>
             </form>
+            {errorMessage && (
+                        <Stack spacing={3}>
+                            <Alert status='error'>
+                            <AlertIcon />
+                            {errorMessage}
+                          </Alert>
+                          </Stack>  
+                          )} 
             <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
                   {/* Facebook */}
               <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaFacebook />}>
