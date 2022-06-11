@@ -138,9 +138,9 @@ import {
                             onChange={(e) => setName(e.target.value)}    
                             size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Email</FormLabel>
+                        
+                        
+                          <FormLabel name="email">Email</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
@@ -154,9 +154,9 @@ import {
                             onChange={(e) => setEmail(e.target.value)}
                             size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Message</FormLabel>
+                        
+                        
+                          <FormLabel name="message">Message</FormLabel>
                           <Textarea
                             borderColor="gray.300"
                             _hover={{

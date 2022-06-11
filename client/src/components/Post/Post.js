@@ -1,13 +1,13 @@
 import {
   Box,
-  Center,
   Heading,
+  HStack,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
   Image,
-  HStack
+  Center
 } from '@chakra-ui/react';
 
 export default function Post({

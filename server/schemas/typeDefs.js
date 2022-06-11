@@ -40,6 +40,7 @@ const typeDefs = gql`
    meals: [Meal]
    tags: [String]
    comments: [Comment]
+   image: String
    createdAt: String   
   }
     """
@@ -80,7 +81,7 @@ const typeDefs = gql`
     Comment Schema will use for Post
   """
   type Comment {
-   commentAuthor: User!   
+   commentAuthor: String!   
    message: String!
    image: String
    likes: Int
