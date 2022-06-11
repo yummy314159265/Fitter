@@ -5,8 +5,9 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
        me: async (parent, args, context) => {
-         if (context.user) {           
-           const userData = await User.findOne({ _id: context.user._id })
+         if (context.user) {
+           console.log(context.user)
+          //  const userData = await User.findOne({ _id: context.user._id })
            .populate('mealPlan')
            .populate('exercisePlan')
            .populate('goals')
@@ -33,7 +34,11 @@ const resolvers = {
          return await User.find({
            exercisePlan: {calories: args.calories}
          });            
-       },  
+       },
+       posts: async (parent, args, context) => {
+        // create algorithm to show users desired posts if user is logged in
+        return await Post.find({}).populate('exercises').populate('meals');
+       }
  },   
  Mutation: {   
    // add new user
