@@ -40,6 +40,9 @@ export default function Component() {
     const [weight, setWeight] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
+    const [cardiotype, setCardiotype] = useState('');
+    const [time, setTime] = useState('');
+    const [distance, setDistance] = useState('');
     
 
 const renderExercise = () => {
@@ -150,6 +153,20 @@ const handleExercise = () => {
         renderExercise()
     }
 }
+const handleCardiochange = (event) => {
+  const { value } = event.target;
+    setCardiotype(value);  
+};
+
+const handleTime = (event) => {
+  const { value } = event.target;
+    setTime(value);  
+};
+
+const handleDistance = (event) => {
+  const { value } = event.target;
+    setDistance(value);  
+};
 
 const renderCardio = () => {
   if (cardio) {
@@ -164,6 +181,7 @@ const renderCardio = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                onChange = {handleCardiochange}
               />
               <Input
                 placeholder="Distance"
@@ -173,6 +191,7 @@ const renderCardio = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                onChange={handleDistance}
               />
               <Input
                 placeholder="Time"
@@ -182,6 +201,7 @@ const renderCardio = () => {
                 _placeholder={{
                   color: 'gray.500',
                 }}
+                onChange={handleTime}
               />
             </Stack>
             <Button
@@ -193,15 +213,23 @@ const renderCardio = () => {
               _hover={{
                 bgGradient: 'linear(to-r, red.400,pink.400)',
                 boxShadow: 'xl',
-              }}>
-              Add Another Cardio
+              }}
+              onClick = {() => searchCardio()}>
+              Add Cardio
             </Button>
+            {(cardioResults === 'loading') ? (
+                <CircularProgress isIndeterminate />
+              ) : (cardioResults === 'done') ? (
+                <List textAlign={'left'} spacing={3}>
+                  {cardioData.cardios.map((cardio, index) => <CardioResult cardio={cardio} index={index} />)}
+                </List> 
+              ) : (
+                null
+              )}
           </Box>
     )
   }
-  else{
-     
-  }
+ 
 }
 
 const [liftResults, setLiftresults] = useState(null)
@@ -244,6 +272,51 @@ const ExerciseResult =  ( {lifts, index } ) => {
       </Box>
     )
 }
+
+
+
+const [cardioResults, setCardioresults] = useState(null)
+const [cardioData, setCardiodata] = useState(null)
+const [cardioSearch, setCardiosearch] = useState('');
+
+const searchCardio = (async () => {
+  setCardiosearch(cardiotype + ' for ' + time + ' ' + distance + ' ')
+  // console.log(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
+  const response = await searchExercise(cardiotype + ' for ' + time + ' ' + distance + ' ');
+  setCardiodata(await response.json())
+  console.log(response.json)
+  })
+  const CardioResult =  ( {cardios, index } ) => {
+    const [cardioadded, setCardioadded] = useState(false); 
+    const addCardioresult = (result) => {
+        console.log(result)
+        setCardioadded(prev => !prev)
+      }
+      return (
+     
+        <Box>
+      
+  
+        <ListItem key={index}
+        >
+          <IconButton
+            size='xs'
+            mr={2}
+            icon={cardioadded ? <FaCheck /> : <FaPlus />}
+            color={cardioadded ? 'darkgreen' : 'gray'}
+            bg={cardioadded ? 'green' : 'white'}
+            onClick={()=>addCardioresult(cardios)}
+          />
+          {cardios.cardio_name}
+  
+        </ListItem>
+  
+        </Box>
+      )
+  }
+
+  
+
 const handleCardio = () => {
     if(cardio===false){
         setCardio(true);
@@ -365,6 +438,9 @@ const addPost=(text)=>{
   //ADD TO DB
 
   console.log(text);
+  console.log(data)
+  console.log(liftData)
+  console.log(cardioData)
 }
 
 //Rendered onto timeline page
