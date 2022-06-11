@@ -7,11 +7,20 @@ import {
   Avatar,
   useColorModeValue,
   Image,
-  Button
-
+  HStack
 } from '@chakra-ui/react';
 
-export default function Post() {
+export default function Post({
+  postAuthor, 
+  message,
+  likes,
+  exercises,
+  meals,
+  tags,
+  comments,
+  createdAt,
+  image
+}) {
   return (
     <Center py={6}>
       <Box
@@ -78,6 +87,5 @@ export default function Post() {
         </Stack>
       </Box>
     </Center>
-
   )
 };
