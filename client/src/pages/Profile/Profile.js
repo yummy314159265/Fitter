@@ -22,6 +22,7 @@ import {
     UnorderedList,
     List,
     Link,
+    CircularProgress
   } from '@chakra-ui/react';
 
   import { 
@@ -54,30 +55,28 @@ import {
     );
   };
 
-  const GetData = async () => {
-    const response = await useQuery(QUERY_ME);
-    // console.log(response.data.me);
-    localStorage.setItem('user_info', JSON.stringify(response.data.me));
-  };
   
   export default function Profile() {
-
 
     // ISSUES
     // stores data in localstorage but only after loading the page
     // On page load, no data is there to use
     // This throws an error if I uncomment line 135 and try running it
+    const { loading, data } = useQuery(QUERY_ME);
+    const user = data?.me || {};
 
-    const testing = GetData();
-    // const username = Auth.getProfile().data.username;
-    // const {loading, data}= useQuery(QUERY_ME);
-    // if (loading) {
-    //   console.log("loading");
+    // console.log(user)
+
+    // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
+
+    // if(loading){
+    //   return (
+    //     <Center>
+    //       <CircularProgress h={'100vh'} isIndeterminate />
+    //     </Center>
+    //   )
     // }
-    // console.log(data);
-    const user = JSON.parse(localStorage.getItem('user_info')) || {};
-    console.log(user);
-    console.log(user.age)
+
     // const reversedKeys = Object.keys(user.mealPlan).reverse();
     // reversedKeys.forEach(key => {
     //   console.log(key, user.mealPlan[key]);

@@ -203,3 +203,17 @@ export const ADD_COMMENT = gql`
         }
     }
 `;
+
+export const UPDATE_LIKES = gql`
+    mutation updateLikes(
+        $postId: ID!
+        $hasLiked: Boolean!
+    ) {
+        updateLikes(
+            postId: $postId
+            hasLiked: $hasLiked
+        ) {
+            likes
+        }
+    }
+`;

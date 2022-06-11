@@ -43,6 +43,7 @@ const typeDefs = gql`
    image: String
    createdAt: String   
   }
+
     """
     Meal Schema will store meal plan user created
     """
@@ -217,6 +218,11 @@ const typeDefs = gql`
       age: Int
       gender: String
     ): User
+    # Update Post with Likes
+    updateLikes(
+      postId: ID!
+      hasLiked: Boolean!
+    ): Post
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan

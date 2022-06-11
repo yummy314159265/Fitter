@@ -25,17 +25,10 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionIcon,
-
-
 } from "@chakra-ui/react";
 // import { Formik, useFormik } from 'formik';
 import { searchFood, searchExercise } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
-
-
-
-
-
 
 export default function Component() {
 
