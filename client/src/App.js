@@ -23,6 +23,8 @@ import About from './pages/About';
 import FoodSearch from './components/FoodSearch';
 import Meals from './pages/MealPlan';
 
+import Auth from './utils/auth.js'
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -69,7 +71,7 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<Profile />}
+            element={Auth.loggedIn() ? <Profile /> : <Login />}
           />
           <Route 
             path="/posts"

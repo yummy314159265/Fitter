@@ -14,6 +14,7 @@ import {
 import { FaThumbsUp } from 'react-icons/fa';
 import { UPDATE_LIKES } from '../../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
 
 export default function Post({
   postId,
@@ -31,9 +32,12 @@ export default function Post({
   const [liked, setLiked] = useState(false);
   const [postLikes, setPostLikes] = useState(likes);
   const [updateLike, { error }] = useMutation(UPDATE_LIKES);
+  
+  console.log(Auth.loggedIn());
 
   const handleLike = async (event) => {
     event.preventDefault();
+
     try {
       setLiked(prev=>!prev);
       const post = await updateLike({
