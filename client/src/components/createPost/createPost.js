@@ -106,8 +106,6 @@ const handleExercise = () => {
     }
 }
 
-
-
 const renderCardio = () => {
   if (cardio) {
     return (
