@@ -9,7 +9,7 @@
         "commentAuthor": "fitguy",
         "message":"hi",
         "likes":3,
-        "tags": ["#hi", "#hello", "#thisisatag"]
+        "tags": ["#hi"]
       }
     ]
   },
@@ -17,7 +17,7 @@
     "postAuthor":"fitguy",
     "message": "second!",
     "likes": 24,
-    "tags": ["#second", "#anothertag", "#thirdtag"],
+    "tags": ["#second"],
     "comments": [
       {
         "commentAuthor": "johnwick1",

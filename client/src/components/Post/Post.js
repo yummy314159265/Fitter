@@ -2,26 +2,16 @@ import {
   Box,
   Center,
   Heading,
-  HStack,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
   Image,
   Button
+
 } from '@chakra-ui/react';
 
-export default function Post({
-  postAuthor, 
-  message,
-  likes,
-  exercises,
-  meals,
-  tags,
-  comments,
-  createdAt,
-  image
-}) {
+export default function Post() {
   return (
     <Center py={6}>
       <Box
@@ -32,6 +22,7 @@ export default function Post({
         rounded={'md'}
         p={6}
         overflow={'hidden'}>
+
         {image &&
           <Box
             h={'210px'}
@@ -46,12 +37,14 @@ export default function Post({
               />
           </Box>
         }
+
         <Stack>
           <Text
             color={'green.500'}
             textTransform={'uppercase'}
             fontWeight={800}
             fontSize={'sm'}
+
             letterSpacing={1.1}
           >
             Post
@@ -65,6 +58,7 @@ export default function Post({
           </Heading> */}
           <Text color={'gray.500'}>
             {message}
+
           </Text>
         </Stack>
         <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
@@ -73,14 +67,17 @@ export default function Post({
             alt={'Author'}
           />
           <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+
             <Text fontWeight={600}>{postAuthor}</Text>
             <Text color={'gray.500'}>{createdAt}</Text>
             <HStack>
               {tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
             </HStack>
+
           </Stack>
         </Stack>
       </Box>
     </Center>
+
   )
 };

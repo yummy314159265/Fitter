@@ -6,9 +6,33 @@ import {
     Heading,
     Text,
     Stack,
+    StackDivider,
+    Icon,
+    useColorModeValue,
+    List,
     ListItem,
+    ListIcon,
+    OrderedList,
     UnorderedList,
 } from '@chakra-ui/react';
+import { ReactElement } from 'react';
+  
+const Feature = ({ text, icon, iconBg }) => {
+    return (
+      <Stack direction={'row'} align={'center'}>
+        <Flex
+          w={8}
+          h={8}
+          align={'center'}
+          justify={'center'}
+          rounded={'full'}
+          bg={iconBg}>
+          {icon}
+        </Flex>
+        <Text fontWeight={600}>{text}</Text>
+      </Stack>
+    );
+};
   
 export default function SplitWithImage() {
     return (
@@ -25,7 +49,7 @@ export default function SplitWithImage() {
                 <ListItem>Rodin Grajo: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Koki Hara: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Melissa Hookey: super fun and interesting sentence goes here</ListItem>
-                <ListItem>Mayur Patel: super fun and interesting sentence goes here</ListItem>
+                <ListItem>Mayur Patel: Believe in `Passion creates motivation, which leads to innovation`</ListItem>
             </UnorderedList>
           </Stack>
           <Flex>
