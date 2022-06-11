@@ -64,9 +64,7 @@ import {
     // This throws an error if I uncomment line 135 and try running it
     const { loading, data } = useQuery(QUERY_ME);
     const user = data?.me || {};
-
-    // console.log(user)
-
+    console.log(user)
     // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
 
     // if(loading){
@@ -77,13 +75,10 @@ import {
     //   )
     // }
 
-    // const reversedKeys = Object.keys(user.mealPlan).reverse();
-    // reversedKeys.forEach(key => {
-    //   console.log(key, user.mealPlan[key]);
-    // });
+
+    
     // const targetWeight = user.goals[0].goalWeight;
     // console.log(targetWeight);
-
     return (
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>
@@ -91,15 +86,25 @@ import {
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
           <Stack spacing={4}  align="center">
           <Center>
-            <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
+            <Avatar size='2xl' name={user.username} src='https://bit.ly/' />{' '}
           </Center>
             <Heading>{user.username}'s Profile</Heading>
+            { (user.gender || user.age || user.weight || user.height) &&
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
+              { (user.gender) &&
               <ListItem>{user.gender}</ListItem>  
+              }
+              { (user.age) &&
               <ListItem>{user.age} years old</ListItem>
+              }
+              { (user.weight) &&
               <ListItem>{user.weight} pounds</ListItem>
+              }
+              { (user.height) &&
               <ListItem>{user.height} inches</ListItem>       
+              }
             </UnorderedList>
+            }
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
                 px={8}
@@ -132,12 +137,16 @@ import {
                 text={`Your current goal`}
 
                 // add goal
-              />
+              />                
+              { user.exercisePlan.length > 0 &&                
               <UnorderedList>
-                
-                {/* <ListItem>Target weight : {user.goals[0].goalWeight}</ListItem> */}
-                <ListItem>goal 2</ListItem>
+                {user.goals.slice(0).reverse().map( (item, index) => (
+                    <ListItem key={index}>
+                          {item.goalWeight} lbs
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
 
@@ -145,10 +154,16 @@ import {
 
                 // add exercise plan
               />
+    
+              { user.exercisePlan.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.exercisePlan.slice(0).reverse().map(item => (
+                    <ListItem key={item.id}>
+                          {item.name}
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Feature
                 iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
 
@@ -156,10 +171,15 @@ import {
 
                 // add meal plan
               />
+              { user.mealPlan.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.mealPlan.slice(0).reverse().map(item => (
+                    <ListItem key={item.id}>
+                          {item.name}
+                          </ListItem>
+                ))}
               </UnorderedList>
+               }
               <Feature
                 iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
 
@@ -167,10 +187,15 @@ import {
 
                 // add post
               />
+             { user.posts.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.posts.map( (item) => (
+                    <ListItem key={item.id}>
+                          {item.createdAt}
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Link as={RouterLink} to='/posts'>
                 <Button
                     leftIcon={<BsFillPlusCircleFill />}              
