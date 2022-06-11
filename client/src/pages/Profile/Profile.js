@@ -3,13 +3,16 @@
 // Goals
 // Plans
 // Posts?
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
     Container,
     Box,
     SimpleGrid,
     Flex,
     Heading,
+    Alert,
+    AlertIcon,
     Text,
     Button,
     ButtonGroup,
@@ -38,6 +41,7 @@ import {
    import Auth from '../../utils/auth';
    import { QUERY_ME } from '../../utils/queries';
 
+   
   const Feature = ({ text, icon, iconBg }) => {
     return (
       <Stack direction={'row'} align={'center'}>
@@ -54,36 +58,41 @@ import {
       </Stack>
     );
   };
-
-  
+ 
   export default function Profile() {
+    const buttonBg = useColorModeValue('#151F21', 'gray.900');
+    const recentPostBg = useColorModeValue(theme.colors.darkgreen, 'red.900');
+    const currentMealPlanBg = useColorModeValue(theme.colors.lightblue, 'purple.900');
+    const currentExerciseBg = useColorModeValue(theme.colors.lightgreen, 'teal.900');
+    const currentGoalBg = useColorModeValue(theme.colors.grey, 'yellow.900');
+    const dividerBorder = useColorModeValue('gray.100', 'gray.700');
 
     // ISSUES
     // stores data in localstorage but only after loading the page
     // On page load, no data is there to use
     // This throws an error if I uncomment line 135 and try running it
-    const { loading, data } = useQuery(QUERY_ME);
-    const user = data?.me || {};
-    console.log(user)
-    // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
+    const { loading, error, data } = useQuery(QUERY_ME);    
+    const user = data?.me || {};    
+    //console.log(user)
+  // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
+  if(loading){
+      return (
+        <Center>
+          <CircularProgress h={'100vh'} isIndeterminate />
+        </Center>
+      )
+    }
 
-    // if(loading){
-    //   return (
-    //     <Center>
-    //       <CircularProgress h={'100vh'} isIndeterminate />
-    //     </Center>
-    //   )
-    // }
-
-
-    
     // const targetWeight = user.goals[0].goalWeight;
     // console.log(targetWeight);
-    return (
+     // if data isn't here yet, say so
+       
+    return (     
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
+       
           <Stack spacing={4}  align="center">
           <Center>
             <Avatar size='2xl' name={user.username} src='https://bit.ly/' />{' '}
@@ -108,7 +117,7 @@ import {
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
                 px={8}
-                bg={useColorModeValue('#151f21', 'gray.900')}
+                bg={buttonBg}
                 color={'white'}
                 rounded={'md'}
                 _hover={{
@@ -128,12 +137,12 @@ import {
               mt="5"
               divider={
                 <StackDivider
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
+                  borderColor={dividerBorder}
                 />
               }>
 
               <Feature
-                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
+                iconBg={currentGoalBg}
                 text={`Your current goal`}
 
                 // add goal
@@ -148,7 +157,7 @@ import {
               </UnorderedList>
               }
               <Feature
-                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+                iconBg={currentExerciseBg}                
 
                 text={`Your current exercise plan`}
 
@@ -165,7 +174,7 @@ import {
               </UnorderedList>
               }
               <Feature
-                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+                iconBg={currentMealPlanBg}
 
                 text={`Your current meal plan`}
 
@@ -181,7 +190,7 @@ import {
               </UnorderedList>
                }
               <Feature
-                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+                iconBg={recentPostBg}
 
                 text={`Your most recent post`}
 
@@ -200,7 +209,7 @@ import {
                 <Button
                     leftIcon={<BsFillPlusCircleFill />}              
                     px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
+                    bg={buttonBg}
                     color={'white'}
                     rounded={'md'}
                     _hover={{
@@ -221,7 +230,7 @@ import {
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={5}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -236,7 +245,7 @@ import {
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={8}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -251,7 +260,7 @@ import {
               <Button
                   leftIcon={<BsTools />}              
                   px={8}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -263,7 +272,8 @@ import {
                   Edit Goal
               </Button>
             </ButtonGroup>
-          </Box>       
+          </Box>  
+           
       </Container>
     </Box>
     );
