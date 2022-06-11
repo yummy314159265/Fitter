@@ -18,7 +18,7 @@ const userSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Must use a valid email address'],
   },
-  private: {
+  isPrivate: {
     type: Boolean,
     default: false,
   },

@@ -12,8 +12,8 @@ const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-     "user who choose private true will not be shared for anything with other users"
-    private: Boolean
+     "user who choose isPrivate true will not be shared for anything with other users"
+    isPrivate: Boolean
     "Store weight in lbs" 
     weight: Int
     "Store height in inches" 
@@ -38,8 +38,9 @@ const typeDefs = gql`
    likes: Int
    exercises: [Exercise]
    meals: [Meal]
-   tags: [Tag]
+   tags: [String]
    comments: [Comment]
+   image: String
    createdAt: String   
   }
     """
@@ -80,19 +81,12 @@ const typeDefs = gql`
     Comment Schema will use for Post
   """
   type Comment {
-   commentAuthor: User!   
+   commentAuthor: String!   
    message: String!
    image: String
    likes: Int
-   tags: [Tag]
+   tags: [String]
    createdAt: String   
-  }
-   """
-    Tag Schema will use for Post
-  """
-  type Tag {
-   id: ID!      
-   name: String   
   }
 
   type Auth {
@@ -110,15 +104,49 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
-  # will use to add new goal
+  # will use MealInout to add new post
+  input MealInput {    
+   name: String
+   type: [String]
+   calories: Int
+   proteins: Int
+   carbs: Int
+   fats: Int
+  }
+  # will use ExerciseInput to add new goal and post
+  input ExerciseInput {    
+   name: String!
+   type: [String]
+   calories: Int
+   distance: Float
+   time: String
+   reps: Int
+   sets: Int
+   liftingWeight: Int
+  }
+  # goalInput to add new goal with ExerciseInput
   input goalInput {
     goalWeight: Int
-    goalExercise: [String]    
+    goalExercise: [ExerciseInput]    
   }
-  input commentInput {
+  # postInput to add new post with MealInout and ExerciseInput
+  input postInput {
+    postAuthor: String!
+    message: String!
+    exercises: [ExerciseInput]
+    meals: [MealInput]
+    tags: [String]
+  }
+  # commentDetails input will be use in commentInput
+  input commentDetails {
     commentAuthor: String!
     message: String!
-    image: String
+    tags: [String]
+  }
+  # commentInput will be use to add new comment to post
+  input commentInput {
+    postId: ID!   
+    commentDetails: [commentDetails] 
     tags: [String]
   }  
   # Following defines mutation
@@ -127,7 +155,7 @@ const typeDefs = gql`
       username: String!, 
       password: String!, 
       email: String!, 
-      private: Boolean,
+      isPrivate: Boolean,
       weight: Int,
       height: Int,
       age: Int,
@@ -179,23 +207,24 @@ const typeDefs = gql`
       carbs: Int
       fats: Int
     ): Meal
+    # Update user information
+    updateUser(       
+      username: String!
+      email: String!
+      isPrivate: Boolean    
+      weight: Int    
+      height: Int
+      age: Int
+      gender: String
+    ): User
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
     # Allow user to add goal plan
-    addGoal(
-      input: goalInput    
-      ): User   
+    addGoal(input: goalInput): User   
     # Allow user to add post
-    addPost(
-      postAuthor: String!
-      message: String!
-      exercises: [String]
-      meals: [String]
-      tags: [String]
-      createdAt: String   
-      ): Post  
+    addPost(input: postInput): Post  
     # Allow user to add comment
-    addComment(postId: ID!, input: commentInput!): Post
+    addComment(input: commentInput!): Post
   }`;
 
 module.exports = typeDefs;

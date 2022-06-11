@@ -3,7 +3,7 @@
 // Goals
 // Plans
 // Posts?
-
+import React from 'react';
 import {
     Container,
     Box,
@@ -20,6 +20,8 @@ import {
     Avatar,
     ListItem,
     UnorderedList,
+    List,
+    Link,
   } from '@chakra-ui/react';
 
   import { 
@@ -27,6 +29,13 @@ import {
     BsTools,
     BsFillPlusCircleFill,
    } from "react-icons/bs";
+
+   import { useQuery } from '@apollo/client';
+   import { Link as RouterLink } from 'react-router-dom';
+
+   import theme from '../../Theme';
+   import Auth from '../../utils/auth';
+   import { QUERY_ME } from '../../utils/queries';
 
   const Feature = ({ text, icon, iconBg }) => {
     return (
@@ -44,23 +53,53 @@ import {
       </Stack>
     );
   };
+
+  const GetData = async () => {
+    const response = await useQuery(QUERY_ME);
+    // console.log(response.data.me);
+    localStorage.setItem('user_info', JSON.stringify(response.data.me));
+  };
   
-  export default function SplitWithImage() {
+  export default function Profile() {
+
+
+    // ISSUES
+    // stores data in localstorage but only after loading the page
+    // On page load, no data is there to use
+    // This throws an error if I uncomment line 135 and try running it
+
+    const testing = GetData();
+    // const username = Auth.getProfile().data.username;
+    // const {loading, data}= useQuery(QUERY_ME);
+    // if (loading) {
+    //   console.log("loading");
+    // }
+    // console.log(data);
+    const user = JSON.parse(localStorage.getItem('user_info')) || {};
+    console.log(user);
+    console.log(user.age)
+    // const reversedKeys = Object.keys(user.mealPlan).reverse();
+    // reversedKeys.forEach(key => {
+    //   console.log(key, user.mealPlan[key]);
+    // });
+    // const targetWeight = user.goals[0].goalWeight;
+    // console.log(targetWeight);
+
     return (
       <Box display="flex">
-      <Container maxW={'5xl'} py={12}>        
+      <Container maxW={'5xl'} py={12}>
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
           <Stack spacing={4}  align="center">
           <Center>
             <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
           </Center>
-            <Heading>USERNAME'S Profile</Heading>
+            <Heading>{user.username}'s Profile</Heading>
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
-              <ListItem>WEIGHT</ListItem>
-              <ListItem>HEIGHT</ListItem>
-              <ListItem>AGE</ListItem>
-              <ListItem>GENDER</ListItem>         
+              <ListItem>{user.gender}</ListItem>  
+              <ListItem>{user.age} years old</ListItem>
+              <ListItem>{user.weight} pounds</ListItem>
+              <ListItem>{user.height} inches</ListItem>       
             </UnorderedList>
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
@@ -72,59 +111,89 @@ import {
                     transform: 'translateY(-2px)',
                     boxShadow: 'lg',
                 }}
-                onClick={console.log("poke")}>
-                Edit Profile
+                >
+
+                <a href="profile/edit">Edit Profile</a>
+
             </Button>
             </Stack>
             <Center>
             <Stack
               spacing={4}
-              align="center"
+              align="left"
               mt="5"
               divider={
                 <StackDivider
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
                 />
               }>
+
               <Feature
-                iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-                text={'Your current goal : '}
+                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
+                text={`Your current goal`}
+
                 // add goal
               />
+              <UnorderedList>
+                
+                {/* <ListItem>Target weight : {user.goals[0].goalWeight}</ListItem> */}
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
-                iconBg={useColorModeValue('green.100', 'green.900')}
-                text={'Your current exercise plan : '}
+                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+
+                text={`Your current exercise plan`}
+
                 // add exercise plan
               />
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
-                iconBg={useColorModeValue('purple.100', 'purple.900')}
-                text={'Your current meal plan : '}
+                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+
+                text={`Your current meal plan`}
+
                 // add meal plan
               />
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
               <Feature
-                iconBg={useColorModeValue('red.100', 'red.900')}
-                text={'Your most recent post : '}
+                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+
+                text={`Your most recent post`}
+
                 // add post
               />
-              <Button
-                  leftIcon={<BsFillPlusCircleFill />}              
-                  px={8}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
-                  color={'white'}
-                  rounded={'md'}
-                  _hover={{
-                      transform: 'translateY(-2px)',
-                      boxShadow: 'lg',
-                  }}
-                  onClick={console.log("poke")}>
-                  Create Post
-              </Button>
+              <UnorderedList>
+                <ListItem>goal 1</ListItem>
+                <ListItem>goal 2</ListItem>
+              </UnorderedList>
+              <Link as={RouterLink} to='/posts'>
+                <Button
+                    leftIcon={<BsFillPlusCircleFill />}              
+                    px={8}
+                    bg={useColorModeValue('#151f21', 'gray.900')}
+                    color={'white'}
+                    rounded={'md'}
+                    _hover={{
+                        transform: 'translateY(-2px)',
+                        boxShadow: 'lg',
+                    }}
+                    >
+                    Create Post
+                </Button>
+              </Link>
             </Stack>
             </Center>
         </SimpleGrid>
         </Box>
           <Box align="center">
             <ButtonGroup variant='outline' spacing='6'>
+            <Link as={RouterLink} to='/meal-plan'>
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={5}
@@ -135,9 +204,11 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Meal Plan
               </Button>
+            </Link>
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={8}
@@ -148,7 +219,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Create Exercise Plan
                   
               </Button>
@@ -162,7 +234,8 @@ import {
                       transform: 'translateY(-2px)',
                       boxShadow: 'lg',
                   }}
-                  onClick={console.log("poke")}>
+                  // onClick={console.log("poke")}
+                  >
                   Edit Goal
               </Button>
             </ButtonGroup>

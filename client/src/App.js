@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, CircularProgress } from '@chakra-ui/react';
 import theme from "./Theme";
 import { 
   ApolloClient, 
@@ -17,9 +17,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Posts from './pages/Timeline';
 import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import FoodSearch from './components/FoodSearch';
+import Meals from './pages/MealPlan';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -61,6 +63,10 @@ function App() {
             path="/signup" 
             element={<Signup />} 
           />
+           <Route
+            path="/profile/edit"
+            element={<EditProfile />}
+          />
           <Route
             path="/profile"
             element={<Profile />}
@@ -80,6 +86,10 @@ function App() {
           <Route 
             path="/food-search"
             element={<FoodSearch />}
+          />
+          <Route
+            path="/meal-plan"
+            element={<Meals />}
           />
         </Routes>
         <Footer />

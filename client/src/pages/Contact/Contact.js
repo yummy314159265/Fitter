@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import {
     Container,
     Flex,
@@ -5,6 +7,11 @@ import {
     Heading,
     Text,
     Button,
+    Stack,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
     VStack,
     Wrap,
     WrapItem,
@@ -20,8 +27,53 @@ import {
     MdLocationOn,
     MdFace,
   } from 'react-icons/md';
-  
-  export default function contact() {
+  import { validateEmail } from '../../utils/helpers'
+
+  export default function Contact() {
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const validateIsName = () => {
+      if(!name) {
+        setErrorMessage('name is required!');
+      }
+    }
+    const validateIsEmail = () => {
+      if (!validateEmail(email)) {
+        setErrorMessage('Your email is Invalid!');
+      }
+    }
+    const validateIsMessage = () => {
+      if(!message) {
+        setErrorMessage('message is required!');
+      }
+    }
+    const handleFormSubmit = (e) => {    
+      e.preventDefault();
+      
+      // validate form
+      if(!name) {
+        setErrorMessage('name is required!');
+        return;
+      }
+      if (!validateEmail(email)) {
+        setErrorMessage('Your email is Invalid!');
+        return;
+      }
+      if(!message) {
+        setErrorMessage('message is required!');
+        return;
+      }
+      // successful
+      setName('');
+      setEmail('');
+      setMessage('');
+      setErrorMessage('');
+      setSuccessMessage('Thank you for reaching out.');
+    }  
     return (
       <Container bg="lightgrey" maxW="full" mt={0} centerContent overflow="hidden">
         <Flex>
@@ -71,6 +123,7 @@ import {
                   <Box bg="white" borderRadius="lg">
                     <Box m={8} color="#0B0E3F">
                       <VStack spacing={5}>
+                      <form onSubmit={handleFormSubmit}>
                         <FormControl id="name">
                           <FormLabel>Your Name</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
@@ -79,33 +132,47 @@ import {
                               children={<MdFace color="black"
                             />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text"
+                            id="name" 
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}    
+                            size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Email</FormLabel>
+                        
+                        
+                          <FormLabel name="email">Email</FormLabel>
                           <InputGroup borderColor="#E0E1E7">
                             <InputLeftElement
                               pointerEvents="none"
                               children={<MdEmail color="black"
                             />}
                             />
-                            <Input type="text" size="md" />
+                            <Input 
+                            type="email" 
+                            id="email" 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            size="md" />
                           </InputGroup>
-                        </FormControl>
-                        <FormControl id="name">
-                          <FormLabel>Message</FormLabel>
+                        
+                        
+                          <FormLabel name="message">Message</FormLabel>
                           <Textarea
                             borderColor="gray.300"
                             _hover={{
                               borderRadius: 'gray.300',
                             }}
                             placeholder=" "
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            id="message" 
                           />
                         </FormControl>
 {/* need to add onsubmit for send message btn */}
                         <FormControl id="name" float="right">
                           <Button
+                            mt={3}
+                            type='submit'
                             variant="solid"
                             bg="darkgreen"
                             color="white"
@@ -113,6 +180,23 @@ import {
                             Send Message
                           </Button>
                         </FormControl>
+                        </form>
+                        {errorMessage && (
+                        <Stack spacing={3}>
+                            <Alert status='error'>
+                            <AlertIcon />
+                            {errorMessage}
+                          </Alert>
+                          </Stack>  
+                          )} 
+                          {successMessage && (
+                        <Stack spacing={3}>
+                            <Alert status='success'>
+                            <AlertIcon />
+                            {successMessage}
+                          </Alert>
+                          </Stack>  
+                          )} 
                       </VStack>
                     </Box>
                   </Box>
