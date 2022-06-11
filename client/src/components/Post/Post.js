@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Heading,
@@ -8,10 +9,14 @@ import {
   useColorModeValue,
   Image,
   Center,
-  Button
+  IconButton
 } from '@chakra-ui/react';
+import { FaThumbsUp } from 'react-icons/fa';
+import { UPDATE_LIKES } from '../../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
 
 export default function Post({
+  postId,
   postAuthor, 
   message,
   likes,
@@ -22,6 +27,25 @@ export default function Post({
   createdAt,
   image
 }) {
+
+  const [liked, setLiked] = useState(false);
+  const [postLikes, setPostLikes] = useState(likes);
+  const [updateLike, { error }] = useMutation(UPDATE_LIKES);
+
+  const handleLike = async (event) => {
+    event.preventDefault();
+    try {
+      setLiked(prev=>!prev);
+      const post = await updateLike({
+        variables: { postId: postId, hasLiked: liked }
+      });
+
+      setPostLikes(post.data.updateLikes.likes)
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <Center py={6}>
       <Box
@@ -71,19 +95,31 @@ export default function Post({
 
           </Text>
         </Stack>
-        <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-          <Avatar
-            src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
-            alt={'Author'}
+        <Stack direction={'row'} mt={6} justifyContent={'space-between'}>
+          <Stack direction={'row'} spacing={4} align={'center'}>
+            <Avatar
+              src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
+              alt={'Author'}
+            />
+            <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+              <Text fontWeight={600}>{postAuthor}</Text>
+              <Text color={'gray.500'}>{createdAt}</Text>
+              <HStack>
+                {tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
+              </HStack>
+            </Stack>
+          </Stack>
+          <Stack>
+          <IconButton 
+            justifySelf='end' 
+            aria-label='Like' 
+            color={liked ? 'green' : 'black'} 
+            icon={<FaThumbsUp />} 
+            onClick={handleLike}
           />
-          <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-
-            <Text fontWeight={600}>{postAuthor}</Text>
-            <Text color={'gray.500'}>{createdAt}</Text>
-            <HStack>
-              {tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
-            </HStack>
-
+          <Center>
+            <Text fontWeight={600}>{postLikes}</Text>
+          </Center>
           </Stack>
         </Stack>
       </Box>

@@ -62,6 +62,7 @@ export const QUERY_ME = gql`
 export const GET_POSTS = gql`
   query posts {
     posts {
+      id
       postAuthor
       message
       likes
@@ -96,4 +97,4 @@ export const GET_POSTS = gql`
       image
     }
   }
-`
+`;

@@ -16,7 +16,7 @@ export default function PostList() {
   return (
     <>
       {posts.map(({
-        _id,
+        id,
         postAuthor, 
         message,
         likes,
@@ -28,7 +28,8 @@ export default function PostList() {
         image
       }) => {
         return <Post 
-          key={_id}
+          key={id}
+          postId={id}
           postAuthor={postAuthor}
           message={message}  
           likes={likes}
