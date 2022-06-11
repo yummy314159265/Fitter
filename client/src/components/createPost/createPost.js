@@ -35,6 +35,8 @@ import { FaPlus, FaCheck } from 'react-icons/fa';
 
 
 
+
+
 export default function Component() {
 
 
@@ -48,6 +50,7 @@ export default function Component() {
     const [weight, setWeight] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
+    
 
 
 const renderExercise = () => {
