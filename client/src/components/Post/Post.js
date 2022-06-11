@@ -26,22 +26,25 @@ export default function Post({
   tags,
   comments,
   createdAt,
-  image
+  image,
+  usersLiked
 }) {
-
-  const [liked, setLiked] = useState(false);
+  const hasBeenLiked = usersLiked.find(
+    user => {
+      console.log(user.id, Auth.getProfile().data._id);
+      return user.id === Auth.getProfile().data._id
+  }) ? true : false; 
+  const [liked, setLiked] = useState(hasBeenLiked);
   const [postLikes, setPostLikes] = useState(likes);
-  const [updateLike, { error }] = useMutation(UPDATE_LIKES);
-  
-  console.log(Auth.loggedIn());
+  const [updateLikes, { error }] = useMutation(UPDATE_LIKES);
 
   const handleLike = async (event) => {
     event.preventDefault();
 
     try {
       setLiked(prev=>!prev);
-      const post = await updateLike({
-        variables: { postId: postId, hasLiked: liked }
+      const post = await updateLikes({
+        variables: { postId: postId }
       });
 
       setPostLikes(post.data.updateLikes.likes)
@@ -120,6 +123,10 @@ export default function Post({
             color={liked ? 'green' : 'black'} 
             icon={<FaThumbsUp />} 
             onClick={handleLike}
+            isDisabled={Auth.loggedIn() ? false : true}
+            _disabled={{
+              cursor: 'default'
+            }}
           />
           <Center>
             <Text fontWeight={600}>{postLikes}</Text>

@@ -95,6 +95,9 @@ export const GET_POSTS = gql`
       }
       createdAt
       image
+      usersLiked {
+        id
+      }
     }
   }
 `;
