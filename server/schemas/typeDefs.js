@@ -56,10 +56,10 @@ const typeDefs = gql`
    name: String
    type: [String]
   "Following macronutrients are per complete meal and not per individual intake"
-   calories: Int
-   proteins: Int
-   carbs: Int
-   fats: Int
+   calories: Float
+   proteins: Float
+   carbs: Float
+   fats: Float
   }
   """
     Exercise Schema will store exercise plan user created
@@ -68,12 +68,12 @@ const typeDefs = gql`
    id: ID!   
    name: String!
    type: [String]
-   calories: Int
-   distance: Float
+   calories: Float
+   distance: String
    time: String
-   reps: Int
-   sets: Int
-   liftingWeight: Int
+   reps: String
+   sets: String
+   liftingWeight: String
   }
   """
     Goal Schema will store goal user created
@@ -119,21 +119,21 @@ const typeDefs = gql`
   input MealInput {    
    name: String
    type: [String]
-   calories: Int
-   proteins: Int
-   carbs: Int
-   fats: Int
+   calories: Float
+   proteins: Float
+   carbs: Float
+   fats: Float
   }
   # will use ExerciseInput to add new goal and post
   input ExerciseInput {    
    name: String!
    type: [String]
-   calories: Int
-   distance: Float
+   calories: Float
+   distance: String
    time: String
-   reps: Int
-   sets: Int
-   liftingWeight: Int
+   reps: String
+   sets: String
+   liftingWeight: String
   }
   # goalInput to add new goal with ExerciseInput
   input goalInput {

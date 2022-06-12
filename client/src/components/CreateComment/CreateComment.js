@@ -4,13 +4,6 @@ import {
   Center,
   Button,
   Box,
-  List,
-  ListItem,
-  CircularProgress,
-  VStack,
-  HStack,
-  Stack,
-  IconButton
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/client';
@@ -30,27 +23,36 @@ export default function CreateComment({ postId, commentAuthor }){
         variables: { input: { postId, commentDetails: { commentAuthor, message, tags}}}
       })
       console.log(newComment)
+      formik.values.message = '';
     })
   })
 
   return (
     <Center>
-      <Box>
+      <Box 
+        bg={'white'} 
+        p={3}
+        rounded={'md'}
+        maxW={'50%'}
+        w={'50%'}
+        alignItems={'end'}
+      >
         <form onSubmit={formik.handleSubmit}>
-          <VStack>
-            <Textarea 
-              id='message'
-              name='message'
-              type='text'
-              onChange={formik.handleChange}
-              value={formik.values.message}
-              resize={'none'}
-            />
-            <Button justifyContent={'end'} type='submit'>
-              Post Comment
+          <Textarea 
+            bg={'white'}
+            id='message'
+            name='message'
+            type='text'
+            onChange={formik.handleChange}
+            value={formik.values.message}
+            resize={'none'}
+          />
+          <Center>
+            <Button mt={3}  type='submit'>
+              Comment
             </Button>
-        </VStack>
-          </form>
+          </Center>
+        </form>
       </Box>  
     </Center>
   )

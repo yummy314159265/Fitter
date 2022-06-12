@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  Box,
-  Heading,
-  HStack,
-  VStack,
-  Text,
-  Stack,
-  Avatar,
-  useColorModeValue,
-  Image,
+  Grid,
+  GridItem,
   Center,
-  IconButton,
-  List,
-  ListItem,
-  ListIcon,
   CircularProgress
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
@@ -23,6 +12,7 @@ import Auth from '../../utils/auth';
 import Post from '../../components/Post';
 import CreateComment from '../../components/CreateComment';
 import Comment from '../../components/Comment';
+import Sidebar from '../../components/Sidebar';
 
 export default function SinglePost() {
 
@@ -62,27 +52,44 @@ export default function SinglePost() {
   console.log(data)
 
   return (
-    <VStack mb={3}>
-      <Post 
-        key={id}
-        postId={id}
-        postAuthor={postAuthor}
-        message={message}  
-        likes={likes}
-        exercises={exercises}
-        meals={meals}
-        tags={tags}
-        comments={comments}
-        createdAt={createdAt}
-        image={image}
-        usersLiked={usersLiked}
-      />
-      {username && <CreateComment postId={postId} commentAuthor={username} />}
-      {comments.map(comment => {
-        return (
-          <Comment key={comment.commentId} comment={comment} postId={postId} />
-        )
-      })}
-    </VStack>
+      <>
+         <Grid 
+             gap={1}
+             templateRows='repeat(2, auto 1fr)'
+             templateColumns='repeat(5, 1fr)'
+             bg="lightgrey"
+             >
+             <GridItem rowSpan={2} colSpan={1}>
+                 <Sidebar />
+             </GridItem>
+             
+             <GridItem row span={1} colSpan={4}>
+
+                <Post 
+                  key={id}
+                  postId={id}
+                  postAuthor={postAuthor}
+                  message={message}  
+                  likes={likes}
+                  exercises={exercises}
+                  meals={meals}
+                  tags={tags}
+                  comments={comments}
+                  createdAt={createdAt}
+                  image={image}
+                  usersLiked={usersLiked}
+                />
+                {username && <CreateComment postId={postId} commentAuthor={username} />}
+                {comments.slice().reverse().map(comment => {
+                  return (
+                    <Comment key={comment.commentId} comment={comment} postId={postId} />
+                  )
+                })}
+
+             </GridItem>
+         </Grid>
+      </>
+
+
   )
 };

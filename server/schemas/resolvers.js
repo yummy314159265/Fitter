@@ -197,19 +197,23 @@ const resolvers = {
     if (!context.user) throw new AuthenticationError("You must be logged in to add Meal plan!");
     let postExerciseList = [];
     // iterate over array of exercise and insert each to exercise collection
-    for (let i = 0; i < postInput.input.exercises.length; i++)
+    
+    for (let i = 0; i < postInput.input?.exercises?.length; i++)
     {
        const exercise = await Exercise.create(postInput.input.exercises[i]);
-       postExerciseList.push(exercise.id)
+       console.log(exercise)
+       postExerciseList.push(exercise._id)
     }
     let postMealList = [];
     // iterate over array of meals and insert each to meals collection
-    for (let i = 0; i < postInput.input.meals.length; i++)
+    for (let i = 0; i < postInput.input?.meals?.length; i++)
     {
        const meal = await Meal.create(postInput.input.meals[i]);
-       postMealList.push(meal.id)
+       console.log(meal)
+       postMealList.push(meal._id)
     }
     // generate post document
+    console.log(postInput.input.postAuthor)
     const post = {
       "postAuthor": postInput.input.postAuthor,
       "message": postInput.input.message,
@@ -217,20 +221,22 @@ const resolvers = {
       "meals": postMealList,
     }    
     const postinsert = await Post.create(post);
-    const postId = postinsert.id;
+    const postId = postinsert._id;
     // append tags to post just inserted    
     const updatepost = await Post.findByIdAndUpdate(
       { _id: postId },
       { $addToSet: { tags: postInput.input.tags} },
       { runValidators: true, new: true }
-      );
+      ).populate('exercises').populate('meals');
      // finally update user to add post 
     const updatedUser = await User.findByIdAndUpdate(
       { _id: context.user._id },
       { $addToSet: { posts: postId } },
       { new: true }
     );
-    return updatedUser;
+
+    console.log(updatepost);
+    return updatepost;
   },
     // add comment to post
     addComment: async (parent, commentInput, context) => {

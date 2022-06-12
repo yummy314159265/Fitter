@@ -10,9 +10,7 @@ import {
   Image,
   Center,
   IconButton,
-  List,
-  ListItem,
-  ListIcon,
+  Divider
 } from '@chakra-ui/react';
 import { FaThumbsUp, FaComment } from 'react-icons/fa';
 import { useQuery, useMutation } from '@apollo/client';
@@ -46,7 +44,7 @@ export default function Comment({comment, postId}) {
   return (
     <Center py={6}>
       <Box
-        maxW={'445px'}
+        maxW={'50%'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'2xl'}
@@ -68,53 +66,56 @@ export default function Comment({comment, postId}) {
               />
           </Box>
         }
-        <Stack>
+        <Stack mb={3}>
           <Text
             color={'green.500'}
             textTransform={'uppercase'}
             fontWeight={800}
             fontSize={'sm'}
             letterSpacing={1.1}
-          >
+            >
             Comment
           </Text>
           <Text color={'gray.500'}>
             {comment.message}
           </Text>
         </Stack>
-        <Stack direction={'row'} mt={6} justifyContent={'space-between'}>
-          <Stack direction={'row'} spacing={4} align={'center'}>
-            <Avatar
-              src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
-              alt={'Author'}
-            />
-            <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-              <Text fontWeight={600}>{comment.commentAuthor}</Text>
-              <Text color={'gray.500'}>{comment.createdAt}</Text>
-              <HStack>
-                {comment.tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
-              </HStack>
+        <Divider />
+        <Stack direction={'row'} justifyContent={'space-between'}>
+          <Stack direction={'row'} mt={6} justifyContent={'space-between'}>
+            <Stack direction={'row'} spacing={4} align={'center'}>
+              <Avatar
+                src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
+                alt={'Author'}
+              />
+              <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+                <Text fontWeight={600}>{comment.commentAuthor}</Text>
+                <Text color={'gray.500'}>{comment.createdAt}</Text>
+                <HStack>
+                  {comment.tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
+                </HStack>
+              </Stack>
             </Stack>
           </Stack>
+          <VStack alignItems={'end'} justifyContent={'end'} mt={3}>
+            <Center>
+              <Text fontWeight={600} mx={2}>
+                {commentLikes}
+              </Text>
+              <IconButton 
+                justifySelf='end' 
+                aria-label='Like' 
+                color={liked ? 'green' : 'black'}
+                icon={<FaThumbsUp />} 
+                onClick={handleLike}
+                isDisabled={Auth.loggedIn() ? false : true}
+                _disabled={{
+                  cursor: 'default'
+                }}
+              />
+            </Center>
+          </VStack>
         </Stack>
-        <VStack alignItems={'end'} mt={3}>
-          <Center>
-            <Text fontWeight={600} mx={2}>
-              {commentLikes}
-            </Text>
-            <IconButton 
-              justifySelf='end' 
-              aria-label='Like' 
-              color={liked ? 'green' : 'black'}
-              icon={<FaThumbsUp />} 
-              onClick={handleLike}
-              isDisabled={Auth.loggedIn() ? false : true}
-              _disabled={{
-                cursor: 'default'
-              }}
-            />
-          </Center>
-        </VStack>
       </Box>
     </Center>
   )
