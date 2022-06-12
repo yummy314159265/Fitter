@@ -67,6 +67,7 @@ export const GET_POSTS = gql`
       message
       likes
       exercises {
+        id
         name
         type
         calories
@@ -77,6 +78,7 @@ export const GET_POSTS = gql`
         liftingWeight
       }
       meals {
+        id
         name
         type
         calories
@@ -95,6 +97,63 @@ export const GET_POSTS = gql`
       }
       createdAt
       image
+      usersLiked {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_POST = gql`
+  query post(
+    $postId: ID!
+  ) {
+    post(
+      postId: $postId
+    ) {
+      id
+      postAuthor
+      message
+      likes
+      exercises {
+        id
+        name
+        type
+        calories
+        distance
+        time
+        reps
+        sets
+        liftingWeight
+      }
+      meals {
+        id
+        name
+        type
+        calories
+        proteins
+        carbs
+        fats
+      }
+      tags
+      comments {
+        commentId
+        commentAuthor
+        message
+        image
+        likes
+        tags
+        createdAt
+        usersLiked {
+          id
+          username
+        }
+      }
+      createdAt
+      image
+      usersLiked {
+        id
+      }
     }
   }
 `;

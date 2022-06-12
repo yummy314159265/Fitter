@@ -1,43 +1,65 @@
 const { User, Exercise, Meal, Post } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth'); 
+const { Types } = require('mongoose');
 
 const resolvers = {
-    Query: {
-       me: async (parent, args, context) => {
-         if (context.user) {           
-           const userData = await User.findOne({ _id: context.user._id })
-           .populate('mealPlan')
-           .populate('exercisePlan')
-           .populate('goals')
-           .populate({
-             path: 'posts', 
-             option: { 'createdAt': -1 } })
-           .populate('friends')
-           .select('-__v -password')              
-            return userData;
-         }
-         throw new AuthenticationError('You need to be logged in!');
-       },   
-       users: async () => {
-         // Populate the meal and exercise subdocuments when querying for user
-         return await User.find({}).populate('goals');
-       },     
-       // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
-       meal: async (parent, args) => {
-         return await User.find({
-           mealPlan: {calories: args.calories}
-         });            
-       },  
-       exercise: async (parent, args) => {
-         return await User.find({
-           exercisePlan: {calories: args.calories}
-         });            
-       },
-       posts: async (parent, args, context) => {
-        // create algorithm to show users desired posts if user is logged in
-        return await Post.find({}).populate('exercises').populate('meals');
-       },
+  Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {           
+        const userData = await User.findOne({ _id: context.user._id })
+        .populate('mealPlan')
+        .populate('exercisePlan')
+        .populate('goals')
+        .populate({
+          path: 'posts', 
+          option: { 'createdAt': -1 } })
+        .populate('friends')
+        .select('-__v -password')              
+        return userData;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },   
+    users: async () => {
+      // Populate the meal and exercise subdocuments when querying for user
+      return await User.find({}).populate('goals');
+    },     
+    // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
+    meal: async (parent, args) => {
+      return await User.find({
+        mealPlan: {calories: args.calories}
+      });            
+    },  
+    exercise: async (parent, args) => {
+      return await User.find({
+        exercisePlan: {calories: args.calories}
+      });            
+    },
+    posts: async (parent, args, context) => {
+    // create algorithm to show users desired posts if user is logged in
+    return await Post.find({})
+      .populate('exercises')
+      .populate('meals')
+      .populate('usersLiked')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'usersLiked'
+        }
+      });
+    },
+    post: async (parent, { postId }, context) => {
+      return await Post.findById(postId)
+      .populate('exercises')
+      .populate('meals')
+      .populate('usersLiked')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'usersLiked'
+        }
+      });
+    }
  },   
  Mutation: {   
    // add new user
@@ -222,26 +244,72 @@ const resolvers = {
       return updatePost;
     },
     // add likes
-    updateLikes: async (parent, { postId, hasLiked }, context) => {
+    updateLikes: async (parent, { postId }, context) => {
       if (!context.user) throw new AuthenticationError("You must be logged in to like!");  
+      const userId = new Types.ObjectId(context.user._id)
+      const post = await Post.findOne({_id: postId});
       let updatePost;
 
-      if (!hasLiked) {
+      if (!post.usersLiked.includes(userId)) {
         updatePost = await Post.findByIdAndUpdate(
           { _id: postId },
-          { $inc: { likes: 1 }},
+          { 
+            $inc: { likes: 1 },
+            $addToSet: { usersLiked: userId }
+          },
           { new: true }
         );
       } else {
         updatePost = await Post.findByIdAndUpdate(
           { _id: postId },
-          { $inc: { likes: -1 }},
+          { 
+            $inc: { likes: -1 },
+            $pull: { usersLiked: userId }
+          },
           { new: true }
         );
       }
-
       return updatePost;
-    }
+    },
+    // add comment likes
+    updateCommentLikes: async (parent, { postId, commentId }, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to like!");  
+      const userId = new Types.ObjectId(context.user._id)
+      const post = await Post.findOne({_id: postId, "comments.commentId": commentId});
+      const comment = await post.comments.find(comment => commentId === comment.commentId.valueOf());
+      let updateComment;
+
+      if (!comment.usersLiked.includes(userId)) {
+        updateComment = await Post.findOneAndUpdate(
+          { _id: postId, "comments.commentId": commentId},
+          { 
+            $inc: { "comments.$.likes": 1 },
+            $addToSet: { "comments.$.usersLiked": userId }
+          },
+          { new: true }
+        ).populate({
+          path: 'comments',
+          populate: {
+            path: 'usersLiked'
+          }
+        });
+      } else {
+        updateComment = await Post.findOneAndUpdate(
+          { _id: postId, "comments.commentId": commentId},
+          { 
+            $inc: { "comments.$.likes": -1 },
+            $pull: { "comments.$.usersLiked": userId }
+          },
+          { new: true }
+        ).populate({
+          path: 'comments',
+          populate: {
+            path: 'usersLiked'
+          }
+        });
+      }
+      return updateComment;
+    },
  }
 }
 module.exports = resolvers;

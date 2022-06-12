@@ -7,6 +7,9 @@ const typeDefs = gql`
     goals - user can set more than one goal
     exercise and meal - each goal will have related exercise and meal plan
     """
+
+  # ----------Queries-----------
+    
   type User {
     id: ID!
     username: String!
@@ -42,6 +45,7 @@ const typeDefs = gql`
    comments: [Comment]
    image: String
    createdAt: String   
+   usersLiked: [User]
   }
 
     """
@@ -82,12 +86,14 @@ const typeDefs = gql`
     Comment Schema will use for Post
   """
   type Comment {
+   commentId: ID!
    commentAuthor: String!   
    message: String!
    image: String
    likes: Int
    tags: [String]
-   createdAt: String   
+   createdAt: String
+   usersLiked: [User]   
   }
 
   type Auth {
@@ -104,7 +110,11 @@ const typeDefs = gql`
     exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
+    post(postId: ID!): Post
   }  
+
+  #------------Mutations---------------
+
   # will use MealInout to add new post
   input MealInput {    
    name: String
@@ -147,7 +157,7 @@ const typeDefs = gql`
   # commentInput will be use to add new comment to post
   input commentInput {
     postId: ID!   
-    commentDetails: [commentDetails] 
+    commentDetails: commentDetails! 
     tags: [String]
   }  
   # Following defines mutation
@@ -221,7 +231,11 @@ const typeDefs = gql`
     # Update Post with Likes
     updateLikes(
       postId: ID!
-      hasLiked: Boolean!
+    ): Post
+    # Update Comment with Likes
+    updateCommentLikes(
+      postId: ID!
+      commentId: ID!
     ): Post
     # Delete Meal plan
     removeMeal(id: ID!): Meal       

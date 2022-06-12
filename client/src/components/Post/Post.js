@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
-  Heading,
   HStack,
+  VStack,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
   Image,
   Center,
-  IconButton
+  IconButton,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react';
-import { FaThumbsUp } from 'react-icons/fa';
+import { FaThumbsUp, FaDumbbell, FaRunning, FaLeaf, FaComment } from 'react-icons/fa';
+import { GiMeat } from 'react-icons/gi';
 import { UPDATE_LIKES } from '../../utils/mutations';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
+import { useNavigate } from "react-router-dom";
 
 export default function Post({
   postId,
@@ -26,22 +31,29 @@ export default function Post({
   tags,
   comments,
   createdAt,
-  image
+  image,
+  usersLiked
 }) {
 
-  const [liked, setLiked] = useState(false);
+  // likes
+  const hasBeenLiked = usersLiked.find(user => user.id === Auth.getProfile().data._id) ? true : false; 
+  const [liked, setLiked] = useState(hasBeenLiked);
   const [postLikes, setPostLikes] = useState(likes);
-  const [updateLike, { error }] = useMutation(UPDATE_LIKES);
-  
-  console.log(Auth.loggedIn());
+  const [updateLikes, { error }] = useMutation(UPDATE_LIKES);
+  let navigate = useNavigate();
+
+  const handleSinglePost = async (event) => {
+    event.preventDefault();
+    navigate(`/post/${postId}`, { replace: true });
+  }
 
   const handleLike = async (event) => {
     event.preventDefault();
 
     try {
       setLiked(prev=>!prev);
-      const post = await updateLike({
-        variables: { postId: postId, hasLiked: liked }
+      const post = await updateLikes({
+        variables: { postId: postId }
       });
 
       setPostLikes(post.data.updateLikes.likes)
@@ -51,15 +63,18 @@ export default function Post({
   }
 
   return (
-    <Center py={6}>
+    <Center 
+      py={2}
+      m={2}>
       <Box
-        maxW={'445px'}
+        maxW={'95%'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
-        overflow={'hidden'}>
+        overflow={'hidden'}
+        align={'stretch'}>
 
         {image &&
           <Box
@@ -75,28 +90,18 @@ export default function Post({
               />
           </Box>
         }
-
         <Stack>
           <Text
             color={'green.500'}
             textTransform={'uppercase'}
             fontWeight={800}
             fontSize={'sm'}
-
             letterSpacing={1.1}
           >
             Post
           </Text>
-          {/* <Heading
-            color={useColorModeValue('gray.700', 'white')}
-            fontSize={'2xl'}
-            fontFamily={'body'}
-          >
-            Boost your conversion rate
-          </Heading> */}
           <Text color={'gray.500'}>
             {message}
-
           </Text>
         </Stack>
         <Stack direction={'row'} mt={6} justifyContent={'space-between'}>
@@ -113,19 +118,81 @@ export default function Post({
               </HStack>
             </Stack>
           </Stack>
-          <Stack>
-          <IconButton 
-            justifySelf='end' 
-            aria-label='Like' 
-            color={liked ? 'green' : 'black'} 
-            icon={<FaThumbsUp />} 
-            onClick={handleLike}
-          />
-          <Center>
-            <Text fontWeight={600}>{postLikes}</Text>
-          </Center>
-          </Stack>
         </Stack>
+        <Stack direction={'row'} justifyContent={'space-around'}>
+          <List spacing={3}>
+            <Text>
+              Exercises
+            </Text>
+            {exercises.map(exercise => {
+              return (
+                <ListItem key={exercise.id}>
+                  <ListIcon as={(exercise.type[0]==='Cardio') ? FaRunning : FaDumbbell} color='green' /> 
+                  <Text display='inline'>{exercise.name}</Text>
+                  <List>
+                    {exercise.time && <ListItem fontSize='small'>Time: {exercise.time} min</ListItem>}
+                    {exercise.distance && <ListItem fontSize='small'>Distance: {exercise.distance} km</ListItem>}
+                    {exercise.liftingWeight && <ListItem fontSize='small'>Lift weight: {exercise.liftingWeight}</ListItem>}
+                    {exercise.sets && <ListItem fontSize='small'>Sets: {exercise.sets}</ListItem>}
+                    {exercise.reps && <ListItem fontSize='small'>Reps: {exercise.reps}</ListItem>}
+                    {exercise.calories && <ListItem fontSize='small'>Calories burnt: {exercise.calories}</ListItem>}
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
+          <List spacing={3}>
+            <Text>
+              Meals
+            </Text>
+            {meals.map(meal => {
+              return (
+                <ListItem key={meal.id}>
+                  <ListIcon as={meal.type[0] === 'Vegan'|| meal.type[0] === 'Vegetarian' ? FaLeaf : GiMeat} color='green' /> 
+                  <Text display='inline'>{meal.name}</Text>
+                  <List>
+                    <ListItem fontSize='small'>{meal.calories} calories</ListItem>
+                    <ListItem fontSize='small'>{meal.carbs} carbs</ListItem>
+                    <ListItem fontSize='small'>{meal.proteins} proteins</ListItem>
+                    <ListItem fontSize='small'>{meal.fats} fats</ListItem>
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
+        </Stack>
+        <VStack alignItems={'end'} mt={3}>
+          <Center>
+            <Text fontWeight={600} mx={2}>
+              {postLikes}
+            </Text>
+            <IconButton 
+              justifySelf='end' 
+              aria-label='Like' 
+              color={liked ? 'green' : 'black'} 
+              icon={<FaThumbsUp />} 
+              onClick={handleLike}
+              isDisabled={Auth.loggedIn() ? false : true}
+              _disabled={{
+                cursor: 'default'
+              }}
+            />
+            <Text fontWeight={600} mx={2}>
+              {comments.length}
+            </Text>
+            <IconButton 
+              justifySelf='end' 
+              aria-label='Like' 
+              color='black'
+              icon={<FaComment />} 
+              onClick={handleSinglePost}
+              isDisabled={Auth.loggedIn() ? false : true}
+              _disabled={{
+                cursor: 'default'
+              }}
+            />
+          </Center>
+        </VStack>
       </Box>
     </Center>
   )

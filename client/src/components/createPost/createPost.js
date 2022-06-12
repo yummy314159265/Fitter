@@ -4,7 +4,7 @@ import {
   Box,
   Flex,
   useColorModeValue,
-  SimpleGrid,
+  Grid,
   GridItem,
   Stack,
   FormControl,
@@ -384,9 +384,12 @@ const addPost=(text)=>{
 
 //Rendered onto timeline page
   return (
-    <Box bg={useColorModeValue("gray.50", "inherit")} p={10} alignItems="center">
+    <Box 
+      bg={useColorModeValue("gray.50", "inherit")} 
+      p={6} 
+      alignItems="center">
       <Box  alignItems="center">
-        <SimpleGrid
+        <Grid
           display={{ base: "initial", md: "grid" }}
           columns={{ md: 4 }}
           spacing={{ md: 4 }}
@@ -540,11 +543,11 @@ const addPost=(text)=>{
               </Stack>
 
               <FormControl>
-                  <Center>
+                  <Center pb="2">
+                    
   {/* post button needs functionality */}
   {/* post btn */}
-              <Button
-                      
+              <Button   
                       ml={5}
                       variant="outline"
                       size="md"
@@ -570,27 +573,27 @@ const addPost=(text)=>{
                 bg={useColorModeValue("gray.50", "gray.900")}
                 textAlign="right"
               >
-                <Button
+                {/* <Button
                   type="button"
                   colorScheme="brand"
                   _focus={{ shadow: "" }}
                   fontWeight="md"
                 >
                   Save
-                </Button>
+                </Button> */}
               </Box>
             </chakra.form>
           </GridItem>
-        </SimpleGrid>
+        </Grid>
       </Box>
-      <Box visibility={{ base: "hidden", sm: "visible" }} aria-hidden="true">
+      {/* <Box visibility={{ base: "hidden", sm: "visible" }} aria-hidden="true">
         <Box py={5}>
           <Box
             borderTop="solid 1px"
             borderTopColor={useColorModeValue("gray.200", "whiteAlpha.200")}>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
 
     </Box>
   );
