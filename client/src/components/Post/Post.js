@@ -63,16 +63,19 @@ export default function Post({
   }
 
   return (
-    <Center py={6}>
+    <Center 
+      py={2}
+      m={2}>
       <Box
-        maxW={'445px'}
+        maxW={'95%'}
         w={'full'}
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
         overflow={'hidden'}
-      >
+        align={'stretch'}>
+
         {image &&
           <Box
             h={'210px'}
