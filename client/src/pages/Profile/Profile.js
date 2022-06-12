@@ -25,9 +25,10 @@ import {
     UnorderedList,
     List,
     Link,
-    CircularProgress
+    CircularProgress,
+    textDecoration
   } from '@chakra-ui/react';
-
+  
   import { 
     BsFillPersonLinesFill,
     BsTools,
@@ -40,8 +41,8 @@ import {
    import theme from '../../Theme';
    import Auth from '../../utils/auth';
    import { QUERY_ME } from '../../utils/queries';
+import { FaMousePointer } from 'react-icons/fa';
 
-   
   const Feature = ({ text, icon, iconBg }) => {
     return (
       <Stack direction={'row'} align={'center'}>
@@ -58,7 +59,7 @@ import {
       </Stack>
     );
   };
- 
+  
   export default function Profile() {
     const buttonBg = useColorModeValue('#151F21', 'gray.900');
     const recentPostBg = useColorModeValue(theme.colors.darkgreen, 'red.900');
@@ -66,13 +67,14 @@ import {
     const currentExerciseBg = useColorModeValue(theme.colors.lightgreen, 'teal.900');
     const currentGoalBg = useColorModeValue(theme.colors.grey, 'yellow.900');
     const dividerBorder = useColorModeValue('gray.100', 'gray.700');
-
+  
     // ISSUES
     // stores data in localstorage but only after loading the page
     // On page load, no data is there to use
     // This throws an error if I uncomment line 135 and try running it
     const { loading, error, data } = useQuery(QUERY_ME);    
     const user = data?.me || {};    
+    
     //console.log(user)
   // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
   if(loading){
@@ -87,7 +89,7 @@ import {
     // console.log(targetWeight);
      // if data isn't here yet, say so
        
-    return (     
+    return (        
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
@@ -272,9 +274,9 @@ import {
                   Edit Goal
               </Button>
             </ButtonGroup>
-          </Box>  
-           
+          </Box>            
       </Container>
     </Box>
+    
     );
   }
