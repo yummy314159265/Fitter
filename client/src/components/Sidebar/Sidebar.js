@@ -69,7 +69,10 @@ export default function Sidebar() {
                         icon={FiUser} 
                         color="black"
                         title="Profile"
-                        onClick={handleClick} />
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href='/Profile'
+                        }} />
                     <NavItem 
                         navSize={navSize} 
                         icon={FiSettings} 
