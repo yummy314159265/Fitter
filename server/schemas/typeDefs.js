@@ -86,12 +86,14 @@ const typeDefs = gql`
     Comment Schema will use for Post
   """
   type Comment {
+   commentId: ID!
    commentAuthor: String!   
    message: String!
    image: String
    likes: Int
    tags: [String]
-   createdAt: String   
+   createdAt: String
+   usersLiked: [User]   
   }
 
   type Auth {
@@ -155,7 +157,7 @@ const typeDefs = gql`
   # commentInput will be use to add new comment to post
   input commentInput {
     postId: ID!   
-    commentDetails: [commentDetails] 
+    commentDetails: commentDetails! 
     tags: [String]
   }  
   # Following defines mutation
@@ -229,6 +231,11 @@ const typeDefs = gql`
     # Update Post with Likes
     updateLikes(
       postId: ID!
+    ): Post
+    # Update Comment with Likes
+    updateCommentLikes(
+      postId: ID!
+      commentId: ID!
     ): Post
     # Delete Meal plan
     removeMeal(id: ID!): Meal       
