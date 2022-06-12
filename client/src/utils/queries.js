@@ -137,12 +137,17 @@ export const GET_POST = gql`
       }
       tags
       comments {
+        commentId
         commentAuthor
         message
         image
         likes
         tags
         createdAt
+        usersLiked {
+          id
+          username
+        }
       }
       createdAt
       image

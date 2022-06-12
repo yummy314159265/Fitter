@@ -1,9 +1,13 @@
-const { Schema } = require('mongoose');
+const { Schema, Types } = require('mongoose');
 
 const { formatDate } = require('../utils/helpers.js');
 
 const commentSchema = new Schema(
   {
+    commentId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
     commentAuthor: {
       type: String,
       required: true,
@@ -27,6 +31,12 @@ const commentSchema = new Schema(
       default: Date.now,
       get: formatDate,
     },
+    usersLiked: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     toJSON: {

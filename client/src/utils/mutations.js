@@ -190,16 +190,21 @@ export const ADD_POST = gql`
 
 export const ADD_COMMENT = gql` 
     mutation addComment(
-        $postId: ID!,
-        $input: commentInput
+        $input: commentInput!
     ) {
         addComment(
-            postId: $postId,
             input: $input
         ) {
             id
             message
-            comments
+            comments {
+                commentId
+                commentAuthor
+                message
+                createdAt
+                tags
+                likes
+            }
         }
     }
 `;
@@ -212,6 +217,26 @@ export const UPDATE_LIKES = gql`
             postId: $postId
         ) {
             likes
+        }
+    }
+`;
+
+export const UPDATE_COMMENT_LIKES = gql`
+    mutation updateCommentLikes(
+        $postId: ID!
+        $commentId: ID!
+    ) {
+        updateCommentLikes(
+            postId: $postId
+            commentId: $commentId
+        ) {
+            comments {
+                commentId
+                likes
+                usersLiked {
+                    username
+                }
+            }
         }
     }
 `;

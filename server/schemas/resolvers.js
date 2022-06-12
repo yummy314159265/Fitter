@@ -37,10 +37,28 @@ const resolvers = {
     },
     posts: async (parent, args, context) => {
     // create algorithm to show users desired posts if user is logged in
-    return await Post.find({}).populate('exercises').populate('meals').populate('usersLiked');
+    return await Post.find({})
+      .populate('exercises')
+      .populate('meals')
+      .populate('usersLiked')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'usersLiked'
+        }
+      });
     },
     post: async (parent, { postId }, context) => {
-      return await Post.findById(postId).populate('exercises').populate('meals').populate('usersLiked');
+      return await Post.findById(postId)
+      .populate('exercises')
+      .populate('meals')
+      .populate('usersLiked')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'usersLiked'
+        }
+      });
     }
  },   
  Mutation: {   
@@ -251,9 +269,47 @@ const resolvers = {
           { new: true }
         );
       }
-
       return updatePost;
-    }
+    },
+    // add comment likes
+    updateCommentLikes: async (parent, { postId, commentId }, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to like!");  
+      const userId = new Types.ObjectId(context.user._id)
+      const post = await Post.findOne({_id: postId, "comments.commentId": commentId});
+      const comment = await post.comments.find(comment => commentId === comment.commentId.valueOf());
+      let updateComment;
+
+      if (!comment.usersLiked.includes(userId)) {
+        updateComment = await Post.findOneAndUpdate(
+          { _id: postId, "comments.commentId": commentId},
+          { 
+            $inc: { "comments.$.likes": 1 },
+            $addToSet: { "comments.$.usersLiked": userId }
+          },
+          { new: true }
+        ).populate({
+          path: 'comments',
+          populate: {
+            path: 'usersLiked'
+          }
+        });
+      } else {
+        updateComment = await Post.findOneAndUpdate(
+          { _id: postId, "comments.commentId": commentId},
+          { 
+            $inc: { "comments.$.likes": -1 },
+            $pull: { "comments.$.usersLiked": userId }
+          },
+          { new: true }
+        ).populate({
+          path: 'comments',
+          populate: {
+            path: 'usersLiked'
+          }
+        });
+      }
+      return updateComment;
+    },
  }
 }
 module.exports = resolvers;
