@@ -7,6 +7,9 @@ const typeDefs = gql`
     goals - user can set more than one goal
     exercise and meal - each goal will have related exercise and meal plan
     """
+
+  # ----------Queries-----------
+    
   type User {
     id: ID!
     username: String!
@@ -42,6 +45,7 @@ const typeDefs = gql`
    comments: [Comment]
    image: String
    createdAt: String   
+   usersLiked: [User]
   }
 
     """
@@ -105,6 +109,9 @@ const typeDefs = gql`
     goals: [Goal]
     me: User
   }  
+
+  #------------Mutations---------------
+
   # will use MealInout to add new post
   input MealInput {    
    name: String
@@ -221,7 +228,6 @@ const typeDefs = gql`
     # Update Post with Likes
     updateLikes(
       postId: ID!
-      hasLiked: Boolean!
     ): Post
     # Delete Meal plan
     removeMeal(id: ID!): Meal       

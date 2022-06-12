@@ -2,15 +2,21 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_POSTS } from '../../utils/queries';
 import Post from '../Post';
-import { CircularProgress } from '@chakra-ui/react'
+import { 
+  Center,
+  CircularProgress } from '@chakra-ui/react'
 
 export default function PostList() {
   const { loading, error, data } = useQuery(GET_POSTS);
   const posts = data?.posts || [];
-  console.log(posts);
+  console.log(posts)
 
   if(loading){
-    return <CircularProgress isIndeterminate />
+    return (
+      <Center>
+        <CircularProgress isIndeterminate />
+      </Center>
+    )
   }
 
   return (
@@ -25,7 +31,8 @@ export default function PostList() {
         tags,
         comments,
         createdAt,
-        image
+        image,
+        usersLiked
       }) => {
         return <Post 
           key={id}
@@ -39,6 +46,7 @@ export default function PostList() {
           comments={comments}
           createdAt={createdAt}
           image={image}
+          usersLiked={usersLiked}
         />
       })}
     </>
