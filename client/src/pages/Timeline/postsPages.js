@@ -12,19 +12,20 @@ export default function postsPages() {
  return(
  <>
     <Grid 
-        gap={4}
-        templateRows='repeat(2, 1fr)'
+        gap={1}
+        templateRows='repeat(2, auto 1fr)'
         templateColumns='repeat(5, 1fr)'
-        bg="lightgrey">
+        bg="lightgrey"
+        >
         <GridItem rowSpan={2} colSpan={1}>
             <Sidebar />
         </GridItem>
 
-        <GridItem colSpan={4}>
+        <GridItem row span={1} colSpan={4} >
             <CreatePost />
         </GridItem>
 
-        <GridItem colSpan={4}>
+        <GridItem row span={1} colSpan={4}>
             <PostList />
         </GridItem>
     </Grid>
