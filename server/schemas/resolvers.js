@@ -4,41 +4,44 @@ const { signToken } = require('../utils/auth');
 const { Types } = require('mongoose');
 
 const resolvers = {
-    Query: {
-       me: async (parent, args, context) => {
-         if (context.user) {           
-           const userData = await User.findOne({ _id: context.user._id })
-           .populate('mealPlan')
-           .populate('exercisePlan')
-           .populate('goals')
-           .populate({
-             path: 'posts', 
-             option: { 'createdAt': -1 } })
-           .populate('friends')
-           .select('-__v -password')              
-            return userData;
-         }
-         throw new AuthenticationError('You need to be logged in!');
-       },   
-       users: async () => {
-         // Populate the meal and exercise subdocuments when querying for user
-         return await User.find({}).populate('goals');
-       },     
-       // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
-       meal: async (parent, args) => {
-         return await User.find({
-           mealPlan: {calories: args.calories}
-         });            
-       },  
-       exercise: async (parent, args) => {
-         return await User.find({
-           exercisePlan: {calories: args.calories}
-         });            
-       },
-       posts: async (parent, args, context) => {
-        // create algorithm to show users desired posts if user is logged in
-        return await Post.find({}).populate('exercises').populate('meals').populate('usersLiked');
-       },
+  Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {           
+        const userData = await User.findOne({ _id: context.user._id })
+        .populate('mealPlan')
+        .populate('exercisePlan')
+        .populate('goals')
+        .populate({
+          path: 'posts', 
+          option: { 'createdAt': -1 } })
+        .populate('friends')
+        .select('-__v -password')              
+        return userData;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },   
+    users: async () => {
+      // Populate the meal and exercise subdocuments when querying for user
+      return await User.find({}).populate('goals');
+    },     
+    // Query array of subdocs: https://www.mongodb.com/docs/v5.2/tutorial/query-array-of-documents/
+    meal: async (parent, args) => {
+      return await User.find({
+        mealPlan: {calories: args.calories}
+      });            
+    },  
+    exercise: async (parent, args) => {
+      return await User.find({
+        exercisePlan: {calories: args.calories}
+      });            
+    },
+    posts: async (parent, args, context) => {
+    // create algorithm to show users desired posts if user is logged in
+    return await Post.find({}).populate('exercises').populate('meals').populate('usersLiked');
+    },
+    post: async (parent, { postId }, context) => {
+      return await Post.findById(postId).populate('exercises').populate('meals').populate('usersLiked');
+    }
  },   
  Mutation: {   
    // add new user

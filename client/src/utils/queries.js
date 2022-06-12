@@ -103,3 +103,52 @@ export const GET_POSTS = gql`
     }
   }
 `;
+
+export const GET_POST = gql`
+  query post(
+    $postId: ID!
+  ) {
+    post(
+      postId: $postId
+    ) {
+      id
+      postAuthor
+      message
+      likes
+      exercises {
+        id
+        name
+        type
+        calories
+        distance
+        time
+        reps
+        sets
+        liftingWeight
+      }
+      meals {
+        id
+        name
+        type
+        calories
+        proteins
+        carbs
+        fats
+      }
+      tags
+      comments {
+        commentAuthor
+        message
+        image
+        likes
+        tags
+        createdAt
+      }
+      createdAt
+      image
+      usersLiked {
+        id
+      }
+    }
+  }
+`;

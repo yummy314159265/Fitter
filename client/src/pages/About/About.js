@@ -22,7 +22,7 @@ export default function SplitWithImage() {
 {/* Need to add personal statements */}
             <UnorderedList spacing={4} padding={6}>
                 <ListItem>Alex Blanke: super fun and interesting sentence goes here</ListItem>
-                <ListItem>Rodin Grajo: super fun and interesting sentence goes here</ListItem>
+                <ListItem>Rodin Grajo: Lost all his money in $Luna</ListItem>
                 <ListItem>Koki Hara: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Melissa Hookey: super fun and interesting sentence goes here</ListItem>
                 <ListItem>Mayur Patel: Believe in `Passion creates motivation, which leads to innovation`</ListItem>
