@@ -3,17 +3,22 @@ import {
   Box,
   Heading,
   HStack,
+  VStack,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
   Image,
   Center,
-  IconButton
+  IconButton,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react';
-import { FaThumbsUp } from 'react-icons/fa';
+import { FaThumbsUp, FaDumbbell, FaRunning, FaLeaf } from 'react-icons/fa';
+import { GiMeat } from 'react-icons/gi';
 import { UPDATE_LIKES } from '../../utils/mutations';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 
 export default function Post({
@@ -29,11 +34,9 @@ export default function Post({
   image,
   usersLiked
 }) {
-  const hasBeenLiked = usersLiked.find(
-    user => {
-      console.log(user.id, Auth.getProfile().data._id);
-      return user.id === Auth.getProfile().data._id
-  }) ? true : false; 
+
+  // likes
+  const hasBeenLiked = usersLiked.find(user => user.id === Auth.getProfile().data._id) ? true : false; 
   const [liked, setLiked] = useState(hasBeenLiked);
   const [postLikes, setPostLikes] = useState(likes);
   const [updateLikes, { error }] = useMutation(UPDATE_LIKES);
@@ -52,6 +55,8 @@ export default function Post({
       console.error(e);
     }
   }
+
+  console.log(meals)
 
   return (
     <Center py={6}>
@@ -132,6 +137,48 @@ export default function Post({
             <Text fontWeight={600}>{postLikes}</Text>
           </Center>
           </Stack>
+        </Stack>
+        <Stack direction={'row'} justifyContent={'space-around'}>
+          <List spacing={3}>
+            <Text>
+              Exercises
+            </Text>
+            {exercises.map(exercise => {
+              return (
+                <ListItem key={exercise.id}>
+                  <ListIcon as={(exercise.type[0]==='Cardio') ? FaRunning : FaDumbbell} color='green' /> 
+                  <Text display='inline'>{exercise.name}</Text>
+                  <List>
+                    {exercise.time && <ListItem fontSize='small'>Time: {exercise.time} min</ListItem>}
+                    {exercise.distance && <ListItem fontSize='small'>Distance: {exercise.distance} km</ListItem>}
+                    {exercise.liftingWeight && <ListItem fontSize='small'>Lift weight: {exercise.liftingWeight}</ListItem>}
+                    {exercise.sets && <ListItem fontSize='small'>Sets: {exercise.sets}</ListItem>}
+                    {exercise.reps && <ListItem fontSize='small'>Reps: {exercise.reps}</ListItem>}
+                    {exercise.calories && <ListItem fontSize='small'>Calories burnt: {exercise.calories}</ListItem>}
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
+          <List spacing={3}>
+            <Text>
+              Meals
+            </Text>
+            {meals.map(meal => {
+              return (
+                <ListItem key={meal.id}>
+                  <ListIcon as={meal.type[0] === 'Vegan'|| meal.type[0] === 'Vegetarian' ? FaLeaf : GiMeat} color='green' /> 
+                  <Text display='inline'>{meal.name}</Text>
+                  <List>
+                    <ListItem fontSize='small'>{meal.calories} calories</ListItem>
+                    <ListItem fontSize='small'>{meal.carbs} carbs</ListItem>
+                    <ListItem fontSize='small'>{meal.proteins} proteins</ListItem>
+                    <ListItem fontSize='small'>{meal.fats} fats</ListItem>
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
         </Stack>
       </Box>
     </Center>
