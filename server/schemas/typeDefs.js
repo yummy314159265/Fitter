@@ -108,6 +108,7 @@ const typeDefs = gql`
     exercise(calories: Int!): Exercise
     goals: [Goal]
     me: User
+    post(postId: ID!): Post
   }  
 
   #------------Mutations---------------
