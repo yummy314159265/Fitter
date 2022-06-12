@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Box,
+  Heading,
   HStack,
   VStack,
   Text,
@@ -13,39 +14,54 @@ import {
   List,
   ListItem,
   ListIcon,
+  CircularProgress
 } from '@chakra-ui/react';
 import { FaThumbsUp, FaDumbbell, FaRunning, FaLeaf, FaComment } from 'react-icons/fa';
 import { GiMeat } from 'react-icons/gi';
+import { useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_POST } from '../../utils/queries';
 import { UPDATE_LIKES } from '../../utils/mutations';
-import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
-import { useNavigate } from "react-router-dom";
 
-export default function Post({
-  postId,
-  postAuthor, 
-  message,
-  likes,
-  exercises,
-  meals,
-  tags,
-  comments,
-  createdAt,
-  image,
-  usersLiked
-}) {
+export default function SinglePost() {
 
-  // likes
-  const hasBeenLiked = usersLiked.find(user => user.id === Auth.getProfile().data._id) ? true : false; 
-  const [liked, setLiked] = useState(hasBeenLiked);
+  const { postId } = useParams();
+
+  const { loading, data } = useQuery(GET_POST, {
+    variables: { postId: postId },
+  })
+
+  const { 
+    postAuthor, 
+    message,
+    likes,
+    exercises,
+    meals,
+    tags,
+    comments,
+    createdAt,
+    image,
+    usersLiked
+  } = data?.post || {}
+
+  const [liked, setLiked] = useState(false);
   const [postLikes, setPostLikes] = useState(likes);
   const [updateLikes, { error }] = useMutation(UPDATE_LIKES);
-  let navigate = useNavigate();
+  const boxBg = useColorModeValue('white', 'gray.900')
 
-  const handleSinglePost = async (event) => {
-    event.preventDefault();
-    navigate(`/post/${postId}`, { replace: true });
-  }
+  useEffect(() => {
+    setLiked(usersLiked?.find(user => user.id === Auth.getProfile().data._id) ? true : false);
+    setPostLikes(likes);
+  }, [loading])
+
+  if(loading){
+    return (
+      <Center>
+        <CircularProgress isIndeterminate />
+      </Center>
+    )
+  } 
 
   const handleLike = async (event) => {
     event.preventDefault();
@@ -67,7 +83,7 @@ export default function Post({
       <Box
         maxW={'445px'}
         w={'full'}
-        bg={useColorModeValue('white', 'gray.900')}
+        bg={boxBg}
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
@@ -182,8 +198,7 @@ export default function Post({
               aria-label='Like' 
               color='black'
               icon={<FaComment />} 
-              onClick={handleSinglePost}
-              isDisabled={Auth.loggedIn() ? false : true}
+              isDisabled={true}
               _disabled={{
                 cursor: 'default'
               }}

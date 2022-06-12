@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, CircularProgress } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import theme from "./Theme";
 import { 
   ApolloClient, 
@@ -20,7 +20,7 @@ import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import FoodSearch from './components/FoodSearch';
+import SinglePost from './pages/SinglePost';
 import Meals from './pages/MealPlan';
 
 import Auth from './utils/auth.js'
@@ -85,13 +85,13 @@ function App() {
             path="/about" 
             element={<About />} 
           />
-          <Route 
-            path="/food-search"
-            element={<FoodSearch />}
-          />
           <Route
             path="/meal-plan"
             element={<Meals />}
+          />
+          <Route 
+            path="/post/:postId" 
+            element={<SinglePost />} 
           />
         </Routes>
         <Footer />
