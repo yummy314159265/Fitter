@@ -67,6 +67,7 @@ export const GET_POSTS = gql`
       message
       likes
       exercises {
+        id
         name
         type
         calories
@@ -77,6 +78,7 @@ export const GET_POSTS = gql`
         liftingWeight
       }
       meals {
+        id
         name
         type
         calories
