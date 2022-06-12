@@ -160,29 +160,35 @@ export const ADD_GOAL = gql`
 
 export const ADD_POST = gql` 
     mutation addPOST(
-        $postAuthor: String!,
-        $message: String!,
-        $exercises: [String],
-        $meals: [String],
-        $tags: [String],
-        $createdAt: String
+        $input: postInput!
     ) {
         addPost(
-            postAuthor: $postAuthor,
-            message: $message,
-            exercises: $exercises,
-            meals: $meals,
-            tags: $tags,
-            createdAt: $createdAt
+            input: $input
         ) {
            id
            postAuthor
            message
-           likes
-           exercises
-           meals
+           exercises {
+               id
+               name
+               type
+               distance
+               time
+               liftingWeight
+               sets
+               reps
+               calories
+           }
+           meals {
+               id
+               name
+               type
+               calories
+               fats
+               carbs
+               proteins
+           }
            tags
-           comments
            createdAt
         }
     }

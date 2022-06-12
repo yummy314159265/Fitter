@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PostList from '../../components/PostList';
 import CreatePost from '../../components/createPost';
 import Sidebar from '../../components/Sidebar';
+import { useQuery } from '@apollo/client';
+import { GET_POSTS } from '../../utils/queries';
+import { 
+    Center,
+    CircularProgress 
+} from '@chakra-ui/react'
 
 import {
     Grid,
     GridItem,
 } from '@chakra-ui/react';
 
-export default function postsPages() {
+import Auth from '../../utils/auth';
+
+export default function PostsPages() {
+    const { loading, error, data } = useQuery(GET_POSTS);
+    const posts = data?.posts?.slice().reverse() || [];
+
+    if(loading){
+      return (
+        <Center>
+          <CircularProgress isIndeterminate />
+        </Center>
+      )
+    }
+
  return(
  <>
     <Grid 
@@ -21,12 +40,14 @@ export default function postsPages() {
             <Sidebar />
         </GridItem>
 
-        <GridItem row span={1} colSpan={4} >
-            <CreatePost />
-        </GridItem>
+        {Auth.loggedIn() &&
+            <GridItem row span={1} colSpan={4} >
+                <CreatePost />
+            </GridItem>
+        }
 
         <GridItem row span={1} colSpan={4}>
-            <PostList />
+            <PostList posts={posts} />
         </GridItem>
     </Grid>
  </>

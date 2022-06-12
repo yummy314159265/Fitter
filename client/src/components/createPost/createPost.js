@@ -17,9 +17,6 @@ import {
   IconButton,
   CircularProgress,
   List,
-  UnorderedList,
-  Text,
-  Divider,
   Accordion,
   AccordionPanel,
   AccordionItem,
@@ -29,11 +26,14 @@ import {
 // import { Formik, useFormik } from 'formik';
 import { searchFood, searchExercise } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
+import Auth from '../../utils/auth';
+import { useMutation } from '@apollo/client';
+import { ADD_POST } from '../../utils/mutations';
 
+export default function Component({ postUpdate }) {
 
-
-export default function Component() {
-
+  const user = Auth.loggedIn() ? Auth.getProfile() : null;
+  const [newPost, newPostMutation] = useMutation(ADD_POST);
 
     //Rendered States
     const [exercise, setExercise] = useState(false);
@@ -179,7 +179,7 @@ const renderCardio = () => {
         <Box as={'form'} mt={10}>
             <Stack spacing={4}>
               <Input
-                placeholder="Workout(Running,Swimming,etc.)"
+                placeholder="Cardio(Running,Swimming,etc.)"
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
@@ -189,7 +189,7 @@ const renderCardio = () => {
                 onChange = {handleCardiochange}
               />
               <Input
-                placeholder="Distance"
+                placeholder="Distance (km)"
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
@@ -199,7 +199,7 @@ const renderCardio = () => {
                 onChange={handleDistance}
               />
               <Input
-                placeholder="Time"
+                placeholder="Time (minutes)"
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
@@ -242,9 +242,9 @@ const [liftData, setLiftdata] = useState(null)
 const [liftSearch, setLiftsearch] = useState('');
 
 const queryExercise = (async () => {
-setLiftsearch(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
+setLiftsearch(lift + ' ' + weight + ' ' + sets + ' sets ' + reps + ' reps')
 // console.log(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
-const response = await searchExercise(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps');
+const response = await searchExercise(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps', user);
 setLiftdata(await response.json())
 console.log(response.json)
 })
@@ -287,7 +287,7 @@ const [cardioSearch, setCardiosearch] = useState('');
 const searchCardio = (async () => {
   setCardiosearch(cardiotype + ' for ' + time + ' ' + distance + ' ')
   // console.log(lift + ' ' + weight +'lbs ' + sets + ' sets ' + reps + ' reps')
-  const response = await searchExercise(cardiotype + ' for ' + time + ' ' + distance + ' ' );
+  const response = await searchExercise(cardiotype + ' ' + distance + ' for ' + time, user );
   setCardiodata(await response.json())
   console.log(response.json)
   })
@@ -417,7 +417,7 @@ const renderMeal = () => {
                 <CircularProgress isIndeterminate />
               ) : (results === 'done') ? (
                 <List textAlign={'left'} spacing={3}>
-                  {data.foods.map((food, index) => <SearchResult food={food} index={index} />)}
+                  {data.foods.map((food, index) => <SearchResult key={index} food={food} index={index} />)}
                 </List> 
               ) : (
                 null
@@ -448,13 +448,65 @@ const textChange=(event)=>{
     setPostdata(value);
   
 }
-const addPost=(text)=>{
+const addPost = async (text)=>{
   //ADD TO DB
+  const newExercises = [];
+  const hashtagRegExp = /#[a-z0-9_]+/g;
+  const tags = text.match(hashtagRegExp);
+  let cardio;
+  let weightLift;
+  let newMeals;
 
-  console.log(text);
-  console.log(data)
-  console.log(liftData)
-  console.log(cardioData)
+  if(cardioData) {
+    cardio = {
+      name: cardiotype,
+      type: 'Cardio',
+      distance: distance,
+      time: time,
+      calories: cardioData?.exercises[0]?.nf_calories
+    }
+
+    newExercises.push(cardio);
+  }
+
+  if(liftData){
+    weightLift = {
+      name: lift,
+      type: 'Strength',
+      liftingWeight: weight,
+      sets: sets,
+      reps: reps,
+      calories: liftData.exercises[0].nf_calories
+    }
+
+    newExercises.push(weightLift);
+  } 
+
+  if(data) {
+    newMeals = data.foods.map(food => {
+      return {
+        name: food.food_name,
+        calories: food.nf_calories,
+        fats: food.nf_total_fat,
+        carbs: food.nf_total_carbohydrate,
+        proteins: food.nf_protein
+      }
+    })
+  }
+
+  console.log(user?.data?.username);
+
+  const createPost = await newPost({
+    variables: { input: {
+      postAuthor: user.data.username,
+      message: text,
+      exercises: newExercises,
+      meals: newMeals,
+      tags: tags,
+    }}
+  })
+
+  console.log(createPost);
 }
 
 //Rendered onto timeline page
@@ -482,6 +534,10 @@ const addPost=(text)=>{
               rounded={[null, "md"]}
               overflow={{ sm: "hidden" }}
               alignItems="center"
+              onSubmit={(e)=> {
+                e.preventDefault();
+                return addPost(postdata);
+              }}
             >
               <Stack
                 px={4}
@@ -511,6 +567,7 @@ const addPost=(text)=>{
                       shadow="sm"
                       focusBorderColor="brand.400"
                       fontSize={{ sm: "sm" }}
+                      onChange={textChange}
                     />
                   </FormControl>
 
@@ -550,7 +607,7 @@ const addPost=(text)=>{
                             bg: 'darkblue',
                             boxShadow: 'xl',
                         }}>
-                          Add Exercise
+                          Add Strength Training
                         </Button>
                         <Button
                           type="button"
@@ -614,7 +671,7 @@ const addPost=(text)=>{
                     bg: 'darkgreen',
                     boxShadow: 'xl',
                   }}
-                  onClick={()=> addPost(postdata)}
+                  type="submit"
                 >
                   Post
                 </Button>

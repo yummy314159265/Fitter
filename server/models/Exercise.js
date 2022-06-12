@@ -12,19 +12,19 @@ const exerciseSchema = new Schema({
     type: Number,
   },
   distance: {
-    type: Number,
+    type: String,
   },
   time: {
-    type: Date,
+    type: String,
   },
   reps: {
-    type: Number,
+    type: String,
   },
   sets: {
-    type: Number,
+    type: String,
   },
   liftingWeight: {
-    type: Number,
+    type: String,
   },
 });
 

@@ -1,24 +1,8 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_POSTS } from '../../utils/queries';
 import Post from '../Post';
-import { 
-  Center,
-  CircularProgress } from '@chakra-ui/react'
 
-export default function PostList() {
-  const { loading, error, data } = useQuery(GET_POSTS);
-  const posts = data?.posts || [];
-  console.log(posts)
 
-  if(loading){
-    return (
-      <Center>
-        <CircularProgress isIndeterminate />
-      </Center>
-    )
-  }
-
+export default function PostList({ posts }) {
   return (
     <>
       {posts.map(({
