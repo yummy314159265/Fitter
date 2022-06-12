@@ -55,9 +55,11 @@ export default function Navbar() {
               <Link as={RouterLink} to='/posts'>
                   <Button>Posts</Button>
               </Link>
-              <Link as={RouterLink} to='/profile'>
-                  <Button>Profile</Button>
-              </Link>
+              {Auth.loggedIn() &&
+                <Link as={RouterLink} to='/profile'>
+                    <Button>Profile</Button>
+                </Link>
+              }
             </HStack>
           </HStack>
 

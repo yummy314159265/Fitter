@@ -1,17 +1,28 @@
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Heading,
   HStack,
+  VStack,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
   Image,
   Center,
-  Button
+  IconButton,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react';
+import { FaThumbsUp, FaDumbbell, FaRunning, FaLeaf } from 'react-icons/fa';
+import { GiMeat } from 'react-icons/gi';
+import { UPDATE_LIKES } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
 
 export default function Post({
+  postId,
   postAuthor, 
   message,
   likes,
@@ -20,73 +31,156 @@ export default function Post({
   tags,
   comments,
   createdAt,
-  image
+  image,
+  usersLiked
 }) {
+
+  // likes
+  const hasBeenLiked = usersLiked.find(user => user.id === Auth.getProfile().data._id) ? true : false; 
+  const [liked, setLiked] = useState(hasBeenLiked);
+  const [postLikes, setPostLikes] = useState(likes);
+  const [updateLikes, { error }] = useMutation(UPDATE_LIKES);
+
+  const handleLike = async (event) => {
+    event.preventDefault();
+
+    try {
+      setLiked(prev=>!prev);
+      const post = await updateLikes({
+        variables: { postId: postId }
+      });
+
+      setPostLikes(post.data.updateLikes.likes)
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  console.log(meals)
+
   return (
-    <> 
-      <Center>
-        <Box
-          maxW={'445px'}
-          w={'full'}
-          bg={useColorModeValue('white', 'gray.900')}
-          boxShadow={'2xl'}
-          rounded={'md'}
-          p={10}
-          // pt={2}
-          // px={4}
-          overflow={'hidden'}>
+    <Center py={6}>
+      <Box
+        maxW={'445px'}
+        w={'full'}
+        bg={useColorModeValue('white', 'gray.900')}
+        boxShadow={'2xl'}
+        rounded={'md'}
+        p={6}
+        overflow={'hidden'}>
+
+        {image &&
           <Box
             h={'210px'}
             bg={'gray.100'}
-            mt={-10}
-            mx={-10}
+            mt={-6}
+            mx={-6}
             mb={6}
             pos={'relative'}>
-            <Image
-              src={
-                'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-              }
-              layout={'fill'}
-            />
+              <Image
+                src={image}
+                layout={'fill'}
+              />
           </Box>
-          <Stack>
-            <Text
-              color={'green.500'}
-              textTransform={'uppercase'}
-              fontWeight={800}
-              fontSize={'sm'}
-              letterSpacing={1.1}>
-              Blog
-            </Text>
-            <Heading
-              color={useColorModeValue('gray.700', 'white')}
-              fontSize={'2xl'}
-              fontFamily={'body'}
-              pt={10}
-              pb={0}>
-              
-              Boost your conversion rate
-            </Heading>
-            <Text color={'gray.500'}
-            p={2}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.
-            </Text>
-          </Stack>
-          <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
+        }
+
+        <Stack>
+          <Text
+            color={'green.500'}
+            textTransform={'uppercase'}
+            fontWeight={800}
+            fontSize={'sm'}
+
+            letterSpacing={1.1}
+          >
+            Post
+          </Text>
+          {/* <Heading
+            color={useColorModeValue('gray.700', 'white')}
+            fontSize={'2xl'}
+            fontFamily={'body'}
+          >
+            Boost your conversion rate
+          </Heading> */}
+          <Text color={'gray.500'}>
+            {message}
+
+          </Text>
+        </Stack>
+        <Stack direction={'row'} mt={6} justifyContent={'space-between'}>
+          <Stack direction={'row'} spacing={4} align={'center'}>
             <Avatar
               src={'https://avatars0.githubusercontent.com/u/1164541?v=4'}
               alt={'Author'}
             />
             <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-              <Text fontWeight={600}>Achim Rolle</Text>
-              <Text color={'gray.500'}>Feb 08, 2021</Text>
+              <Text fontWeight={600}>{postAuthor}</Text>
+              <Text color={'gray.500'}>{createdAt}</Text>
+              <HStack>
+                {tags?.map((tag,index) =><Text key={index} color={'blue'}>{tag}</Text>)}
+              </HStack>
             </Stack>
           </Stack>
-        </Box>
-      </Center>
-    </>
-  );
-}
+          <Stack>
+          <IconButton 
+            justifySelf='end' 
+            aria-label='Like' 
+            color={liked ? 'green' : 'black'} 
+            icon={<FaThumbsUp />} 
+            onClick={handleLike}
+            isDisabled={Auth.loggedIn() ? false : true}
+            _disabled={{
+              cursor: 'default'
+            }}
+          />
+          <Center>
+            <Text fontWeight={600}>{postLikes}</Text>
+          </Center>
+          </Stack>
+        </Stack>
+        <Stack direction={'row'} justifyContent={'space-around'}>
+          <List spacing={3}>
+            <Text>
+              Exercises
+            </Text>
+            {exercises.map(exercise => {
+              return (
+                <ListItem key={exercise.id}>
+                  <ListIcon as={(exercise.type[0]==='Cardio') ? FaRunning : FaDumbbell} color='green' /> 
+                  <Text display='inline'>{exercise.name}</Text>
+                  <List>
+                    {exercise.time && <ListItem fontSize='small'>Time: {exercise.time} min</ListItem>}
+                    {exercise.distance && <ListItem fontSize='small'>Distance: {exercise.distance} km</ListItem>}
+                    {exercise.liftingWeight && <ListItem fontSize='small'>Lift weight: {exercise.liftingWeight}</ListItem>}
+                    {exercise.sets && <ListItem fontSize='small'>Sets: {exercise.sets}</ListItem>}
+                    {exercise.reps && <ListItem fontSize='small'>Reps: {exercise.reps}</ListItem>}
+                    {exercise.calories && <ListItem fontSize='small'>Calories burnt: {exercise.calories}</ListItem>}
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
+          <List spacing={3}>
+            <Text>
+              Meals
+            </Text>
+            {meals.map(meal => {
+              return (
+                <ListItem key={meal.id}>
+                  <ListIcon as={meal.type[0] === 'Vegan'|| meal.type[0] === 'Vegetarian' ? FaLeaf : GiMeat} color='green' /> 
+                  <Text display='inline'>{meal.name}</Text>
+                  <List>
+                    <ListItem fontSize='small'>{meal.calories} calories</ListItem>
+                    <ListItem fontSize='small'>{meal.carbs} carbs</ListItem>
+                    <ListItem fontSize='small'>{meal.proteins} proteins</ListItem>
+                    <ListItem fontSize='small'>{meal.fats} fats</ListItem>
+                  </List>
+                </ListItem>
+              )
+            })}
+          </List>
+        </Stack>
+      </Box>
+    </Center>
+  )
+};

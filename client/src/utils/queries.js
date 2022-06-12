@@ -62,10 +62,12 @@ export const QUERY_ME = gql`
 export const GET_POSTS = gql`
   query posts {
     posts {
+      id
       postAuthor
       message
       likes
       exercises {
+        id
         name
         type
         calories
@@ -76,6 +78,7 @@ export const GET_POSTS = gql`
         liftingWeight
       }
       meals {
+        id
         name
         type
         calories
@@ -94,6 +97,9 @@ export const GET_POSTS = gql`
       }
       createdAt
       image
+      usersLiked {
+        id
+      }
     }
   }
-`
+`;

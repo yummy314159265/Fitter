@@ -25,17 +25,10 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionIcon,
-
-
 } from "@chakra-ui/react";
 // import { Formik, useFormik } from 'formik';
-import { searchFood } from '../../utils/API';
+import { searchFood, searchExercise } from '../../utils/API';
 import { FaPlus, FaCheck } from 'react-icons/fa';
-
-import { searchExercise } from "../../utils/API";
-
-
-
 
 export default function Component() {
 
@@ -44,7 +37,6 @@ export default function Component() {
     const [exercise, setExercise] = useState(false);
     const [cardio, setCardio] = useState(false);
     const [meal, setMeal] = useState(false);
-
    
    //states for exercise query
     const [lift, setLift] = useState('');

@@ -3,13 +3,16 @@
 // Goals
 // Plans
 // Posts?
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
     Container,
     Box,
     SimpleGrid,
     Flex,
     Heading,
+    Alert,
+    AlertIcon,
     Text,
     Button,
     ButtonGroup,
@@ -22,6 +25,7 @@ import {
     UnorderedList,
     List,
     Link,
+    CircularProgress
   } from '@chakra-ui/react';
 
   import { 
@@ -37,6 +41,7 @@ import {
    import Auth from '../../utils/auth';
    import { QUERY_ME } from '../../utils/queries';
 
+   
   const Feature = ({ text, icon, iconBg }) => {
     return (
       <Stack direction={'row'} align={'center'}>
@@ -53,58 +58,66 @@ import {
       </Stack>
     );
   };
-
-  const GetData = async () => {
-    const response = await useQuery(QUERY_ME);
-    // console.log(response.data.me);
-    localStorage.setItem('user_info', JSON.stringify(response.data.me));
-  };
-  
+ 
   export default function Profile() {
-
+    const buttonBg = useColorModeValue('#151F21', 'gray.900');
+    const recentPostBg = useColorModeValue(theme.colors.darkgreen, 'red.900');
+    const currentMealPlanBg = useColorModeValue(theme.colors.lightblue, 'purple.900');
+    const currentExerciseBg = useColorModeValue(theme.colors.lightgreen, 'teal.900');
+    const currentGoalBg = useColorModeValue(theme.colors.grey, 'yellow.900');
+    const dividerBorder = useColorModeValue('gray.100', 'gray.700');
 
     // ISSUES
     // stores data in localstorage but only after loading the page
     // On page load, no data is there to use
     // This throws an error if I uncomment line 135 and try running it
+    const { loading, error, data } = useQuery(QUERY_ME);    
+    const user = data?.me || {};    
+    //console.log(user)
+  // MOVE USECOLORMODEVALUE TO VARIABLES SET BEFORE IF STATEMENT
+  if(loading){
+      return (
+        <Center>
+          <CircularProgress h={'100vh'} isIndeterminate />
+        </Center>
+      )
+    }
 
-    const testing = GetData();
-    // const username = Auth.getProfile().data.username;
-    // const {loading, data}= useQuery(QUERY_ME);
-    // if (loading) {
-    //   console.log("loading");
-    // }
-    // console.log(data);
-    const user = JSON.parse(localStorage.getItem('user_info')) || {};
-    console.log(user);
-    console.log(user.age)
-    // const reversedKeys = Object.keys(user.mealPlan).reverse();
-    // reversedKeys.forEach(key => {
-    //   console.log(key, user.mealPlan[key]);
-    // });
     // const targetWeight = user.goals[0].goalWeight;
     // console.log(targetWeight);
-
-    return (
+     // if data isn't here yet, say so
+       
+    return (     
       <Box display="flex">
       <Container maxW={'5xl'} py={12}>
         <Box borderWidth='2px' borderRadius='lg' mb='5' overflow='hidden'>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} py={12}>
+       
           <Stack spacing={4}  align="center">
           <Center>
-            <Avatar size='2xl' name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />{' '}
+            <Avatar size='2xl' name={user.username} src='https://bit.ly/' />{' '}
           </Center>
             <Heading>{user.username}'s Profile</Heading>
+            { (user.gender || user.age || user.weight || user.height) &&
             <UnorderedList color={'gray.500'} fontSize={'lg'}>
+              { (user.gender) &&
               <ListItem>{user.gender}</ListItem>  
+              }
+              { (user.age) &&
               <ListItem>{user.age} years old</ListItem>
+              }
+              { (user.weight) &&
               <ListItem>{user.weight} pounds</ListItem>
+              }
+              { (user.height) &&
               <ListItem>{user.height} inches</ListItem>       
+              }
             </UnorderedList>
+            }
             <Button
                 leftIcon={<BsFillPersonLinesFill />}
                 px={8}
-                bg={useColorModeValue('#151f21', 'gray.900')}
+                bg={buttonBg}
                 color={'white'}
                 rounded={'md'}
                 _hover={{
@@ -124,59 +137,79 @@ import {
               mt="5"
               divider={
                 <StackDivider
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
+                  borderColor={dividerBorder}
                 />
               }>
 
               <Feature
-                iconBg={useColorModeValue(theme.colors.grey, 'yellow.900')}
+                iconBg={currentGoalBg}
                 text={`Your current goal`}
 
                 // add goal
-              />
+              />                
+              { user.exercisePlan.length > 0 &&                
               <UnorderedList>
-                
-                {/* <ListItem>Target weight : {user.goals[0].goalWeight}</ListItem> */}
-                <ListItem>goal 2</ListItem>
+                {user.goals.slice(0).reverse().map( (item, index) => (
+                    <ListItem key={index}>
+                          {item.goalWeight} lbs
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Feature
-                iconBg={useColorModeValue(theme.colors.lightgreen, 'teal.900')}                
+                iconBg={currentExerciseBg}                
 
                 text={`Your current exercise plan`}
 
                 // add exercise plan
               />
+    
+              { user.exercisePlan.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.exercisePlan.slice(0).reverse().map(item => (
+                    <ListItem key={item.id}>
+                          {item.name}
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Feature
-                iconBg={useColorModeValue(theme.colors.lightblue, 'purple.900')}
+                iconBg={currentMealPlanBg}
 
                 text={`Your current meal plan`}
 
                 // add meal plan
               />
+              { user.mealPlan.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.mealPlan.slice(0).reverse().map(item => (
+                    <ListItem key={item.id}>
+                          {item.name}
+                          </ListItem>
+                ))}
               </UnorderedList>
+               }
               <Feature
-                iconBg={useColorModeValue(theme.colors.darkgreen, 'red.900')}
+                iconBg={recentPostBg}
 
                 text={`Your most recent post`}
 
                 // add post
               />
+             { user.posts.length > 0 &&                
               <UnorderedList>
-                <ListItem>goal 1</ListItem>
-                <ListItem>goal 2</ListItem>
+                {user.posts.map( (item) => (
+                    <ListItem key={item.id}>
+                          {item.createdAt}
+                          </ListItem>
+                ))}
               </UnorderedList>
+              }
               <Link as={RouterLink} to='/posts'>
                 <Button
                     leftIcon={<BsFillPlusCircleFill />}              
                     px={8}
-                    bg={useColorModeValue('#151f21', 'gray.900')}
+                    bg={buttonBg}
                     color={'white'}
                     rounded={'md'}
                     _hover={{
@@ -197,7 +230,7 @@ import {
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={5}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -212,7 +245,7 @@ import {
               <Button
                   leftIcon={<BsFillPlusCircleFill />}
                   px={8}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -227,7 +260,7 @@ import {
               <Button
                   leftIcon={<BsTools />}              
                   px={8}
-                  bg={useColorModeValue('#151f21', 'gray.900')}
+                  bg={buttonBg}
                   color={'white'}
                   rounded={'md'}
                   _hover={{
@@ -239,7 +272,8 @@ import {
                   Edit Goal
               </Button>
             </ButtonGroup>
-          </Box>       
+          </Box>  
+           
       </Container>
     </Box>
     );

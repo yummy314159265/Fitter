@@ -43,13 +43,18 @@ const postSchema = new Schema(
         type: String,
       }
     ],
+    usersLiked: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     comments: [commentSchema],
   },
   {
-      toJSON: {
-          getters: true,
-          virtuals: true,
-      }
+    toJSON: {
+      getters: true,
+    }
   },
 );
 

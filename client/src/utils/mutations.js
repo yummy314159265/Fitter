@@ -203,3 +203,15 @@ export const ADD_COMMENT = gql`
         }
     }
 `;
+
+export const UPDATE_LIKES = gql`
+    mutation updateLikes(
+        $postId: ID!
+    ) {
+        updateLikes(
+            postId: $postId
+        ) {
+            likes
+        }
+    }
+`;

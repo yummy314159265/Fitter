@@ -1,13 +1,13 @@
 const { User, Exercise, Meal, Post } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth'); 
+const { Types } = require('mongoose');
 
 const resolvers = {
     Query: {
        me: async (parent, args, context) => {
-         if (context.user) {
-           console.log(context.user)
-          //  const userData = await User.findOne({ _id: context.user._id })
+         if (context.user) {           
+           const userData = await User.findOne({ _id: context.user._id })
            .populate('mealPlan')
            .populate('exercisePlan')
            .populate('goals')
@@ -37,8 +37,8 @@ const resolvers = {
        },
        posts: async (parent, args, context) => {
         // create algorithm to show users desired posts if user is logged in
-        return await Post.find({}).populate('exercises').populate('meals');
-       }
+        return await Post.find({}).populate('exercises').populate('meals').populate('usersLiked');
+       },
  },   
  Mutation: {   
    // add new user
@@ -222,6 +222,35 @@ const resolvers = {
       );
       return updatePost;
     },
+    // add likes
+    updateLikes: async (parent, { postId }, context) => {
+      if (!context.user) throw new AuthenticationError("You must be logged in to like!");  
+      const userId = new Types.ObjectId(context.user._id)
+      const post = await Post.findOne({_id: postId});
+      let updatePost;
+
+      if (!post.usersLiked.includes(userId)) {
+        updatePost = await Post.findByIdAndUpdate(
+          { _id: postId },
+          { 
+            $inc: { likes: 1 },
+            $addToSet: { usersLiked: userId }
+          },
+          { new: true }
+        );
+      } else {
+        updatePost = await Post.findByIdAndUpdate(
+          { _id: postId },
+          { 
+            $inc: { likes: -1 },
+            $pull: { usersLiked: userId }
+          },
+          { new: true }
+        );
+      }
+
+      return updatePost;
+    }
  }
 }
 module.exports = resolvers;
