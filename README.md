@@ -17,7 +17,7 @@ For people passionate about fitness and health, social networks can be a great w
 
 ## Deployment
 
-Deployed Application:
+Deployed Application: https://fitter-bc2022.herokuapp.com/
 
 ## Project Requirements
 
@@ -46,6 +46,15 @@ Deployed Application:
 - bcrypt
 
 ## Screenshots
+
+![screenshot of homepage](./client/src/assets/images/home.png)
+![screenshot of login page](./client/src/assets/images/login.png)
+![screenshot of signup page](./client/src/assets/images/signup.png)
+![screenshot of timeline page](./client/src/assets/images/timeline.png)
+![screenshot of profile page](./client/src/assets/images/profile.png)
+![screenshot of profile settings page](./client/src/assets/images/profile-settings.png)
+![screenshot of contact page](./client/src/assets/images/contact.png)
+![screenshot of about page](./client/src/assets/images/about.png)
 
 ## Contributors
 
