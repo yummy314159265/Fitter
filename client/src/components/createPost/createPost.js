@@ -29,6 +29,7 @@ import { FaPlus, FaCheck } from 'react-icons/fa';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_POST } from '../../utils/mutations';
+import { GET_POSTS } from '../../utils/queries';
 
 export default function Component({ postUpdate }) {
 
@@ -503,10 +504,12 @@ const addPost = async (text)=>{
       exercises: newExercises,
       meals: newMeals,
       tags: tags,
-    }}
-  })
-
-  console.log(createPost);
+    }},
+    refetchQueries: [
+      {query: GET_POSTS},
+      'posts'
+    ]
+  });
 }
 
 //Rendered onto timeline page
