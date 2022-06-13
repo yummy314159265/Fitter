@@ -7,13 +7,27 @@ import {
   Button,
   Stack,
   Icon,
+  Link,
   useColorModeValue,
   createIcon,
 } from '@chakra-ui/react';
 
+import { useAnimate }  from 'react-simple-animate';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { useNavigate } from "react-router-dom";
+
+
 export default function CallToActionWithAnnotation() {
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    navigate('/posts', { replace: true})
+  }
+
   return (
-    <Container maxW={'3xl'}>
+    <Container>
       <Stack
         as={Box}
         textAlign={'center'}
@@ -22,50 +36,40 @@ export default function CallToActionWithAnnotation() {
         <Heading
           fontWeight={600}
           fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
+          lineHeight={'110%'}
+        >
           Fitter. Happier. <br />
-          <Text as={'span'} color={'green.400'}>
+          <Text as={'span'} color={'lightgreen'}>
             More Productive.
           </Text>
         </Heading>
         <Text color={'gray.500'}>
-          Comfortable
-          Not drinking too much
-          Regular exercise at the gym (3 days a week)
-          Getting on better with your associate employee contemporaries
-          At ease
-          Eating well (no more microwave dinners and saturated fats)
-          A patient, better driver
-          A safer car (baby smiling in back seat)
-          Sleeping well (no bad dreams)
-          No paranoia
-          Careful to all animals (never washing spiders down the plughole)
-          Keep in contact with old friends (enjoy a drink now and then)
-          Will frequently check credit at (moral) bank (hole in the wall)
-          Favours for favours
-          Fond but not in love
-          Charity standing orders
-          On Sundays ring road supermarket
+          A social media site for people looking to start their fitness journey and share their progress along the way. We wanted to create a welcoming space for all people, ranging from health experts to novices. 
         </Text>
         <Stack
           direction={'column'}
           spacing={3}
           align={'center'}
           alignSelf={'center'}
-          position={'relative'}>
+          position={'relative'}
+        >
+          <Link as={RouterLink} to='/signup'>
           <Button
-            colorScheme={'green'}
-            bg={'green.400'}
+            bg={'green'}
+            color={'white'}
             rounded={'full'}
             px={6}
             _hover={{
-              bg: 'green.500',
-            }}>
+              bg: 'darkgreen',
+            }}
+            onClick={handleClick}
+          >
             Get Started
           </Button>
-          <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-            Learn more
-          </Button>
+          </Link>
+          
+
+            
           <Box>
             <Icon
               as={Arrow}
@@ -79,10 +83,11 @@ export default function CallToActionWithAnnotation() {
               fontSize={'lg'}
               fontFamily={'Caveat'}
               position={'absolute'}
-              right={'-125px'}
+              right={'-110px'}
               top={'-15px'}
-              transform={'rotate(10deg)'}>
-              Starting at $15/mo
+              transform={'rotate(15deg)'}
+            >
+              Join today
             </Text>
           </Box>
         </Stack>

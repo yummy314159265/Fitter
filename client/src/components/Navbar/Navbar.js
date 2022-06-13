@@ -16,32 +16,23 @@ import {
   useColorMode,
   Center,
   HStack,
-  IconButton
+  IconButton,
+  Image
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import logoImg from '../../assets/images/logos/green-logo-no-text.png';
+import { Link as RouterLink } from 'react-router-dom';
 
-const Links = ['Stuff', 'Other stuff', 'More stuff']
-
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-);
+import Auth from '../../utils/auth';
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // replace with authentication
+
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={useColorModeValue('#f7fafc')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -51,14 +42,24 @@ export default function Navbar() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Box>
+              <Link as={RouterLink} to='/'>
+                <Image boxSize='48px' objectFit='contain' src={logoImg} alt='Logo' />
+              </Link>
+            </Box>
             <HStack
               as={'nav'}
               spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              display={{ base: 'none', md: 'flex' }}
+            >
+              <Link as={RouterLink} to='/posts'>
+                  <Button>Posts</Button>
+              </Link>
+              {Auth.loggedIn() &&
+                <Link as={RouterLink} to='/profile'>
+                    <Button>Profile</Button>
+                </Link>
+              }
             </HStack>
           </HStack>
 
@@ -67,14 +68,15 @@ export default function Navbar() {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-
+              {Auth.loggedIn() ?
               <Menu>
                 <MenuButton
                   as={Button}
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
+                  minW={0}
+                >
                   <Avatar
                     size={'sm'}
                     src={'https://avatars.dicebear.com/api/male/username.svg'}
@@ -82,6 +84,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList alignItems={'center'}>
                   <br />
+                  {/*This needs to show only when logged in, otherwise shows login button*/}
                   <Center>
                     <Avatar
                       size={'2xl'}
@@ -96,9 +99,30 @@ export default function Navbar() {
                   <MenuDivider />
                   <MenuItem>Your Servers</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={(e) =>{e.preventDefault(); Auth.logout()}}>Logout</MenuItem>
                 </MenuList>
-              </Menu>
+              </Menu> :
+              <>
+                {/*Replace buttons*/}
+                <Link as={RouterLink} to='/login'>
+                  <Button
+                  color={'black'}
+                  _hover={{
+                    bg: 'lightgreen',
+                  }}
+                  >Log in</Button>
+                </Link>
+                <Link as={RouterLink} to='/signup'>
+                  <Button 
+                  bg={'green'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'darkgreen',
+                  }}
+                  >Sign up</Button>
+                </Link>
+              </>
+              }
             </Stack>
           </Flex>
         </Flex>

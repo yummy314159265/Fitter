@@ -12,7 +12,9 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.0",
-    "framer-motion": "^6.3.10",
+    "emailjs-com": "^3.2.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
     "graphql": "^16.5.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.1.0",
@@ -20,7 +22,10 @@
     "react-icons": "^3.11.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^0.2.4"
+    "react-simple-animate": "^3.4.0",
+    "react-transition-group": "^4.4.2",
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
