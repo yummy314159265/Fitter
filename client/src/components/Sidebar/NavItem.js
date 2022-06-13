@@ -8,8 +8,9 @@ import {
     MenuButton,
     MenuList
 } from '@chakra-ui/react'
+import {Link as RouterLink} from 'react-router-dom';
 
-export default function NavItem({ icon, title, description, active, navSize }) {
+export default function NavItem({ icon, title, description, active, navSize, link }) {
     return (
         <Flex
             mt={30}
@@ -19,6 +20,8 @@ export default function NavItem({ icon, title, description, active, navSize }) {
         >
             <Menu placement="right">
                 <Link
+                    as={RouterLink}
+                    to={link}
                     backgroundColor={active && "green"}
                     p={3}
                     borderRadius={8}

@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi'
 import NavItem from './NavItem'
 import { useNavigate } from "react-router-dom";
+import Auth from '../../utils/auth';
 
 export default function Sidebar() {
     const [navSize, changeNavSize] = useState("large")
@@ -62,6 +63,7 @@ export default function Sidebar() {
                         icon={FiHome} 
                         color="black"
                         title="Timeline" 
+                        link='/posts'
                         active
                          />
                     <NavItem 
@@ -69,16 +71,15 @@ export default function Sidebar() {
                         icon={FiUser} 
                         color="black"
                         title="Profile"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Profile'
-                        }} />
+                        link='/profile'
+                    />
                     <NavItem 
                         navSize={navSize} 
                         icon={FiSettings} 
                         color="black"
                         title="Settings"
-                         />
+                        link='/'
+                    />
                 </Flex>
 
                 <Flex
@@ -93,8 +94,9 @@ export default function Sidebar() {
                         <Avatar size="sm" src="https://avatars.dicebear.com/api/male/username.svg" />
                         <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
     {/* need to make username change */}
-                            <Heading as="h3" size="sm">Username</Heading>
-                            <Text color="gray">Admin</Text>
+                        {Auth.loggedIn() &&
+                            <Heading as="h3" size="sm">{Auth.getProfile().data.username}</Heading>
+                        }
                         </Flex>
                     </Flex>
                 </Flex>

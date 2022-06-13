@@ -6,7 +6,8 @@ import { useQuery } from '@apollo/client';
 import { GET_POSTS } from '../../utils/queries';
 import { 
     Center,
-    CircularProgress 
+    CircularProgress,
+    Container 
 } from '@chakra-ui/react'
 
 import {
@@ -22,9 +23,11 @@ export default function PostsPages() {
 
     if(loading){
       return (
-        <Center>
-          <CircularProgress isIndeterminate />
-        </Center>
+        <Container h={'73vh'}>
+            <Center>
+                <CircularProgress isIndeterminate />
+            </Center>
+        </Container>
       )
     }
 

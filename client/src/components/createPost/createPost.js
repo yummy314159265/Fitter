@@ -514,200 +514,203 @@ const addPost = async (text)=>{
 
 //Rendered onto timeline page
   return (
-    <Box       
-      bg={useColorModeValue("gray.50", "inherit")} 
-      p={6} 
-      alignItems="center"
-    >
-      <Box  alignItems="center">
-        <Grid
-          display={{ base: "initial", md: "grid" }}
-          columns={{ md: 4 }}
-          spacing={{ md: 4 }}
-          mt={0}
-          align="center"
-        >
-            <Center>
-            </Center>
+    <Center>
+      <Box       
+        bg={useColorModeValue("gray.50", "inherit")} 
+        p={6} 
+        alignItems="center"
+        w={'55%'}
+      >
+        <Box  alignItems="center">
+          <Grid
+            display={{ base: "initial", md: "grid" }}
+            columns={{ md: 4 }}
+            spacing={{ md: 4 }}
+            mt={0}
+            align="center"
+          >
+              <Center>
+              </Center>
 
-          <GridItem mt={[0, null, 0]} colSpan={4}>
-            <chakra.form
-              method="POST"
-              shadow="base"
-              rounded={[null, "md"]}
-              overflow={{ sm: "hidden" }}
-              alignItems="center"
-              onSubmit={(e)=> {
-                e.preventDefault();
-                return addPost(postdata);
-              }}
-            >
-              <Stack
-                px={4}
-                py={5}
-                bg={useColorModeValue("white", "gray.700")}
-                spacing={4}
-                p={2}
-                align='stretch'
+            <GridItem mt={[0, null, 0]} colSpan={4}>
+              <chakra.form
+                method="POST"
+                shadow="base"
+                rounded={[null, "md"]}
+                overflow={{ sm: "hidden" }}
+                alignItems="center"
+                onSubmit={(e)=> {
+                  e.preventDefault();
+                  return addPost(postdata);
+                }}
               >
+                <Stack
+                  px={4}
+                  py={5}
+                  bg={useColorModeValue("white", "gray.700")}
+                  spacing={4}
+                  p={2}
+                  align='stretch'
+                >
 
-                
-                <FormControl id="email" mt={1}>
-                  <FormLabel
-                    fontSize="sm"
-                    fontWeight="md"
-                    color={useColorModeValue("gray.700", "gray.50")}
-                  >
-                    Write a Post!
-                  </FormLabel>
-                </FormControl>
-                <Accordion allowMultiple allowToggle>
-                  <FormControl id="createpost" mt={1}>
-                    <Textarea
-                      placeholder="Big Lift Today! New PR 225 Bench "
-                      mt={1}
-                      rows={3}
-                      shadow="sm"
-                      focusBorderColor="brand.400"
-                      fontSize={{ sm: "sm" }}
-                      onChange={textChange}
-                    />
+                  
+                  <FormControl id="email" mt={1}>
+                    <FormLabel
+                      fontSize="sm"
+                      fontWeight="md"
+                      color={useColorModeValue("gray.700", "gray.50")}
+                    >
+                      Write a Post!
+                    </FormLabel>
                   </FormControl>
+                  <Accordion allowMultiple allowToggle>
+                    <FormControl id="createpost" mt={1}>
+                      <Textarea
+                        placeholder="Big Lift Today! New PR 225 Bench "
+                        mt={1}
+                        rows={3}
+                        shadow="sm"
+                        focusBorderColor="brand.400"
+                        fontSize={{ sm: "sm" }}
+                        onChange={textChange}
+                      />
+                    </FormControl>
 
-                <AccordionItem> 
-                  <h2>
-                    <AccordionButton>
-                      <AccordionPanel>
-                      <FormControl alignItems="center" mt={1}>
-                        <Flex wrap="wrap">
-                        <Button
-                          type="button"
-                          ml={5}
-                          variant="outline"
-                          size="sm"
-                          fontWeight="medium"
-                          _focus={{ shadow: "none" }}
-                          bg="lightblue"
-                          color={'white'}
-                          _hover={{
-                            bg: 'darkblue',
-                            boxShadow: 'xl',
-                          }}
-                        >
-                          Add Image
-                        </Button>
-                        <Button
-                          type="button"
-                          ml={5}
-                          variant="outline"
-                          size="sm"
-                          fontWeight="medium"
-                          _focus={{ shadow: "none" }}
-                          onClick={  () => handleExercise() } 
-                          bg="lightblue"
-                          color={'white'}
-                          _hover={{
-                            bg: 'darkblue',
-                            boxShadow: 'xl',
-                        }}>
-                          Add Strength Training
-                        </Button>
-                        <Button
-                          type="button"
-                          ml={5}
-                          variant="outline"
-                          size="sm"
-                          fontWeight="medium"
-                          _focus={{ shadow: "none" }}
-                          onClick = { () => handleCardio() }
-                          bg="lightblue"
-                          color={'white'}
-                          _hover={{
-                            bg: 'darkblue',
-                            boxShadow: 'xl',
-                          }}
-                        >
-                          Add Cardio
-                        </Button>
-                        <Button
-                          type="button"
-                          ml={5}
-                          variant="outline"
-                          size="sm"
-                          fontWeight="medium"
-                          _focus={{ shadow: "none" }}
-                          onClick = { () => handleMeal() }
-                          bg="lightblue"
-                          color={'white'}
-                          _hover={{
-                            bg: 'darkblue',
-                            boxShadow: 'xl',
-                          }}
-                        >
-                        Add Meal
-                        </Button>
-                        </Flex>
-                      </FormControl>
-                      </AccordionPanel>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    </h2>
-                  </AccordionItem>
-                </Accordion>  
-                {renderExercise()}
-                {renderCardio()}
-                {renderMeal()}
-              </Stack>
-              <FormControl>
-                <Center pb="2">
-                <Button   
-                  ml={5}
-                  variant="outline"
-                  size="md"
-                  fontWeight="medium"
-                  _focus={{ shadow: "none" }}
-                  verticalAlign = "center"
-                  top = "25"
-                  bg="lightgreen"
-                  color={'white'}
-                  _hover={{
-                    bg: 'darkgreen',
-                    boxShadow: 'xl',
-                  }}
-                  type="submit"
+                  <AccordionItem> 
+                    <h2>
+                      <AccordionButton>
+                        <AccordionPanel>
+                        <FormControl alignItems="center" mt={1}>
+                          <Flex wrap="wrap">
+                          <Button
+                            type="button"
+                            ml={5}
+                            variant="outline"
+                            size="sm"
+                            fontWeight="medium"
+                            _focus={{ shadow: "none" }}
+                            bg="lightblue"
+                            color={'white'}
+                            _hover={{
+                              bg: 'darkblue',
+                              boxShadow: 'xl',
+                            }}
+                          >
+                            Add Image
+                          </Button>
+                          <Button
+                            type="button"
+                            ml={5}
+                            variant="outline"
+                            size="sm"
+                            fontWeight="medium"
+                            _focus={{ shadow: "none" }}
+                            onClick={  () => handleExercise() } 
+                            bg="lightblue"
+                            color={'white'}
+                            _hover={{
+                              bg: 'darkblue',
+                              boxShadow: 'xl',
+                          }}>
+                            Add Strength Training
+                          </Button>
+                          <Button
+                            type="button"
+                            ml={5}
+                            variant="outline"
+                            size="sm"
+                            fontWeight="medium"
+                            _focus={{ shadow: "none" }}
+                            onClick = { () => handleCardio() }
+                            bg="lightblue"
+                            color={'white'}
+                            _hover={{
+                              bg: 'darkblue',
+                              boxShadow: 'xl',
+                            }}
+                          >
+                            Add Cardio
+                          </Button>
+                          <Button
+                            type="button"
+                            ml={5}
+                            variant="outline"
+                            size="sm"
+                            fontWeight="medium"
+                            _focus={{ shadow: "none" }}
+                            onClick = { () => handleMeal() }
+                            bg="lightblue"
+                            color={'white'}
+                            _hover={{
+                              bg: 'darkblue',
+                              boxShadow: 'xl',
+                            }}
+                          >
+                          Add Meal
+                          </Button>
+                          </Flex>
+                        </FormControl>
+                        </AccordionPanel>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      </h2>
+                    </AccordionItem>
+                  </Accordion>  
+                  {renderExercise()}
+                  {renderCardio()}
+                  {renderMeal()}
+                </Stack>
+                <FormControl>
+                  <Center pb="2">
+                  <Button   
+                    ml={5}
+                    variant="outline"
+                    size="md"
+                    fontWeight="medium"
+                    _focus={{ shadow: "none" }}
+                    verticalAlign = "center"
+                    top = "25"
+                    bg="lightgreen"
+                    color={'white'}
+                    _hover={{
+                      bg: 'darkgreen',
+                      boxShadow: 'xl',
+                    }}
+                    type="submit"
+                  >
+                    Post
+                  </Button>
+                      </Center>
+                </FormControl>
+                <Box
+                  px={{ base: 4, sm: 6 }}
+                  py={3}
+                  bg={useColorModeValue("gray.50", "gray.900")}
+                  textAlign="right"
                 >
-                  Post
-                </Button>
-                    </Center>
-              </FormControl>
-              <Box
-                px={{ base: 4, sm: 6 }}
-                py={3}
-                bg={useColorModeValue("gray.50", "gray.900")}
-                textAlign="right"
-              >
-                <Button
-                  type="button"
-                  colorScheme="brand"
-                  _focus={{ shadow: "" }}
-                  fontWeight="md"
-                >
-                  Save
-                </Button>
-              </Box>
-            </chakra.form>
-          </GridItem>
-        </Grid>
-      </Box>
-      <Box visibility={{ base: "hidden", sm: "visible" }} aria-hidden="true">
-        <Box py={5}>
-          <Box
-            borderTop="solid 1px"
-            borderTopColor={useColorModeValue("gray.200", "whiteAlpha.200")}
-          ></Box>
+                  <Button
+                    type="button"
+                    colorScheme="brand"
+                    _focus={{ shadow: "" }}
+                    fontWeight="md"
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </chakra.form>
+            </GridItem>
+          </Grid>
         </Box>
-      </Box>
+        <Box visibility={{ base: "hidden", sm: "visible" }} aria-hidden="true">
+          <Box py={5}>
+            <Box
+              borderTop="solid 1px"
+              borderTopColor={useColorModeValue("gray.200", "whiteAlpha.200")}
+            ></Box>
+          </Box>
+        </Box>
 
       </Box>
+    </Center>
   );
 }

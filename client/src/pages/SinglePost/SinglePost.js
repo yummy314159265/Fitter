@@ -3,7 +3,8 @@ import {
   Grid,
   GridItem,
   Center,
-  CircularProgress
+  CircularProgress,
+  Container
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import {  useQuery } from '@apollo/client';
@@ -43,9 +44,11 @@ export default function SinglePost() {
 
   if(loading){
     return (
-      <Center>
-        <CircularProgress isIndeterminate />
-      </Center>
+      <Container h={'73vh'}>
+        <Center>
+            <CircularProgress isIndeterminate />
+        </Center>
+      </Container>
     )
   } 
 
