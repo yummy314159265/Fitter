@@ -41,7 +41,8 @@ import {
    import theme from '../../Theme';
    import Auth from '../../utils/auth';
    import { QUERY_ME } from '../../utils/queries';
-import { FaMousePointer } from 'react-icons/fa';
+  import { FaMousePointer } from 'react-icons/fa';
+
 
   const Feature = ({ text, icon, iconBg }) => {
     return (
@@ -116,7 +117,8 @@ import { FaMousePointer } from 'react-icons/fa';
               }
             </UnorderedList>
             }
-            <Button
+            <Link as={RouterLink} to='/profile/edit'>
+              <Button
                 leftIcon={<BsFillPersonLinesFill />}
                 px={8}
                 bg={buttonBg}
@@ -126,11 +128,10 @@ import { FaMousePointer } from 'react-icons/fa';
                     transform: 'translateY(-2px)',
                     boxShadow: 'lg',
                 }}
-                >
-
-                <a href="profile/edit">Edit Profile</a>
-
-            </Button>
+              >
+                Edit Profile
+              </Button>
+            </Link>
             </Stack>
             <Center>
             <Stack

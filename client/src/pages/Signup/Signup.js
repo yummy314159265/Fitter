@@ -22,6 +22,7 @@ import { useFormik } from 'formik';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -170,7 +171,7 @@ export default function SignupCard() {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link to='/login' color={'darkgreen'}>Log in</Link>
+                Already a user? <Link as={RouterLink} to='/login' color={'darkgreen'}>Log in</Link>
                 {/* link back to login if already a user */}
               </Text>
             </Stack>
