@@ -49,54 +49,54 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-    <ChakraProvider theme={theme}>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route 
-            path="/" 
-            element={<Start />} 
-          />
-          <Route 
-            path="/login" 
-            element={<Login />} 
-          />
-          <Route 
-            path="/signup" 
-            element={<Signup />} 
-          />
-           <Route
-            path="/profile/edit"
-            element={<EditProfile />}
-          />
-          <Route
-            path="/profile"
-            element={Auth.loggedIn() ? <Profile /> : <Login />}
-          />
-          <Route 
-            path="/posts"
-            element={<Posts />}
-          />
-          <Route 
-            path="/contact" 
-            element={<Contact />} 
-          />
-          <Route 
-            path="/about" 
-            element={<About />} 
-          />
-          <Route
-            path="/meal-plan"
-            element={<Meals />}
-          />
-          <Route 
-            path="/post/:postId" 
-            element={<SinglePost />} 
-          />
-        </Routes>
-        <Footer />
-      </Router>
-    </ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route 
+              path="/" 
+              element={<Start />} 
+            />
+            <Route 
+              path="/login" 
+              element={<Login />} 
+            />
+            <Route 
+              path="/signup" 
+              element={<Signup />} 
+            />
+            <Route
+              path="/profile/edit"
+              element={<EditProfile />}
+            />
+            <Route
+              path="/profile"
+              element={Auth.loggedIn() ? <Profile /> : <Login />}
+            />
+            <Route 
+              path="/posts"
+              element={<Posts />}
+            />
+            <Route 
+              path="/contact" 
+              element={<Contact />} 
+            />
+            <Route 
+              path="/about" 
+              element={<About />} 
+            />
+            <Route
+              path="/meal-plan"
+              element={<Meals />}
+            />
+            <Route 
+              path="/post/:postId" 
+              element={<SinglePost />} 
+            />
+          </Routes>
+          <Footer />
+        </Router>
+      </ChakraProvider>
     </ApolloProvider>
   );
 }
